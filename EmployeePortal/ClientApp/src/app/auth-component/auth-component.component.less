@@ -1,0 +1,118 @@
+:host /deep/ {
+
+}
+.component-wrapper {
+  height: 100%;
+  width: 100%;
+  background-color: #212429;
+}
+input, textarea, [contenteditable] {
+  caret-color: #ADB5BC;
+}
+.example-form {
+    min-width: 150px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .example-full-width {
+    width: 100%;
+  }
+
+  .example-container {
+    min-height: 33.5em;
+    min-width: 35em;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -17em 0 0 -17.5em;
+    background-color: #485B6A;
+    color: #98B518;
+    padding: 2.5em;
+  }
+  mat-card-content {
+    margin-top: 5em;
+  }
+
+  .mat-card-subtitle, .mat-hint{
+    color: #98B518;
+    font-size: 14px;
+  }
+
+  .mat-card-subtitle {
+    //position: absolute;
+    // top: 100px;
+    // left: 40%;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+  }
+  /* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px #485B6A inset;
+}
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+  -webkit-text-fill-color: #6D808E !important;
+}
+
+  .mat-card-lg-image {
+    height: unset;
+    width: 350px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 1em;
+  }
+  .mat-form-field {
+    color: #6D808E;
+  }
+  ::ng-deep .component-wrapper .mat-form-field-label {
+    color: #6D808E;
+    font-size: 16px !important;
+    margin-bottom: 0 !important;
+    top: 1.7em;
+  }
+  ::ng-deep .component-wrapper .mat-focused .mat-form-field-label {
+    color: #6D808E;
+  }
+  ::ng-deep .component-wrapper .mat-form-field-label-wrapper {
+    top: -1.4em;
+  }
+  ::ng-deep .component-wrapper .mat-input-element {
+    font-size: 18px !important;
+  }
+  ::ng-deep .component-wrapper .mat-form-field-underline {
+    background-color: #ADB5BC;
+  }
+  ::ng-deep .component-wrapper .mat-form-field-ripple {
+    background-color: #ADB5BC;
+  }
+  .password {
+    margin-top: 3em;
+  }
+
+  button {
+    display: block;
+    margin: 0 auto !important;
+    margin-top: 3em !important;
+    border: none;
+    background-color: #A8C709;
+    color: white;
+    text-transform: uppercase;
+    padding: 0.15em 3.5em;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .errorBox {
+    padding-top: 5px;
+    color:#f44336;
+  }
+
+  mat-error {
+    font-size: 14px;
+  }

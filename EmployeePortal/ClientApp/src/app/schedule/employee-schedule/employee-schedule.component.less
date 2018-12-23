@@ -1,0 +1,169 @@
+.content{
+  max-height: 100%;
+  padding: 1em;
+  width: 100%;
+  overflow-y:auto ;
+}
+
+:host {
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: block;
+  overflow-y: auto;
+}
+:host /deep/ p-schedule .ui-state-highlight  {
+  background: transparent !important;
+}
+:host /deep/ p-schedule .active {
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+#hoverPanel {
+  position: absolute;
+  left: 0px;
+  top: -70px;
+  margin-right: 1px;
+}
+:host /deep/ p-schedule .fc th.fc-resource-cell {
+  cursor: pointer;
+}
+
+.dummy-mat-sidenav {
+  // height: 100%;
+  width: 24em;
+}
+
+.dummy-action-panel {
+  // height: 100%;
+  width: 100%;
+  background-color: white;
+  overflow-y:auto !important;
+}
+
+.fc-header-toolbar {
+position: absolute;
+background-color: red;
+}
+.content.datepicker-visible {
+  display: table;
+}
+.content.date-picker-visible app-calnav{
+  display: table-cell;
+  vertical-align: top;
+}
+:host /deep/ .content.date-picker-visible p-schedule {
+  vertical-align: top;
+}
+:host /deep/ .content.date-picker-visible app-calnav{
+  height: calc(~'100vh - 70px');
+}
+
+:host /deep/ p-schedule .fc-slats table {
+  height: calc(~'100vh - 138px');
+}
+
+.mat-drawer-content {
+  overflow: hidden;
+}
+
+mat-sidenav{
+  // overflow-y: initial;
+  position:fixed;
+  top:70px;
+  margin-right:17px;
+}
+
+:host /deep/ .full-screen {
+  top: 70px!important;
+  // left: 59px!important;
+}
+
+/* :host .mat-drawer-transition .mat-drawer-content {
+  margin-right: 0px !important;
+} */
+
+:host /deep/ .fc-axis.fc-time{
+  font-weight:600 !important;
+
+}
+:host /deep/ .fc-axis.fc-time sub {
+  bottom: -0.10em !important;
+  font-weight:400 !important;
+}
+// :host /deep/ .fc-slats tbody tr:nth-child(12n) .fc-axis.fc-time,
+// :host /deep/ .fc-slats tbody tr:nth-child(12n - 1) .fc-axis.fc-time,
+// :host /deep/ .fc-slats tbody tr:nth-child(12n - 2) .fc-axis.fc-time,
+// :host /deep/ .fc-slats tbody tr:nth-child(12n - 3) .fc-axis.fc-time,
+// :host /deep/ .fc-slats tbody tr:nth-child(12n - 4) .fc-axis.fc-time,
+// :host /deep/ .fc-slats tbody tr:nth-child(12n - 5) .fc-axis.fc-time
+// {
+// background-color: #37434f !important;
+// }
+
+:host /deep/ .fc-now-indicator {
+  position: absolute;
+  border: 1px solid #B1C617;
+}
+:host /deep/ .fc-now-indicator-arrow{
+  border:0 !important;
+  color:#fff;
+  font-size:12px;
+  text-align:right !important;
+  width:52px;
+  margin-top:-8px;
+
+
+}
+:host /deep/ .fc-toolbar{
+  display:none !important;
+  }
+
+
+:host /deep/ .fc-slats {
+  background-color: #eee;
+}
+:host /deep/ .fc-preferredAppoints.fc-bgevent{
+  opacity:1 !important;
+}
+:host /deep/ .fc-InteralAppoints.fc-bgevent{
+  opacity:1 !important;
+}
+:host /deep/ .fc-preferredAppoints.fc-bgevent .color-bar img{
+  opacity: 0.3;
+  width: 18px !important;
+  margin: 5px auto;
+  display: block;
+}
+:host /deep/ .fc-nonbusiness{
+  opacity:1 !important;
+  z-index:1;
+}
+.schedule-wrapper {
+  display: table-cell;
+  position: absolute;
+  top: 0;
+  left: 180px;
+}
+
+app-current-date {
+background-color: #343a40;
+}
+
+@media (min-width: 992px) {
+app-current-date {
+  display: none;
+}
+}
+
+:host /deep/ #hoverPanel .ui-overlaypanel-content { padding: 0px; }
+:host /deep/ .ui-overlaypanel { background: #fff;min-width: 280px;  }
+:host /deep/ #hoverPanel .ui-overlaypanel-content ul { padding: 0px; }
+:host /deep/ #hoverPanel .ui-overlaypanel-content ul li .right-bar { text-align: center; }
+:host /deep/ #hoverPanel .ui-overlaypanel-content ul li .right-bar span { padding: 0px 10px; }
+:host /deep/ #hoverPanel .ui-overlaypanel-content ul li .right-bar span i { font-size: 26px; }
+:host /deep/ #hoverPanel .ui-overlaypanel-content ul li {    background: #fff; border-bottom: 1px solid #eee; padding: 5px 30px; list-style: none; }
+

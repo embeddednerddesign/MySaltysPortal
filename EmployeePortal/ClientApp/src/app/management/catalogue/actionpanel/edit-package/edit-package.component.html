@@ -1,0 +1,124 @@
+<mat-expansion-panel id="editpackage" [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{addOrEdit}} Package
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Package Name" class="capitalized" aria-label="Package Name" (change)="formatterService.textCapitalize(name)"
+        [(ngModel)]="package.name" [formControl]="name">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item currency-field">
+      <input matInput disabled placeholder="Total of Prices (including Taxes)" aria-label="Total of Prices" [(ngModel)]="package.totalOfIndividualPrices">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Retail Price" aria-label="Retail Price" [(ngModel)]="package.retailPrice"
+        [formControl]="retailPrice">
+    </mat-form-field>
+    <kendo-multiselect class="panel-flex-row-item kendo-multiselect" placeholder="Taxes" aria-label="Taxes" [data]="taxes"
+      [valuePrimitive]="false" [(ngModel)]="selectedTaxes" textField="name" valueField="value" (valueChange)="updateTotalOfPrices()">
+    </kendo-multiselect>
+  </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Products
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div id="productSelections">
+    <table class="detail-table" id="productList">
+      <tr *ngFor="let product of selectedProducts">
+        <td>
+          <div class="bullet" (click)="removeProductFromPackage(product)" [inlineSVG]="'../../../assets/svg/negative-sign-inside-circle.svg'"></div>
+        </td>
+        <td>{{product.product.name}}</td>
+        <td><span>${{product.product.retailPrice}}</span></td>
+        <td><span class='quantity-box'>
+            <input class="no-spin" type="number" [(ngModel)]="product.productQuantity" (change)="updatePackageProductQuantity(product)"></span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <button id="addProductsButton" mat-button (click)="addProductToPackage()">+ Add Product</button>
+    </div>
+    <div class="selecter col-8">
+      <div class="search-icon-container">
+        <div class="bullet" [inlineSVG]="'../../../assets/svg/search.svg'"></div>
+      </div>
+      <div class="form-field-container">
+        <mat-form-field>
+          <input id="productsInput" type="text" matInput [formControl]="selectedProduct" placeholder="Search for a product"
+            [matAutocomplete]="products" />
+        </mat-form-field>
+      </div>
+
+      <mat-autocomplete #products="matAutocomplete" [displayWith]="productDisplayFn">
+        <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+          {{ product.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+  </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Services
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div id="serviceSelections">
+    <table class="detail-table" id="serviceList">
+      <tr *ngFor="let service of selectedServices">
+        <td>
+          <div class="bullet" (click)="removeServiceFromPackage(service)" [inlineSVG]="'../../../assets/svg/negative-sign-inside-circle.svg'"></div>
+        </td>
+        <td>{{service.service.serviceName}}</td>
+        <td><span>${{service.service.defaultPrice}}</span></td>
+        <td><span class='quantity-box'>
+            <input class="no-spin" type="number" [(ngModel)]="service.serviceQuantity" (change)="updatePackageServiceQuantity(service)"></span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <button id="addServicesButton" mat-button (click)="addServiceToPackage()">+ Add Service</button>
+    </div>
+    <div class="selecter col-8">
+      <div class="search-icon-container">
+        <div class="bullet" [inlineSVG]="'../../../assets/svg/search.svg'"></div>
+      </div>
+      <div class="form-field-container">
+        <mat-form-field>
+          <input id="servicesInput" type="text" matInput [formControl]="selectedService" placeholder="Search for a service"
+            [matAutocomplete]="services" />
+        </mat-form-field>
+      </div>
+      <mat-autocomplete #services="matAutocomplete" [displayWith]="serviceDisplayFn">
+        <mat-option *ngFor="let service of filteredServices | async" [value]="service">
+          {{ service.serviceName }}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+  </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header [style.display]="'none'">
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <div>
+      <button mat-button class="btn half" (click)="updatePackage()">{{addOrEdit == 'Add' ? 'Add' : 'Update'}} Package</button>
+      <button mat-button class="btn half" (click)="cancelUpdate()">Cancel</button>
+    </div>
+  </div>
+</mat-expansion-panel>

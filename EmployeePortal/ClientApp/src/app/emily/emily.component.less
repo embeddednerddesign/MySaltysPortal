@@ -1,0 +1,18 @@
+app-sidenav {
+    &.sideNavCollapsed {
+        width: 70px;
+    }
+}
+
+.sideNavCollapsed {
+    left: 70px;
+}
+
+:host /deep/ #overlayDisableDiv {
+    .backdrop {
+        z-index: 2;
+    }
+    .spinner-three-bounce.ng-star-inserted {
+        display: none;
+    }
+}

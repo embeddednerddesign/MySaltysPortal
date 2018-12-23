@@ -1,0 +1,10 @@
+﻿<div class="category-item">
+  <input class="category-name" [formControl]="control" [placeholder]="placeholder" #input>
+
+  <div class="category-controls">
+    <i class="fal fa-save" (click)="save()" [hidden]="!isSaveButtonVisible"></i>
+    <i class="fal fa-trash-alt" (click)="delete()"></i>
+  </div>
+</div>
+
+<mat-progress-bar mode="indeterminate" [hidden]="!isProgressBarVisible"></mat-progress-bar>

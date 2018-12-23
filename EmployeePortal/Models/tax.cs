@@ -1,0 +1,10 @@
+using EmilyEMRVS.Models;
+
+namespace EmilyEMRVS.Models
+{
+    public class Tax {
+        public int taxId { get; set; }
+        public string name { get; set; }
+        public decimal value { get; set; }
+    }
+}

@@ -1,0 +1,77 @@
+<div class="patient-panel-container">
+  <div class="re-links-container">
+    <div class="re-links">
+      <a (click)="closePatientPanel()" class="close-panel"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+    </div>
+    <div class="re-links">
+      <a (click)="patientCheckInClicked()" class="close-panel"><i class="fas fa-calendar-check" aria-hidden="true"></i></a>
+    </div>
+    <div class="re-links">
+      <a (click)="closePatientPanel()" class="close-panel"><i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+    </div>
+    <div class="re-links">
+      <a (click)="bookAppointment()" class="close-panel"><i class="fas fa-calendar-plus" aria-hidden="true"></i></a>
+    </div>
+  </div>
+  <div class="patient-panel-header" *ngIf="thePatient">
+    <div class="patient-photo">
+      <img src="http://via.placeholder.com/150x150" class="patient-image">
+    </div>
+     <div class="patient-data">
+      <div class="patient-name-address">
+        <div class="patient-name-address-row">
+          <span class="patient-name">{{thePatient.firstName}}&nbsp;{{thePatient.lastName}} <i *ngIf="thePatient.isPreferred" class="fa fa-star" aria-hidden="true"></i></span>
+          <span>{{thePatient.address.city}},&nbsp;{{thePatient.address.province}}</span>&nbsp;&nbsp;&nbsp;
+          <span *ngIf="thePatient.gender==='female'" class="dot"><Strong class="gender">F</Strong></span>
+          <span *ngIf="thePatient.gender==='male'" class="dot"><Strong class="gender">M</Strong></span>
+        </div>
+        <div class="patient-name-address-row">
+          <span class="ref-num">{{thePatient.mobileNumber}}</span><br/>
+          <span class="ref-num"> | </span>
+          <span class="ref-num">{{thePatient.email}}</span><br/>
+        </div>
+        <div class="patient-name-address-row">
+          <span>{{getBirthday(thePatient.birthDate)}}</span>&nbsp;
+          <span>(Age: {{getAge(thePatient.birthDate)}})</span>&nbsp;
+          <span><i class="fas fa-gift gift" ></i></span>
+        </div>
+      </div>
+      <div class="patient-notes-alerts">
+        <div class="patient-notes-alerts-row">
+          <h3>Notes/Alerts</h3>
+          <div *ngIf="editIsEnabled === false" class="panel-flex-row">
+              <div class="editable-toggle" (click)="editPatientNotes()"><i class="fas fa-pencil"></i></div>
+          </div>
+          <div *ngIf="editIsEnabled === true">
+            <div class="edit-panel-flex-row edit-controls">
+              <div class="editable-toggle" (click)="savePatientNotes()"><i class="fas fa-save"></i></div>
+              <div class="editable-toggle" (click)="cancelPatientNotes()"><i class="fas fa-close"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="patient-notes-alerts-row">
+          <div *ngIf="editIsEnabled === false">
+            <p>{{thePatient.notesAndAlerts}}</p>
+          </div>
+          <div *ngIf="editIsEnabled === true" class="edit-panel-flex-row">
+            <mat-form-field class="edit-panel-flex-row">
+              <textarea #patientNotesEntry matInput>{{thePatient.notesAndAlerts}}</textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+   </div>
+  </div>
+  <nav class="patient-panel-tabs" mat-tab-nav-bar>
+    <a mat-tab-link routerLink="patientprofiletab" routerLinkActive #patientprofiletab="routerLinkActive" [active]="patientprofiletab.isActive">Profile</a>
+    <a mat-tab-link routerLink="patientcharttab" routerLinkActive #patientcharttab="routerLinkActive" [active]="patientcharttab.isActive">Chart</a>
+    <a mat-tab-link routerLink="patientnudgestab" routerLinkActive #patientnudgestab="routerLinkActive" [active]="patientnudgestab.isActive">Nudges</a>
+    <a mat-tab-link routerLink="patientaccounttab" routerLinkActive #patienpatientaccounttabtprofiletab="routerLinkActive" [active]="patienpatientaccounttabtprofiletab.isActive">Account</a>
+    <a mat-tab-link routerLink="patientphotostab" routerLinkActive #patientphotostab="routerLinkActive" [active]="patientphotostab.isActive">Photos(Camera)</a>
+    <a mat-tab-link routerLink="patientcommunicationtab" routerLinkActive #patientcommunicationtab="routerLinkActive" [active]="patientcommunicationtab.isActive">Communications</a>
+  </nav>
+  <div class="content">
+        <router-outlet></router-outlet>
+  </div>
+</div>
+

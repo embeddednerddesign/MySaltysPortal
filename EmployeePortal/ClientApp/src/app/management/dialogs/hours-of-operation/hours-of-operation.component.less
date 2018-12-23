@@ -1,0 +1,67 @@
+.closedColumn {
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  align-items: center;
+}
+
+.itemRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 32px;
+}
+
+.dayOfWeekColumn {
+  display: flex;
+  flex-direction: column;
+  width: 225px;
+  align-items: center;
+}
+
+.startEndTimeColumn {
+  display: flex;
+  flex-direction: column;
+  width: 225px;
+  align-items: center;
+}
+
+.start-end-time {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 5px;
+    text-align: center;
+  }
+
+.days-of-week {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100%;
+    margin-top: 30px;
+}
+
+.hoursOfOperationHeading {
+  display: flex;
+}
+
+:host /deep/ .mat-dialog-content {
+    display: flex;
+    height: 270px;
+    overflow: hidden;
+}
+
+:host /deep/ .mat-dialog-actions {
+    justify-content: center;
+    margin-top: 10px;
+}
+
+:host /deep/ .mat-checkbox {
+  padding: 5px;
+  height: 36px;
+}
+
+:host /deep/ .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #5B7381;
+}

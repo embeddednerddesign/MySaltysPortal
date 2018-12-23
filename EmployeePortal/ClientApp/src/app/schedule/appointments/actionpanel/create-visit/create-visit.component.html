@@ -1,0 +1,209 @@
+<div class="re-links-container">
+  <div class="re-links">
+    <a (click)="closePanel()" class="close-panel"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+  </div>
+</div>
+<div class="content">
+  <div class="header">
+    <div class="appointment_heading">Create Visit</div>
+  </div>
+
+  <div class="row no-gutter">
+    <div class="col-12 patient-select">
+      <label for="patientsAutoComplete">Select a Patient</label>
+      <kendo-autocomplete name="patientsAutoComplete" #patientsAutoComplete [data]="patients" [valueField]="'firstName'"
+        [placeholder]="'Enter a patient name..'" class="full" (valueChange)="patientValueChange($event)" [filterable]="true"
+        (filterChange)="handleFilter($event)" (focus)="onPatientAutoCompleteFocus()">
+        <ng-template kendoDropDownListItemTemplate let-dataItem>
+          <div (click)="patientSelect(dataItem)" class="patients-list">
+            <div class="patient row no-gutter">
+              <div class="col-6">
+                <div class="patient-matched-name" [innerHTML]="formatValue(dataItem.firstName, patientsAutoComplete)"></div>
+                &nbsp;<div class="patient-matched-name" [innerHTML]="formatValue(dataItem.lastName, patientsAutoComplete)"></div>
+              </div>
+              <div class="col-6" *ngIf="dataItem.address">
+                <div class="template gender">{{getGender(dataItem)}}</div>
+                <span>&nbsp;{{dataItem.address.city}}, {{dataItem.address.province}}</span>
+              </div>
+              <div class="col-6">
+                <div class="icon" inlineSVG="../../../assets/svg/phone-square.svg"></div>
+                <div class="patient-matched-info">&nbsp;{{dataItem.mobileNumber}}</div>
+              </div>
+              <div class="col-6">
+                <div class="icon" inlineSVG="../../../assets/svg/gift.svg"></div>
+                <div class="patient-matched-info">&nbsp;{{dataItem.birthDate | date}}&nbsp;(Age:
+                  {{getAge(dataItem.birthDate)}})</div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <!-- <ng-template kendoAutoCompleteFooterTemplate>
+          <button class="add-patient-btn" (click)="newPatientHandler()">
+            <span class="add-patient-btn-icon" inlineSVG="../../../assets/svg/plus.svg"></span>
+            Add Patient
+          </button>
+        </ng-template> -->
+      </kendo-autocomplete>
+      <div class="col-12 add-patient-div">
+        <button class="add-btn" (click)="newPatientHandler()">Add Patient</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="patient-form row no-gutter" *ngIf="createPatientPanelVisible">
+    <div class="col-6">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <input matInput placeholder="First Name" class="capitalized" aria-label="First Name" (change)="formatterService.textCapitalize(firstName)"
+          [formControl]="firstName">
+      </mat-form-field>
+    </div>
+
+    <div class="col-6">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <input matInput placeholder="Last Name" class="capitalized" aria-label="Last Name" (change)="formatterService.textCapitalize(lastName)"
+          [formControl]="lastName">
+      </mat-form-field>
+    </div>
+
+    <div class="col-6">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <input matInput [matDatepicker]="bdpicker" placeholder="Birth Date" (change)="updateSubmitButtonState()"
+          [formControl]="bdate">
+        <mat-datepicker-toggle matSuffix [for]="bdpicker"></mat-datepicker-toggle>
+        <mat-datepicker #bdpicker></mat-datepicker>
+        <mat-error *ngIf="bdate.invalid">Not a Valid Date</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-6">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <input matInput placeholder="MSP #" aria-label="Medicare secondary payer number" [formControl]="mspNumber">
+      </mat-form-field>
+    </div>
+
+    <div class="col-6">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <input matInput placeholder="Email Address" aria-label="Email Address" (change)="updateSubmitButtonState()"
+          [formControl]="emailAddress">
+        <mat-error *ngIf="emailAddress.invalid">Not a Valid Email</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-6">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <input matInput placeholder="Phone Number" aria-label="Phone Number" (change)="formatterService.formatPhoneNumber(phoneNumber);updateSubmitButtonState()"
+          [formControl]="phoneNumber">
+      </mat-form-field>
+    </div>
+
+    <div class="col-12">
+      <button class="add-btn" (click)="createPatient()">Create Patient</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="patient-info" *ngIf="patientSelected">
+    <div class="row no-gutter">
+      <div class="patient-data-column">
+        <div class="patient-data">
+          <div class="">
+            <span class="patient-name">{{selectedPatient.firstName}}&nbsp;{{selectedPatient.lastName}} <i *ngIf="selectedPatient.isPreferred"
+                class="fa fa-star" aria-hidden="true"></i></span>
+          </div>
+          <div>
+            <span>{{selectedPatient.address.city}},&nbsp;{{selectedPatient.address.province}}</span>&nbsp;&nbsp;&nbsp;
+            <span class="ref-num">{{selectedPatient.mobileNumber}}</span><br />
+            <span>{{getBirthday(selectedPatient.birthDate)}}</span>&nbsp;
+            <span>(Age: {{getAge(selectedPatient.birthDate)}})</span>&nbsp;
+            <span><i class="fas fa-gift gift"></i></span>
+            <span *ngIf="selectedPatient.gender==='female'" class="dot"><Strong class="gender">F</Strong></span>
+            <span *ngIf="selectedPatient.gender==='male'" class="dot"><Strong class="gender">M</Strong></span>
+          </div>
+          <div class="alerts">
+            <h3>Notes/Alerts</h3>
+            <p>{{selectedPatient.notesAndAlerts}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="patient-avt col-md-4">
+        <img src="http://via.placeholder.com/150x150" class="patient-image">
+      </div> -->
+    </div>
+  </div>
+  <div class="visit-form row no-gutter">
+      <div class="appointments col-12">
+          <div *ngFor="let appointment of appointments; let i = index">
+            <div class="appointment-panel" *ngIf="!appointment.cancelled">
+              <div class="cancel-appointment" (click)="cancelAppointment(i)">
+                <img class="cancel-icon" src="../../../assets/svg/negative-sign-inside-circle.svg" alt="Cancel icon">
+              </div>
+              <div class="appointment-panel-color" [ngStyle]="{'background-color': appointment.color}"></div>
+              <div class="service-container" [ngStyle]="{'background': hexToTranslucentRgbA(appointment.color)}">
+                <div class="service-info">
+                  <div class="appointment-panel-dec">
+                    <span class="time">{{getTime(appointment.start)}}&nbsp;-&nbsp;{{getTime(appointment.end)}}</span>
+                    <br />{{getTitle(appointment.title)}}
+                  </div>
+
+                  <div class="price">
+                    <span>${{appointment.service.defaultPrice}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    <div class="col-6">
+      <mat-form-field class="full service" [floatLabel]="'always'">
+        <mat-select placeholder="Select Service" [(value)]="selectedService" name="services" (selectionChange)="serviceSelectionChange()">
+          <mat-option *ngFor="let service of services" [value]="service.serviceId">
+            {{ service.service.serviceName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <mat-select placeholder="Service Provider" [(value)]="selectedStaff" name="staff" (selectionChange)="staffSelectionChanged()">
+          <mat-option *ngFor="let staff of currentDataService.staff" [value]="staff.staffId">
+            {{ staff.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <div class="full">
+        <label for="startTime">Start Time</label>
+        <kendo-timepicker name="startTime" [steps]="{ minute: minimumDuration }" [min]="minTime" [max]="maxTime"
+          [(value)]="startTime" [readonly]="startTimeIsReadonly"></kendo-timepicker>
+      </div>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <mat-select placeholder="Duration (minutes)" [value]="durationInMinutes" aria-label="Duration" [formControl]="customDuration">
+          <mat-option *ngFor="let durOpt of durationOptions" [value]="durOpt">
+            {{ durOpt }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      <button class="add-btn"
+      (click)="addAppointment()"
+      [disabled]="!createOk()">
+        <span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>
+        Add{{appointments.length ? ' Another' : ''}}&nbsp;Appointment
+      </button>
+        <br><br>
+      <button class="add-btn"
+        *ngIf="appointments.length"
+        (click)="createVisit()"
+        [disabled]="!createOk() || !appointments.length">
+        <span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>
+          Visit Details
+      </button>
+    </div>
+
+  </div>
+</div>

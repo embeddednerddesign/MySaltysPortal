@@ -1,0 +1,49 @@
+ul {
+    list-style-type: none;
+    width: 100%;
+    padding: 0;
+}
+h5 {
+    color: #44565D;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 1em;
+    margin-left: 1em;
+
+    &::after {
+        content: '\f085';
+        font-family: FontAwesome;
+        margin-left: 10px;
+    }
+}
+li {
+    color: #B8D2D6;
+    text-transform: uppercase;
+    padding-left: 1.5em;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+li:hover {
+    background-color: #1F262D;
+}
+li i {
+    margin-right: 1.5em;
+    font-size: 16px;
+}
+
+.inactive {
+    display: none !important;
+}
+
+.fa-inbox {
+    margin-right: 20px !important;
+}
+
+.fa-user-plus {
+    margin-right: 20px !important;
+}
+

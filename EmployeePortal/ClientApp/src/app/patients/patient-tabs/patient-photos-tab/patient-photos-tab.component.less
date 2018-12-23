@@ -1,0 +1,261 @@
+:host /deep/ #gridDisableDiv {
+    .backdrop {
+        z-index: 2;
+    }
+    .spinner-three-bounce.ng-star-inserted {
+        display: none;
+    }
+}
+
+.panel-flex-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.panel-flex-column-thumbnails {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-top:30px;
+  overflow: auto;
+  min-width: 335px;
+  max-width: 335px;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+.panel-flex-column-1 {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    padding-top:30px;
+}
+
+.panel-flex-column-2 {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-top:30px;
+}
+
+.panel-flex-column-full {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 10px 10px 10px;
+    border: 1px solid gray;
+}
+
+.panel-flex-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.column-header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-bottom:10px;
+}
+.patient-photos {
+    padding-left:20px;
+}
+.patient-photos .column-header{
+    margin-bottom:30px;
+}
+
+.patient-photos .schedNewCommButton{
+margin-top:30px;
+background:#B1C617;
+}
+.column-header-link {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    color: darkgray;
+    text-transform: uppercase;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.field-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: gray;
+    text-transform: capitalize;
+}
+.field-content {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    padding-bottom:10px;
+}
+
+.visit-stats {
+    background-color: lightgray;
+    border-bottom: none;
+    margin-bottom: none;
+}
+
+.appointment-panel-color {
+    width: 20px;
+    margin-right: 20px;
+}
+
+.visit-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+
+.visit-cost-unpaid {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+}
+
+.visit-cost-paid {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+
+.visit-cost-cancel {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: darkgray;
+    text-transform: uppercase;
+}
+
+.visit-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: darkgray;
+}
+
+.past-visits {
+    display: flex;
+    flex-direction: row;
+    color: #B1C617;
+    text-transform: uppercase;
+}
+.past-visits-icon {
+    font-size: 18px;
+}
+.past-visits-number {
+    font-size: 20px;
+}
+.past-visits-text {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.noshow-visits {
+    display: flex;
+    flex-direction: row;
+    color: red;
+    text-transform: uppercase;
+}
+.noshow-visits-icon {
+    font-size: 18px;
+}
+.noshow-visits-number {
+    font-size: 20px;
+}
+.noshow-visits-text {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+.main-photo {
+  text-align: center;
+}
+.main-photo img {
+    max-width: 80%;
+    margin-top: 10px;
+    width:700px;
+}
+.thumbs-box{
+    margin-bottom:20px;
+}
+.thumb-size{
+    width: 150px;
+    height: 117px;
+    float: left;
+    display: block;
+    margin: 5px;
+}
+.thumb-size img{
+    width:100%;
+}
+.schedNewCommButton {
+    display: flex;
+    background-color: #2f3b47;
+    width: 295px;
+    height: 36px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 6px;
+    padding-left: 30px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    .schedNewCommButtonIcon {
+        margin-left: 5px;
+        margin-right: 30px;
+        color:#ffffff;
+        &:hover {
+          cursor: pointer;
+        }
+    }
+    .schedNewCommButtonText {
+        text-transform: uppercase;
+        color:#ffffff;
+        &:hover {
+          cursor: pointer;
+        }
+    }
+    &:hover {
+      cursor: pointer;
+    }
+}
+.patient-photos {
+    background: #fafafa;
+    &:host /deep/.panel-flex-column-full{
+        background: transparent !important;
+        border: none !important;
+    }
+  }
+  .nudge-icon {
+    margin-right: 20px;
+}
+
+ngx-gallery /deep/ .ngx-gallery-arrow {
+  color:dimgray;
+}
+
+.hidden-input-button {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+  z-index: -1;
+}
+
+.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
+  transform: none !important;
+}
+
+// :host /deep/ .tui-image-editor-container.top {
+//   .tui-image-editor-controls {
+//     .tui-image-editor-controls-logo {
+//       display: none;
+//     }
+//   }
+// }

@@ -1,0 +1,65 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<ngx-loading [show]="disableGrid" id="gridDisableDiv"></ngx-loading>
+
+<kendo-grid
+  [data]="gridView"
+  [pageSize]="gridState.take"
+  [skip]="gridState.skip"
+  [sort]="gridState.sort"
+  [sortable]="true"
+  [selectable]="true"
+  [filter]="gridState.filter"
+  filterable="menu"
+  (add)="onAddClick($event)"
+  (cancel)="cancelHandler($event)"
+  (save)="saveHandler($event)"
+  (edit)="editHandler($event)"
+  (remove)="removeHandler($event)"
+>
+<ng-template kendoGridToolbarTemplate>
+  <div class="search-bar-container">
+    <span class="nav-item search-pharmacies">
+      <span class="fa fa-search bigger-icon"></span>
+      <mat-form-field class="search-bar">
+        <input matInput placeholder="Search..." aria-label="Search Pharmacies" [(ngModel)]="searchValue" [formControl]="searchCtrl">
+        <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
+          <mat-icon><i class="fa fa-times-circle"></i></mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let pharmacy of filteredPharmacies | async" [value]="pharmacy.name">
+            <span>{{pharmacy.name}}</span>
+          </mat-option>  
+        </mat-autocomplete>
+      </mat-form-field>
+    </span>
+    <span class="nav-item add-pharmacies">
+        <button kendoGridAddCommand iconClass="fal fa-plus-circle" style="background: none; border: none; height: 100%;"></button>
+    </span>
+  </div>
+</ng-template>
+<ng-template kendoGridToolbarTemplate>
+  <button kendoGridAddCommand class="k-button">Add Package</button>
+</ng-template>
+
+<kendo-grid-column field="name" title="Pharmacy Name" width="150px"></kendo-grid-column>
+<kendo-grid-column field="phoneNumber1" title="Phone Number" width="125px"></kendo-grid-column>
+<kendo-grid-column field="phoneNumber2" title="Phone Number - Alt 1" width="125px"></kendo-grid-column>
+<kendo-grid-column field="phoneNumber3" title="Phone Number - Alt 2" width="125px"></kendo-grid-column>
+<kendo-grid-column field="faxNumber" title="Fax Number" width="125px"></kendo-grid-column>
+<kendo-grid-column field="email" title="Email Address" width="125px"></kendo-grid-column>
+<kendo-grid-column field="website" title="Website" width="125px"></kendo-grid-column>
+<kendo-grid-column field="hoursOfOperation" title="Hours of Operation" width="125px"></kendo-grid-column>
+<kendo-grid-command-column title="Actions" min-width="125px" width="125px">
+  <ng-template kendoGridCellTemplate let-isNew="isNew">
+    <button kendoGridEditCommand iconClass="fal fa-edit" style="background: none; border: none; height: 100%; font-size: 20px"></button>
+    <button kendoGridRemoveCommand iconClass="fal fa-minus-circle" style="background: none; border: none; height: 100%; font-size: 20px"></button>
+    <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+    <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+  </ng-template>
+</kendo-grid-command-column> 
+</kendo-grid>
+
+<p-overlayPanel #hoverPanel id="hoverPanel" [dismissable]="'false'">
+  Content
+</p-overlayPanel>
+<app-actionpanel></app-actionpanel>

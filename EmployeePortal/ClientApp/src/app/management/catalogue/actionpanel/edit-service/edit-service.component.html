@@ -1,0 +1,196 @@
+<mat-expansion-panel id="editservice" [expanded]="true" style="z-index: 2;">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{addOrEdit}} Service
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput disabled placeholder="Service ID" aria-label="Service ID" [(ngModel)]="service.serviceId">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Service Name" class="capitalized" aria-label="Service Name" (change)="formatterService.textCapitalize(serviceName)"
+        [(ngModel)]="service.serviceName" [formControl]="serviceName">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Alternate Name" class="capitalized" aria-label="Alternate Name" (change)="formatterService.textCapitalize(serviceAltName)"
+        [(ngModel)]="service.serviceAltName" [formControl]="serviceAltName">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Diagnostic Code" aria-label="Diagnostic Code" [(ngModel)]="service.diagnosticCode"
+        [formControl]="diagnosticCode">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Service Type" aria-label="Service Type" [(ngModel)]="service.subType" [formControl]="subType">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select placeholder="Status" [(ngModel)]="service.status" name="status">
+        <mat-option *ngFor="let servStatus of serviceStatus" [value]="servStatus == 'Active' ? true : false">
+          {{ servStatus }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select placeholder="Service Category" [(ngModel)]="service.serviceCategoryId" name="serviceCategories">
+        <mat-option *ngFor="let category of categories" [value]="category.serviceCategoryId">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Service Duration" aria-label="Service Duration" [(ngModel)]="service.defaultDurationMinutes"
+        [formControl]="serviceDuration">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Retail Price" aria-label="Retail Price" [(ngModel)]="service.defaultPrice"
+        [formControl]="retailPrice">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Billing Code" aria-label="Billing Code" [(ngModel)]="service.billingCode"
+        [formControl]="billingCode">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field id="serviceGovtBillingFormField" class="panel-flex-row-item">
+      <mat-select placeholder="Government Billing" [(ngModel)]="service.governmentBilling" name="governmentBilling">
+        <mat-option *ngFor="let boolChoice of boolChoices" [value]="boolChoice == 'Yes' ? true : false">
+          {{ boolChoice }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select id="serviceUserCatsFormField" #userCatSelect placeholder="User Categories" [(ngModel)]="userCatsSelectedStatus"
+        (change)="updateServiceUserCategories($event)" name="userCategories" multiple>
+        <mat-option *ngFor="let category of userCategories" [value]="category.userCategoryId">
+          {{ category.categoryName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="clearfix"></div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select id="serviceIconSelect" placeholder="Service Icon" [(ngModel)]="service.templateIcon" name="serviceIcons"
+        [style.backgroundColor]="service.serviceIDColour ? service.serviceIDColour : 'transparent'" [class]="service.templateIcon">
+        <mat-option id="serviceIconOption" *ngFor="let icon of templateIconsDropDown" [value]="icon.icon"
+          [style.text-align]="'center'">
+          <span id="serviceIconOptionSpan" [style.backgroundColor]="service.serviceIDColour ? service.serviceIDColour : 'transparent'"
+            [class]="icon.icon"></span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field id="serviceColourPickerFormField" class="panel-flex-row-item">
+      <input matInput id="serviceColourInput" placeholder="Service Colour" [disabled]=true aria-label="Service Colour">
+      <p-colorPicker id="serviceColourPicker" [(ngModel)]="service.serviceIDColour" [formControl]="serviceIDColour">
+      </p-colorPicker>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <kendo-multiselect class="panel-flex-row-item kendo-multiselect" placeholder="Taxes" aria-label="Taxes" [data]="taxes"
+      [valuePrimitive]="false" [(ngModel)]="selectedTaxes" textField="name" valueField="value"></kendo-multiselect>
+  </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Required Products
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div id="requiredProductSelections">
+    <table class="detail-table" id="requiredProductList">
+      <tr *ngFor="let product of selectedRequiredProducts">
+        <td>
+          <div class="bullet" (click)="removeRequiredProductFromService(product.product)" [inlineSVG]="'../../../assets/svg/negative-sign-inside-circle.svg'"></div>
+        </td>
+        <td>{{product.product ? product.product.name : ""}}</td>
+        <td><span>${{product.product ? product.product.retailPrice : ""}}</span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <button id="addRequiredProductsButton" mat-button (click)="addRequiredProductToService()">+ Add Product</button>
+    </div>
+    <div class="selecter col-8">
+      <div class="search-icon-container">
+        <div class="bullet" [inlineSVG]="'../../../assets/svg/search.svg'"></div>
+      </div>
+      <div class="form-field-container">
+        <mat-form-field>
+          <input id="requiredProductsInput" type="text" matInput [formControl]="selectedRequiredProduct" placeholder="Search for a product"
+            [matAutocomplete]="requiredProducts" />
+        </mat-form-field>
+      </div>
+
+      <mat-autocomplete #requiredProducts="matAutocomplete" [displayWith]="requiredProductDisplayFn">
+        <mat-option *ngFor="let product of filteredRequiredProducts | async" [value]="product">
+          {{ product.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+  </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Recommended Products
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div id="recommendedProductSelections">
+    <table class="detail-table" id="recommendedProductList">
+      <tr *ngFor="let product of selectedRecommendedProducts">
+        <td>
+          <div class="bullet" (click)="removeRecommendedProductFromService(product.product)" [inlineSVG]="'../../../assets/svg/negative-sign-inside-circle.svg'"></div>
+        </td>
+        <td>{{product.product ? product.product.name : ""}}</td>
+        <td><span>${{product.product ? product.product.retailPrice : ""}}</span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <button id="addRecommendedProductsButton" mat-button (click)="addRecommendedProductToService()">+ Add Product</button>
+    </div>
+    <div class="selecter col-8">
+      <div class="search-icon-container">
+        <div class="bullet" [inlineSVG]="'../../../assets/svg/search.svg'"></div>
+      </div>
+      <div class="form-field-container">
+        <mat-form-field>
+          <input id="recommendedProductsInput" type="text" matInput [formControl]="selectedRecommendedProduct"
+            placeholder="Search for a product" [matAutocomplete]="recommendedProducts" />
+        </mat-form-field>
+      </div>
+
+      <mat-autocomplete #recommendedProducts="matAutocomplete" [displayWith]="recommendedProductDisplayFn">
+        <mat-option *ngFor="let product of filteredRecommendedProducts | async" [value]="product">
+          {{ product.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+  </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header [style.display]="'none'">
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <div>
+      <button mat-button class="btn half" (click)="updateService()">{{addOrEdit == 'Add' ? 'Add' : 'Update'}} Service</button>
+      <button mat-button class="btn half" (click)="cancelUpdate()">Cancel</button>
+    </div>
+  </div>
+</mat-expansion-panel>

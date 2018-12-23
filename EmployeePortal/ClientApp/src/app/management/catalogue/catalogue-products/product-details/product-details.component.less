@@ -1,0 +1,83 @@
+.search-bar-container {
+    display: flex;
+    flex-direction: row;
+    padding-left: 24px;
+}
+
+:host /deep/ .search-bar {
+    width: 80%;
+    padding: 10px 0px 0px 10px;
+}
+
+:host /deep/ .exportExcelBtn {
+  margin-top: 10px;
+}
+
+:host /deep/ #gridDisableDiv {
+    .backdrop {
+        z-index: 2;
+    }
+    .spinner-three-bounce.ng-star-inserted {
+        display: none;
+    }
+}
+
+.nav-item {
+    &.search-products {
+        width: 500px;
+        padding-left: 10px;
+        border: 1px solid;
+        border-radius: 4px;
+        span {
+            font-size: 22px;
+            padding-left: 10px;
+            padding-right: 2px;
+        }
+        mat-form-field {
+            font-size: 18px;
+        }
+    }
+    &.add-products {
+        margin-top: auto;
+        margin-bottom: auto;
+
+        span {
+            font-size: 28px;
+            padding-left: 40px;
+        }
+    }
+    &.manage-categories {
+        margin-top: auto;
+        margin-bottom: auto;
+
+        span {
+            font-size: 28px;
+            padding-left: 40px;
+            padding-top: 3px;
+        }
+    }
+}
+
+.fa-folder-open {
+    margin-left: 30px;
+    background: none;
+    border: none;
+    outline: none;
+    height: 100%;
+    font-size: 28px;
+    color: #656565;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+:host /deep/ .k-button-icon {
+    &:focus {
+        box-shadow: none;
+    }
+}

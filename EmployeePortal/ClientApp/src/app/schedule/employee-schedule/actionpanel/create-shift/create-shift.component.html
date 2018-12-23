@@ -1,0 +1,85 @@
+<ngx-loading [show]="loading"></ngx-loading>
+  <div class="re-links-container">
+    <div class="re-links">
+      <a (click)="closePanel()" class="close-panel"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+    </div>
+  </div>
+
+
+  <div class="content">
+    <div class="header">
+      <div class="shift_heading">Create Shift</div>
+    </div>
+    <div class="row no-gutter">
+      <div class="staff-data-column">
+          <h4>Staff Member</h4>
+        <mat-form-field class="full" [floatLabel]="'always'">
+          <mat-select placeholder="Staff" [(ngModel)]="selectedStaff.staffId" name="staff" (selectionChange)="staffSelectionChanged($event)">
+              <mat-option *ngFor="let staff of currentDataService.staff" [value]="staff.staffId">
+                {{ staff.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+    </div>
+    <hr>
+    <div class="row no-gutter">
+      <div class="col-12 timeSelect">
+          <h4>Time</h4>
+          <div class="full">
+            <label for="startTime">Start Time</label>
+            <kendo-timepicker name="startTime" [steps]="{ minute: minimumDuration }" [min]="minTime" [max]="maxTime" [(value)]="startTime"></kendo-timepicker>
+          </div>
+        </div>
+        <div class="col-12 timeSelect">
+            <div class="full">
+              <label for="startTime">End Time</label>
+              <kendo-timepicker name="endTime" [steps]="{ minute: minimumDuration }" [min]="minTime" [max]="maxTime" [(value)]="endTime"></kendo-timepicker>
+            </div>
+          </div>
+
+      </div>
+      <hr>
+      <div class="row no-gutter">
+          <div class="repeat col-12">
+              <h4>Repeat</h4>
+            <form>
+              <mat-form-field class="full" [floatLabel]="'always'">
+                <mat-select name="shiftRepeat" placeholder="Repeat" [(ngModel)]="selectedStaffSchedule.recurrence" (change)="selectRepeat($event)">
+                  <mat-option [value]=0>No Repeat</mat-option>
+                  <mat-option [value]=1>Every Week</mat-option>
+                  <mat-option [value]=2>Every 2 Weeks</mat-option>
+                  <mat-option [value]=3>Every 3 Weeks</mat-option>
+                  <mat-option [value]=4>Every 4 Weeks</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </form>
+          </div>
+      </div>
+        <div class="row no-gutter">
+            <div class="col-12 repeatUntil" >
+                <div class="full" *ngIf="selectedStaffSchedule.recurrence && selectedStaffSchedule.recurrence != 0 ">
+                  <label for="repeatUntil">End Date</label>
+                  <kendo-datepicker
+                    [(value)]="repeatUntil"
+                    name="repeatUntil"
+                ></kendo-datepicker>
+                </div>
+              </div>
+        </div>
+        <hr>
+        <div class="row no-gutter">
+          <div class="col-12 notes">
+            <h4>Notes</h4>
+            <mat-form-field>
+              <textarea matInput [(ngModel)]="selectedStaffSchedule.notes">
+
+              </textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="add-btn" (click)="addStaffSchedule()">{{addOrEdit == 'Add' ? 'Add' : 'Update'}} Shift</button>
+          <button class="cancel-btn" (click)="cancelStaffSchedule()">Cancel</button>
+        </div>
+   </div>

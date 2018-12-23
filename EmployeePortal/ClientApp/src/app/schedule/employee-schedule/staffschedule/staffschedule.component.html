@@ -1,0 +1,13 @@
+<a id="appointment" class="appointmentCard" [ngClass]="classList + className">
+  <div class="color-bar" [ngStyle]="{'background-color': color}"></div>
+  <div class="fc-content">
+    <div class="fc-title">
+      {{title}}
+    </div>
+    <div class="background-Color" [ngStyle]="{'background-color': color}"></div>
+  </div>
+  <div class="fc-bg" [ngStyle]="{'background': hexToTranslucentRgbA(color)}">
+  </div>
+  <div class="fc-resizer fc-end-resizer">
+  </div>
+</a>

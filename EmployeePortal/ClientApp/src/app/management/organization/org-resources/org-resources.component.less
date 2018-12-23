@@ -1,0 +1,61 @@
+.search-bar-container {
+    display: flex;
+    flex-direction: row;
+    padding-left: 24px;
+}
+
+:host /deep/ .search-bar {
+    width: 80%;
+    padding: 10px 0px 0px 10px;
+}
+:host /deep/ .capitalized {
+    text-transform: capitalize;
+}
+:host /deep/ .uppercased {
+    text-transform: uppercase;
+}
+
+:host /deep/ #gridDisableDiv {
+    .backdrop {
+        z-index: 2;
+    }
+    .spinner-three-bounce.ng-star-inserted {
+        display: none;
+    }
+}
+
+.nav-item {
+    &.search-resources {
+        width: 500px;
+        padding-left: 10px;
+        border: 1px solid;
+        border-radius: 4px;
+        span {
+            font-size: 22px;
+            padding-left: 10px;
+            padding-right: 2px;
+        }
+        mat-form-field {
+            font-size: 18px;
+        }
+    }
+    &.add-resources {
+        margin-top: auto;
+        margin-bottom: auto;
+
+        span {
+            font-size: 28px;
+            padding-left: 40px;
+        }
+    }
+    &.manage-categories {
+        margin-top: auto;
+        margin-bottom: auto;
+
+        span {
+            font-size: 28px;
+            padding-left: 40px;
+            padding-top: 3px;
+        }
+    }
+}

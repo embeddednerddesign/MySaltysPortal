@@ -1,0 +1,114 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<ngx-loading [show]="disableGrid" id="gridDisableDiv"></ngx-loading>
+
+<kendo-grid
+  [data]="gridView"
+  [pageSize]="gridState.take"
+  [skip]="gridState.skip"
+  [sort]="gridState.sort"
+  [sortable]="true"
+  [selectable]="true"
+  [filter]="gridState.filter"
+  filterable="menu"
+  (add)="onAddClick($event)"
+  (edit)="editHandler($event)"
+  (remove)="removeHandler($event)"
+  [class]="'color-picker-test'"
+>
+<ng-template kendoGridToolbarTemplate>
+  <div class="search-bar-container">
+    <span class="nav-item search-services">
+      <span class="fa fa-search bigger-icon"></span>
+      <mat-form-field class="search-bar">
+        <input matInput placeholder="Search..." aria-label="Search Services" [(ngModel)]="searchValue" [formControl]="searchCtrl">
+        <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
+          <mat-icon><i class="fa fa-times-circle"></i></mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let service of filteredServices | async" [value]="service.serviceName">
+            <span>{{service.serviceName}}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </span>
+    <span class="nav-item add-services">
+        <button kendoGridAddCommand iconClass="fal fa-plus-circle" style="background: none; border: none; height: 100%;"></button>
+    </span>
+    <span class="nav-item manage-categories">
+      <button class="fal fa-folder-open" (click)="openManageCategoryDialog()"></button>
+    </span>
+    <!-- <span class="nav-item manage-categories">
+      <button class="fal fa-list-ul" (click)="openManageUserServicesDialog()"></button>
+    </span> -->
+  </div>
+</ng-template>
+<ng-template kendoGridToolbarTemplate>
+  <button kendoGridAddCommand class="k-button">Add Service</button>
+</ng-template>
+<kendo-grid-column field="templateIcon" title="" width="75px" [class]="'icon-column'">
+  <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+    <span [class]=dataItem.templateIcon [style.font-size.px]="32" [style.color]="'whitesmoke'"
+          [style.backgroundColor]="dataItem.serviceIDColour ? dataItem.serviceIDColour : 'transparent'"
+          [style.min-width.px]=52 [style.padding.px]=10 [style.border-radius.px]=10>
+    </span>
+  </ng-template>
+  <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+      <kendo-dropdownlist
+      [data]="templateIconsDropDown"
+      [textField]="'icon'"
+      [valueField]="'icon'"
+      [valuePrimitive]="true"
+      [formControl]="formGroup.get('templateIcon')">
+      <ng-template kendoDropDownListValueTemplate let-dataItem>
+        <span [style.font-size.px]="22" [class]=dataItem?.icon></span>
+      </ng-template>
+      <ng-template kendoDropDownListItemTemplate let-dataItem>
+        <span [style.font-size.px]="22" [class]=dataItem?.icon [style.width.px]="75" [style.text-align]="'center'"></span>
+      </ng-template>
+      </kendo-dropdownlist>
+  </ng-template>
+</kendo-grid-column>
+<kendo-grid-column field="serviceName" title="Name" width="150px"></kendo-grid-column>
+<kendo-grid-column field="serviceAltName" title="Alternate Name" width="150px"></kendo-grid-column>
+<kendo-grid-column field="subType" title="Service Type" width="125px"></kendo-grid-column>
+<kendo-grid-column field="category.name" title="Category" width="125px">
+  <ng-template kendoGridCellTemplate let-dataItem>
+    {{dataItem.category ? dataItem.category.name : 'No Category Selected'}}
+  </ng-template>
+  <ng-template kendoGridEditTemplate
+  let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+    <kendo-dropdownlist
+    [data]="categoriesDropDown"
+    textField="name"
+    valueField="name"
+    [formControl]="formGroup.get('category')">
+    </kendo-dropdownlist>
+  </ng-template>
+</kendo-grid-column><kendo-grid-column field="status" title="Status" width="85px">
+  <ng-template kendoGridCellTemplate let-dataItem>
+    <div style="text-align: center">{{dataItem.status ? 'Active' : 'Inactive'}}</div>
+    <div style="text-align: center"><kendo-switch [(ngModel)]="dataItem.status" [checked]="dataItem.status" (valueChange)="onStatusValueChange($event, dataItem)" [onLabel]="' '" [offLabel]="' '"></kendo-switch></div>
+  </ng-template>
+</kendo-grid-column>
+<!-- <kendo-grid-column field="governmentBilling" title="Gov Billing" width="85px">
+  <ng-template kendoGridCellTemplate let-dataItem>
+    {{dataItem.governmentBilling ? 'Yes' : 'No'}}
+  </ng-template>
+</kendo-grid-column>
+<kendo-grid-column field="billingCode" title="Billing Code" width="85px"></kendo-grid-column> -->
+<kendo-grid-column field="serviceReqProductsString" title="Req Product(s)" width="165px"></kendo-grid-column>
+<kendo-grid-column field="serviceRecProductsString" title="Rec Product(s)" width="165px"></kendo-grid-column>
+<kendo-grid-column field="diagnosticCode" title="Dx Code" width="85px"></kendo-grid-column>
+<kendo-grid-column field="defaultDurationMinutes" title="Duration" width="85px"></kendo-grid-column>
+<kendo-grid-column field="defaultPrice" title="Price" width="85px"></kendo-grid-column>
+<kendo-grid-command-column title="Actions" min-width="125px" width="125px">
+  <ng-template kendoGridCellTemplate let-isNew="isNew">
+    <button kendoGridEditCommand iconClass="fal fa-edit" style="background: none; border: none; height: 100%; font-size: 20px"></button>
+    <button kendoGridRemoveCommand iconClass="fal fa-minus-circle" style="background: none; border: none; height: 100%; font-size: 20px"></button>
+    <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+    <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+  </ng-template>
+</kendo-grid-command-column>
+</kendo-grid>
+
+<app-actionpanel></app-actionpanel>

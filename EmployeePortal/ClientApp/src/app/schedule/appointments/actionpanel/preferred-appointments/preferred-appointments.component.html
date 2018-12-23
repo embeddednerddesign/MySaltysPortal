@@ -1,0 +1,164 @@
+<div class="re-links">
+  <a (click)="closePanel()" class="close-panel">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </a>
+</div>
+<div class="content">
+  <div class="header">
+    <div class="appointment_heading">Plan Appointments</div>
+  </div>
+  <div class="pref-form row no-gutter">
+    <div class="col-12 prefOptions">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <mat-select name="prefOptions" placeholder="Select Planing Type" [(ngModel)]="prefSelect">
+          <mat-option [value]="'Preferred Appointments'">Preferred Appointments</mat-option>
+          <mat-option [value]="'Internal Appointments'">Internal Appointments</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="int-appoints row no-gutter" *ngIf="prefSelect === 'Internal Appointments'">
+    <div class="col-12">
+      <h4>Internal Appointments</h4>
+      <form class="example-form">
+        <mat-form-field class="full" [floatLabel]="'always'">
+          <input matInput placeholder="Title" [value]="interalTitle" [(ngModel)]="interalTitle" name="interalTitle">
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="col-6 timeSelect">
+      <div class="full">
+        <label for="startTime">Start Time</label>
+        <kendo-timepicker name="startTime" [(value)]="startTime"></kendo-timepicker>
+      </div>
+    </div>
+    <div class="col-6 timeSelect">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <mat-select placeholder="Duration (minutes)" [value]="durationInMinutes" aria-label="Duration" [formControl]="customDuration">
+          <mat-option *ngFor="let durOpt of durationOptions" [value]="durOpt">
+            {{ durOpt }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="weekdays">
+      <form class="k-form">
+        <mat-form-field class="full" [floatLabel]="'always'">
+          <mat-select name="prefrepeat" placeholder="Repeat" [(ngModel)]="prefRepeat" (change)="selectRepeat($event)">
+            <!-- <mat-option [value]="'no-repeat'">Doesn't Repeat</mat-option> -->
+            <mat-option [value]="'full-week'">Daily</mat-option>
+            <mat-option [value]="'repeat-every'">Repeat Every {{this.dayName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="col-12" *ngIf="prefSelect === 'Internal Appointments'">
+      <button class="add-btn" (click)="updateInternalAppoints()">
+        <span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>Update Appointment</button>
+    </div>
+    <hr/>
+  </div>
+  <div class="pref-appoints row no-gutter" *ngIf="prefSelect === 'Preferred Appointments'">
+    <div class="col-12">
+      <h4>Preferred Appointments</h4>
+      <div class="row">
+        <div class="col-12">
+          <div class="icons-config">
+            <button #anchor (click)="onToggle()" class="" *ngIf="!iconTitle">Select Preferred Appointment</button>
+            <button #anchor (click)="onToggle()" class="" *ngIf="iconTitle">
+              <img [src]="this.iconUrl" alt="" style="width:24px;margin-right:10px;">{{iconTitle}}</button>
+          </div>
+          <div class="icons-wrapper">
+            <kendo-popup [popupClass]="'content popup'" [anchor]="anchor" (anchorViewportLeave)="show = false">
+            <!-- <kendo-popup [popupClass]="'content popup'" [anchor]="anchor" (anchorViewportLeave)="show = false" *ngIf="show"> -->
+              <div class="product-icon-popup">
+                <div class="icons">
+                  <div class="preficon" *ngFor="let item of list" (click)="onIconClick(item)">
+                  <!-- <div class="preficon" *ngFor="let item of list" (click)="onIconClick(item)" [class.select-product-icon]="icon === this.prefSelectedIcon"> -->
+                    <span *ngIf="item.title">
+                      <img [src]="item.icon" alt="product-icon" style="width:24px;margin-right:10px;"> {{item.title}}</span>
+                  </div>
+                </div>
+              </div>
+            </kendo-popup>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <button class="add-btn" (click)="addPref()">
+          <span class="icon" inlineSVG="../../../assets/svg/plus.svg" *ngIf="iconTitleNew"></span>Add</button>
+      </div>
+      <div class="row" class="add-icon" *ngIf="newIconBox">
+        <div class="col-6 newTitleSelect">
+          <mat-form-field class="full" [floatLabel]="'always'">
+            <input matInput placeholder="Title" [value]="newIconTitle" [(ngModel)]="newIconTitle" [formControl]="newTitle">
+          </mat-form-field>
+
+        </div>
+        <div class="col-6">
+          <div class="icons-config">
+            <button #anchor (click)="onToggle2()" class="" *ngIf="!iconUrlNew">Select Icon</button>
+
+            <button #anchor (click)="onToggle2()" class="" *ngIf="iconUrlNew">
+              <img [src]="this.iconUrlNew" alt="" style="width:24px;margin-right:10px;">
+            </button>
+          </div>
+          <div class="icons-wrapper">
+            <kendo-popup [popupClass]="'content popup'" [anchor]="anchor" (anchorViewportLeave)="show2 = false">
+            <!-- <kendo-popup [popupClass]="'content popup'" [anchor]="anchor" (anchorViewportLeave)="show2 = false" *ngIf="show2"> -->
+              <div class="product-icon-popup">
+                <div class="icons">
+                  <div class="preficon" *ngFor="let item of uniqueIcons" (click)="onIconClickNew(item)">
+                  <!-- <div class="preficon" *ngFor="let item of uniqueIcons" (click)="onIconClickNew(item)" [class.select-product-icon]="icon === this.prefSelectedIcon"> -->
+                    <img [src]="item.icon" alt="product-icon" style="width:24px;margin-right:10px;">
+
+                  </div>
+                </div>
+              </div>
+
+            </kendo-popup>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="add-btn">
+          <!-- <button (click)="updatePref()" class="add-btn"> -->
+            <span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 timeSelect">
+      <div class="full">
+        <label for="startTime">Start Time</label>
+        <kendo-timepicker name="startTime" [(value)]="startTime"></kendo-timepicker>
+      </div>
+    </div>
+    <div class="col-6 timeSelect">
+      <mat-form-field class="full" [floatLabel]="'always'">
+        <mat-select placeholder="Duration (minutes)" [value]="durationInMinutes" aria-label="Duration" [formControl]="customDuration">
+          <mat-option *ngFor="let durOpt of durationOptions" [value]="durOpt">
+            {{ durOpt }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="weekdays">
+      <form class="k-form">
+        <mat-form-field class="full" [floatLabel]="'always'">
+          <mat-select name="prefrepeat" placeholder="Repeat" [(ngModel)]="prefRepeat" (change)="selectRepeat($event)">
+            <!-- <mat-option [value]="'no-repeat'">Doesn't Repeat</mat-option> -->
+            <mat-option [value]="'full-week'">Daily</mat-option>
+            <mat-option [value]="'repeat-every'">Repeat Every {{this.dayName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="col-12" *ngIf="prefSelect === 'Preferred Appointments'">
+      <button class="add-btn" (click)="updatePreferred()">
+        <span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>Update Appointment</button>
+    </div>
+    <hr/>
+  </div>
+
+
+</div>

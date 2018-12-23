@@ -1,0 +1,10 @@
+<div class="content">
+  <div class="appointment_heading">Cancel {{source}}</div>
+  <p>Are you sure you want to cancel ? </p>
+  <div class="visit-form">
+    <div class="buttons-outer"></div>
+    <button mat-button (click)="close()" class="btn btn-cancel">Cancel</button>
+    <button mat-button (click)="cancelVisit()" class="btn btn-cancel-red">Cancel {{source}}</button>
+    <hr/>
+  </div>
+</div>

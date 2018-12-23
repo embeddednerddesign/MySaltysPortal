@@ -1,0 +1,287 @@
+:host {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 30em;
+    height:100%;
+    display: block;
+    z-index:1000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
+}
+mat-panel-title {
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+}
+.panel-flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.panel-flex-row-item {
+    flex: 1 1 auto;
+    margin-right: 5px;
+    line-height: 25px;
+}
+
+:host /deep/ .panel-flex-row-item {
+    flex: 1 1 auto;
+    margin-right: 5px;
+    line-height: 25px;
+}
+
+:host /deep/ #hoursOfOperationInput {
+    .mat-input-flex.mat-form-field-flex {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    div.mat-input-infix.mat-form-field-infix {
+        &:hover {
+            cursor: pointer;
+        }
+        input {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+mat-option {
+    height: 75px;
+    span {
+        font-size: 32px;
+        color: whitesmoke;
+        width: 52px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+}
+.content {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+}
+.card {
+    margin: .5em 0;
+    padding: 1em 1em;
+}
+
+h3 {
+    font-size: 12px;
+    color: #5B7381;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 1em;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h4 {
+    font-size: 16px;
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h5 {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+#specials .fc-title {
+    font-size: 18px;
+}
+
+#specials .appointment {
+    width: 100%;
+    height: 60px;
+    display: block;
+    position: relative;
+    background-color: #f7f4f9;
+    border-radius: 0;
+    border: 1px solid lightgrey;
+}
+
+.status-icon {
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+}
+:host /deep/ .status-icon svg{
+    height: 20px;
+    width: 20px;
+    fill: green;
+    display: inline-block;
+}
+#summary {
+    width: 70%;
+    table-layout: fixed;
+}
+#summary tbody > tr > td:last-child {
+    text-align: right;
+}
+button {
+    border: 1px solid black;
+}
+#pay-container {
+    position: relative;
+}
+#pay {
+    position: absolute;
+    right: -100px;
+    top: -50px;
+}
+
+.notes-inactive{
+    border:none;
+    resize: none;
+}
+.notes{
+    width: 90%;
+    height: 100px;
+    resize: none;
+    border-radius: 5px;
+    margin: 0px 24px;
+}
+.notes-heading{
+    font-weight: bold;
+    color: #485B6C;
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 24px;
+}
+.selecter {
+    height: 40px;
+    display: inline-block;
+}
+.selecter .form-field-container {
+    display: block;
+    background-color: #F6F4F6;
+    border-radius: 2px;
+    float: left;
+    height: 100%;
+}
+.selecter .bullet {
+    padding-top: 13px;
+}
+.selecter mat-form-field {
+    width: 16.7em;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+:host /deep/ .selecter .mat-form-field-wrapper {
+    padding-bottom: 0;
+    height: 100%;
+}
+:host /deep/ .selecter .mat-form-field-flex {
+    height: 100%;
+}
+:host /deep/ .selecter .mat-form-field-underline {
+    display: none;
+}
+:host /deep/ .selecter .mat-form-field-ripple {
+    display: none;
+}
+:host /deep/ .selecter .mat-form-field-infix {
+    padding: 0;
+    border: 0;
+    height: 100%;
+}
+:host /deep/ .selecter .mat-form-field-label {
+    margin-bottom: 0;
+    top: 35%;
+    font-family: 'Montserrat', sans-serif;
+}
+:host /deep/ .selecter .mat-form-field-label-wrapper {
+    padding-top: 0;
+    top: 0;
+}
+
+:host /deep/ .selecter .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    display: none;
+}
+
+.category-icon {
+    height: 20px;
+    width: 20px;
+    margin: 0 auto;
+}
+.search-icon-container {
+    width: 40px;
+    height: 40px;
+    display: block;
+    float: left;
+    background-color: #F6F4F6;
+}
+
+:host /deep/ .mat-button-wrapper{
+    margin-top: -6px
+}
+.bullet {
+    width: 9px;
+    fill: grey;
+    padding-bottom: 2px;
+    margin: 0 auto;
+    width:12px;
+}
+.cancel-icon {
+    width:14px;
+    margin: 17px;
+    cursor: pointer;
+}
+.detail-table {
+    width: 100%;
+    table-layout: auto;
+    margin-bottom: 1em;
+}
+:host /deep/ .mat-expansion-panel-header-title{
+    color:#fff;
+}
+:host /deep/ .mat-expansion-indicator::after{
+    color:#fff;
+}
+:host /deep/ .mat-expansion-panel{
+    background-color: #fff;
+    box-shadow: none !important;
+}
+.no-gutter {
+    margin-left: 0 !important;
+    margin-right: 0! important;
+}
+.cross{
+    width: 20px;
+    padding: 2px;
+    height: 20px;
+    float: right;
+    margin-top: -33px;
+}
+:host /deep/ .mat-accordion .mat-expansion-panel-spacing{
+    margin-top: 0px !important;
+    margin-bottom: 0px;
+}
+.close-panel{
+    cursor: pointer;
+}
+.gift{
+    width: 20px;
+    height: 20px;
+}
+
+:host /deep/ .mat-expansion-panel-header{
+    background-color: #485B6C !important;
+    height: 67px !important;
+    min-height: 67px !important;
+    max-height: 67px !important;
+}
+:host /deep/ .mat-expansion-panel-header:hover {
+    background-color: #2F3B50 !important;
+    height: 67px !important;
+}

@@ -1,0 +1,166 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<mat-expansion-panel id="companyDetails" [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Company - Clinics
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div id="clinicSelections">
+    <table class="detail-table" id="clinicList">
+      <tr *ngFor="let clinic of selectedClinics">
+        <td>
+          <div class="bullet" (click)="removeClinicFromCompany(clinic)" [inlineSVG]="'../../../assets/svg/negative-sign-inside-circle.svg'"></div>
+        </td>
+        <td>{{clinic.name}}</td>
+        <td><span>{{clinic.address.address1}}, {{clinic.address.city}}, {{clinic.address.province}},
+            {{clinic.address.country}}</span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="row">
+    <div>
+      <button id="addClinicsButton" mat-button (click)="addClinicToCompany()">+ Add Clinic</button>
+    </div>
+    <div class="selecter col-4">
+      <div class="search-icon-container">
+        <div class="bullet" [inlineSVG]="'../../../assets/svg/search.svg'"></div>
+      </div>
+      <div class="form-field-container">
+        <mat-form-field>
+          <input id="clinicsInput" type="text" matInput [formControl]="selectedClinic" placeholder="Search for a clinic"
+            [matAutocomplete]="clinics" />
+        </mat-form-field>
+      </div>
+
+      <mat-autocomplete #clinics="matAutocomplete" [displayWith]="clinicDisplayFn">
+        <mat-option *ngFor="let clinic of filteredClinics | async" [value]="clinic">
+          {{ clinic.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+  </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Company - Account
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Company Name" aria-label="Company Name" [(ngModel)]="editedCompany.name"
+        [formControl]="name">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Contact Name" class="capitalized" aria-label="Contact Name" (change)="formatterService.textCapitalize(contactName)"
+        [(ngModel)]="editedCompany.contactName" [formControl]="contactName">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Address 1" class="capitalized" aria-label="Address1" (change)="formatterService.textCapitalize(addressAddress1)"
+        [(ngModel)]="editedCompany.address.address1" [formControl]="addressAddress1">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Address 2" class="capitalized" aria-label="Address2" (change)="formatterService.textCapitalize(addressAddress2)"
+        [(ngModel)]="editedCompany.address.address2" [formControl]="addressAddress2">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="City" class="capitalized" aria-label="City" (change)="formatterService.textCapitalize(addressCity)"
+        [(ngModel)]="editedCompany.address.city" [formControl]="addressCity">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select [(ngModel)]="editedCompany.address.province" name="usStates">
+        <mat-option *ngFor="let provinceState of provincesAndStates" [value]="provinceState">
+          {{ provinceState }}
+        </mat-option>
+      </mat-select>
+      <mat-placeholder class="placeholder">{{editedCompany.address.country == 'United States' ? 'State' : 'Province'}}</mat-placeholder>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select placeholder="Country" [(ngModel)]="editedCompany.address.country" name="usStates" (change)="onChangeCountry()">
+        <mat-option *ngFor="let country of countriesOfTheWorld" [value]="country">
+          {{ country }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput aria-label="Postal Code" class="uppercased" [(ngModel)]="editedCompany.address.postalCode"
+        (change)="formatterService.textUppercase(addressPostalCode);updateSubmitButtonState()" [formControl]="addressPostalCode">
+      <mat-placeholder class="placeholder">{{editedCompany.address.country == 'United States' ? 'Zip Code' : 'Postal
+        Code'}}</mat-placeholder>
+      <mat-error *ngIf="addressPostalCode.invalid">{{editedCompany.address.country == 'United States' ? 'Not a Valid
+        Zip Code' : 'Not a Valid Postal Code'}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Contact Phone" aria-label="Contact Phone" [(ngModel)]="editedCompany.contactPhone"
+        (change)="formatterService.formatPhoneNumber(contactPhone);updateSubmitButtonState()" [formControl]="contactPhone">
+      <mat-error *ngIf="contactPhone.invalid">Not a Valid Phone #</mat-error>
+    </mat-form-field>
+    <mat-form-field id="hoursOfOperationInput" class="panel-flex-row-item">
+      <input matInput placeholder="Hours of Operation" (click)="openHoursOfOperationDialog()" aria-label="Hours of Operation"
+        [readonly]="true" [value]="hoursOfOperation">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row" id="minDurationFlexRow">
+    <mat-form-field class="panel-flex-row-item" id="minDurationFlexRowItem">
+      <input matInput placeholder="Minimum Duration" aria-label="Minimum Duration" [(ngModel)]="editedCompany.minimumDuration"
+        [formControl]="minimumDuration">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select placeholder="Timezone" [(ngModel)]="editedCompany.timezone" name="timezones">
+        <mat-option *ngFor="let timezone of timezonesOfTheWorld" [value]="timezone">
+          {{ timezone }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Company - Branding
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <mat-form-field id="brandingColourPickerFormField" class="panel-flex-row-item">
+      <input matInput placeholder="Primary Colour" aria-label="Primary Colour" [formControl]="primaryColour">
+      <p-colorPicker [(ngModel)]="editedCompany.primaryBrandingColour"></p-colorPicker>
+    </mat-form-field>
+    <mat-form-field id="brandingColourPickerFormField" class="panel-flex-row-item">
+      <input matInput placeholder="Accent Colour" aria-label="Accent Colour" [formControl]="accentColour">
+      <p-colorPicker [(ngModel)]="editedCompany.accentBrandingColour"></p-colorPicker>
+    </mat-form-field>
+  </div>
+  <!-- <div class="panel-flex-row">
+    <div class="panel-flex-row-item">
+      <p-fileUpload mode="basic" name="fileToUpload" url="" maxFileSize="1000000" (onUpload)="onBasicUpload($event)" auto="true"></p-fileUpload>
+    </div>
+  </div> -->
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header [style.display]="'none'">
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <div>
+      <button mat-button class="btn half" [disabled]="submitButtonDisabledState" (click)="updateCompany()">Update
+        Company Info</button>
+      <button mat-button class="btn half" (click)="cancelUpdate()">Cancel</button>
+    </div>
+  </div>
+</mat-expansion-panel>
+
+<app-actionpanel></app-actionpanel>

@@ -1,0 +1,414 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<ngx-loading [show]="disableGrid" id="gridDisableDiv"></ngx-loading>
+
+<div class="panel-flex-row">
+  <div class="panel-flex-column-1">
+    <div class="panel-flex-column-full accounts">
+      <div class="panel-flex-row account-balance">
+        <span><i class="fas fa-dollar-sign"></i></span> 400.34
+      </div>
+      <div class="panel-flex-row">
+        <div class="patient-text">Patient Rank: Excellent</div>
+      </div>
+      <div class="panel-flex-row">
+        <div class="schedNewCommButton">
+          <div class="schedNewCommButtonIcon"><i class="fa fa-plus"></i></div>
+          <div class="schedNewCommButtonText">Add A Payment</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="panel-flex-column-full gift-cards">
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="panel-flex-row">
+                <div class="column-header">
+                  Gift Cards
+                </div>
+              </div>
+            </mat-panel-title>
+
+          </mat-expansion-panel-header>
+          <div class="panel-flex-row panel-box">
+            <div class="nudge-icon"><i class="fal fa-credit-card-blank"></i></div>
+            <div class="panel-flex-column">
+              <div class="panel-flex-row">
+                <div class="field-text">Laser Treatments</div>
+                <div class="amount">$1000</div>
+              </div>
+              <div class="panel-flex-row">
+                <div class="field-text-sub">Paid on: Monday, June 25, 2018 </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="panel-flex-row panel-box">
+            <div class="nudge-icon"><i class="fal fa-credit-card-blank"></i></div>
+            <div class="panel-flex-column">
+              <div class="panel-flex-row">
+                <div class="field-text">Products</div>
+                <div class="amount">$500</div>
+              </div>
+              <div class="panel-flex-row">
+                <div class="field-text-sub">Paid on: Monday, June 25, 2018 </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="panel-flex-row">
+            <div class="schedNewCommButton">
+              <div class="schedNewCommButtonIcon"><i class="fa fa-plus"></i></div>
+              <div class="schedNewCommButtonText">Buy A Gift Card</div>
+            </div>
+          </div>
+
+          <div class="panel-flex-row">
+            <div class="schedNewCommButton">
+              <div class="schedNewCommButtonIcon"><i class="fas fa-undo"></i></div>
+              <div class="schedNewCommButtonText">Redeem A Gift Card</div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div class="panel-flex-column-full quotes">
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="panel-flex-row">
+                <div class="column-header">
+                  Quotes
+                </div>
+              </div>
+            </mat-panel-title>
+
+          </mat-expansion-panel-header>
+          <div class="panel-flex-row panel-box">
+            <div class="nudge-icon"><i class="far fa-usd-circle"></i></div>
+            <div class="panel-flex-column">
+              <div class="panel-flex-row">
+                <div class="field-text"><a>Mole Removal (Nose)</a></div>
+                <div class="amount">$1235</div>
+              </div>
+              <div class="panel-flex-row">
+                <div class="field-text-sub">Monday, June 25, 2018 </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-flex-row panel-box">
+            <div class="nudge-icon"><i class="far fa-usd-circle"></i></div>
+            <div class="panel-flex-column">
+              <div class="panel-flex-row">
+                <div class="field-text"><a>Derma Peel (Eyes)</a></div>
+                <div class="amount">$1835</div>
+              </div>
+              <div class="panel-flex-row">
+                <div class="field-text-sub">Monday, June 25, 2018 </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-flex-row panel-box">
+            <div class="nudge-icon"><i class="far fa-usd-circle"></i></div>
+            <div class="panel-flex-column">
+              <div class="panel-flex-row">
+                <div class="field-text"><a>Derma Peel (Eyes)</a></div>
+                <div class="amount">$450</div>
+              </div>
+              <div class="panel-flex-row">
+                <div class="field-text-sub">Monday, June 25, 2018 </div>
+              </div>
+
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+  <div class="panel-flex-column-2">
+    <div class="panel-flex-column-full product-purchase-history">
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="panel-flex-row">
+                <div class="column-header">
+                  Product Purchase History
+                </div>
+              </div>
+            </mat-panel-title>
+
+          </mat-expansion-panel-header>
+          <div class="panel-flex-row panel-box">
+            <div class="nudge-icon"><i class="fas fa-redo-alt"></i></div>
+
+            <div class="panel-flex-column quantity">
+              <div class="panel-flex-row">
+                <span class="quantity">2x</span>
+              </div>
+            </div>
+            <div class="panel-flex-column product-purchase-history-detail">
+
+              <div class="panel-flex-row">
+                <div class="field-text"> Product XYZ</div>
+                <div class="amount">$55.99</div>
+              </div>
+              <div class="panel-flex-row">
+                <div class="field-text-sub">Purcahsed: Monday, June 25, 2018 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-flex-row panel-box">
+            <div class="nudge-icon"><i class="fas fa-redo-alt"></i></div>
+
+            <div class="panel-flex-column quantity alt">
+              <div class="panel-flex-row">
+                <span>2x</span>
+              </div>
+            </div>
+            <div class="panel-flex-column product-purchase-history-detail alt">
+
+              <div class="panel-flex-row">
+                <div class="field-text"> Product XYZ</div>
+                <div class="amount">$55.99</div>
+              </div>
+              <div class="panel-flex-row">
+                <div class="field-text-sub">Purcahsed: Monday, June 25, 2018 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-flex-row panel-box">
+            <div class="nudge-icon"><i class="fas fa-redo-alt"></i></div>
+
+            <div class="panel-flex-column quantity">
+              <div class="panel-flex-row">
+                <span class="quantity">2x</span>
+              </div>
+            </div>
+            <div class="panel-flex-column product-purchase-history-detail">
+
+              <div class="panel-flex-row">
+                <div class="field-text"> Product XYZ</div>
+                <div class="amount">$55.99</div>
+              </div>
+              <div class="panel-flex-row">
+                <div class="field-text-sub">Purcahsed: Monday, June 25, 2018 </div>
+              </div>
+            </div>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div class="panel-flex-column-full visit-details">
+      <div class="panel-flex-column visits-section">
+        <div class="panel-flex-row">
+          <div class="column-header">Previous Visits:</div>
+        </div>
+        <div class="panel-flex-row">
+          <div class="appointment-panel-color" [ngStyle]="{'background-color': '#b1d100'}">
+          </div>
+          <div class="panel-flex-row" [ngStyle]="{'background': hexToTranslucentRgbA('#fafcf1')}">
+            <div class="panel-flex-column">
+              <div class="panel-flex-row prev-visit-header">
+                <div class="visit-title">
+                  Tuesday, August 31, 2018
+                </div>
+                <div class="visit-cost-unpaid">
+                  $1,204.33
+                </div>
+              </div>
+              <div class="panel-flex-row prev-visit">
+                <div class="visit-text"><i class="far fa-clock"></i></div>
+                <div class="visit-text appt-time">10:15AM</div>
+                <div class="visit-text">appointment details</div>
+              </div>
+              <div class="panel-flex-row prev-visit">
+                <div class="visit-text"><i class="far fa-clock"></i></div>
+                <div class="visit-text appt-time">10:45AM</div>
+                <div class="visit-text">appointment details</div>
+              </div>
+              <div class="panel-flex-row prev-visit">
+                <div class="visit-text"><i class="far fa-copy"></i></div>
+                <div class="visit-text appt-time">Notes</div>
+                <div class="visit-text">Notes details</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-flex-row">
+          <div class="appointment-panel-color" [ngStyle]="{'background-color': '#9b005d'}">
+          </div>
+          <div class="panel-flex-row" [ngStyle]="{'background': hexToTranslucentRgbA('#f9f1f6')}">
+            <div class="panel-flex-column">
+              <div class="panel-flex-row prev-visit-header">
+                <div class="visit-title">
+                  Monday, June 25, 2018
+                </div>
+                <div class="visit-cost-paid">
+                  <i class="fas fa-university"></i> $255.59
+                </div>
+              </div>
+              <div class="panel-flex-row prev-visit">
+                <div class="visit-text"><i class="far fa-clock"></i></div>
+                <div class="visit-text appt-time">10:15AM</div>
+                <div class="visit-text">appointment details</div>
+              </div>
+              <div class="panel-flex-row prev-visit">
+                <div class="visit-text"><i class="far fa-clock"></i></div>
+                <div class="visit-text appt-time">10:45AM</div>
+                <div class="visit-text">appointment details</div>
+              </div>
+              <div class="panel-flex-row prev-visit">
+                <div class="visit-text"><i class="far fa-copy"></i></div>
+                <div class="visit-text appt-time">Notes</div>
+                <div class="visit-text">Notes details</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-flex-row">
+          <div class="appointment-panel-color" [ngStyle]="{'background-color': '#b0b0b0'}">
+          </div>
+          <div class="panel-flex-row" [ngStyle]="{'background': hexToTranslucentRgbA('#f8f8f8')}">
+            <div class="panel-flex-column">
+              <div class="panel-flex-row prev-visit-header">
+                <div class="visit-title">
+                  Friday, June 15, 2018
+                </div>
+                <div class="visit-cost-cancel">
+                  cancelled
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-flex-row">
+          <div class="column-header-link">view full visit history</div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="panel-flex-column-1 recent-activity">
+    <div class="panel-flex-column-full" [ngStyle]="{'background':'transparent','border':'none'}">
+      <div class="panel-flex-row">
+        <div class="column-header">Invoice History</div>
+      </div>
+      <div class="panel-flex-row panel-box">
+        <div class="nudge-icon" [ngStyle]="{'color':'#dc4e41'}"><i class="fal fa-file-invoice-dollar"></i></div>
+        <div class="panel-flex-column">
+          <div class="panel-flex-row">
+            <div class="field-text"><a [ngStyle]="{'color':'#dc4e41'}">Invoice#16584</a></div>
+            <div class="amount">
+              <div class="amount-icon"><i class="fas fa-print"></i></div>
+              <span [ngStyle]="{'color':'#dc4e41'}">$1235</span>
+            </div>
+          </div>
+          <div class="panel-flex-row">
+            <div class="field-text-sub">Monday, June 25, 2018 </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="panel-flex-row panel-box">
+        <div class="nudge-icon" [ngStyle]="{'color':'#0071b9'}"><i class="fal fa-file-invoice-dollar"></i></div>
+        <div class="panel-flex-column">
+          <div class="panel-flex-row">
+            <div class="field-text"><a [ngStyle]="{'color':'#0071b9'}">Invoice#16584</a></div>
+            <div class="amount">
+              <div class="amount-icon"><i class="fas fa-print"></i></div>
+              <span [ngStyle]="{'color':'#0071b9'}">$1235</span>
+            </div>
+          </div>
+          <div class="panel-flex-row">
+            <div class="field-text-sub">Monday, June 25, 2018 </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="panel-flex-row panel-box">
+        <div class="nudge-icon" [ngStyle]="{'color':'#f8ad3b'}"><i class="fal fa-file-invoice-dollar"></i></div>
+        <div class="panel-flex-column">
+          <div class="panel-flex-row">
+            <div class="field-text"><a [ngStyle]="{'color':'#f8ad3b'}">Invoice#16584</a></div>
+            <div class="amount">
+              <div class="amount-icon"><i class="fas fa-print"></i></div>
+              <span [ngStyle]="{'color':'#f8ad3b'}">$1235</span>
+            </div>
+          </div>
+          <div class="panel-flex-row">
+            <div class="field-text-sub">Monday, June 25, 2018 </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="panel-flex-row panel-box">
+        <div class="nudge-icon" [ngStyle]="{'color':'#dc4e41'}"><i class="fal fa-file-invoice-dollar"></i></div>
+        <div class="panel-flex-column">
+          <div class="panel-flex-row">
+            <div class="field-text"><a [ngStyle]="{'color':'#dc4e41'}">Invoice#16584</a></div>
+            <div class="amount">
+              <div class="amount-icon"><i class="fas fa-print"></i></div>
+              <span [ngStyle]="{'color':'#dc4e41'}">$1235</span>
+            </div>
+          </div>
+          <div class="panel-flex-row">
+            <div class="field-text-sub">Monday, June 25, 2018 </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="panel-flex-row panel-box">
+        <div class="nudge-icon" [ngStyle]="{'color':'#dc4e41'}"><i class="fal fa-file-invoice-dollar"></i></div>
+        <div class="panel-flex-column">
+          <div class="panel-flex-row">
+            <div class="field-text"><a [ngStyle]="{'color':'#dc4e41'}">Invoice#16584</a></div>
+            <div class="amount">
+              <div class="amount-icon"><i class="fas fa-print"></i></div>
+              <span [ngStyle]="{'color':'#dc4e41'}">$1235</span>
+            </div>
+          </div>
+          <div class="panel-flex-row">
+            <div class="field-text-sub">Monday, June 25, 2018 </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="panel-flex-row panel-box">
+        <div class="nudge-icon" [ngStyle]="{'color':'#dc4e41'}"><i class="fal fa-file-invoice-dollar"></i></div>
+        <div class="panel-flex-column">
+          <div class="panel-flex-row">
+            <div class="field-text"><a [ngStyle]="{'color':'#dc4e41'}">Invoice#16584</a></div>
+            <div class="amount">
+              <div class="amount-icon"><i class="fas fa-print"></i></div>
+              <span [ngStyle]="{'color':'#dc4e41'}">$1235</span>
+            </div>
+          </div>
+          <div class="panel-flex-row">
+            <div class="field-text-sub">Monday, June 25, 2018 </div>
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <p-overlayPanel #hoverPanel id="hoverPanel" [dismissable]="'false'">
+    Content
+  </p-overlayPanel>
+  <app-actionpanel></app-actionpanel>

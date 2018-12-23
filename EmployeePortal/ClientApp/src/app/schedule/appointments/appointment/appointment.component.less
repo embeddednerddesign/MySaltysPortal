@@ -1,0 +1,111 @@
+.fc-title {
+  font-size: 14px;
+  padding-top: 5px;
+  padding-left: 5px;
+  font-weight: bold;
+  color:#333;
+}
+.fc-title span{
+font-weight:300;
+font-size:13px;
+}
+
+i {
+  display: inline-block;
+  font-size: 20px;
+  line-height: 30px;
+  color: #333;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  vertical-align: bottom;
+}
+.action-icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 25px;
+    height: 25px;
+    margin: auto 0;
+}
+#appointment {
+  width: 100%;
+  height: 100%;
+  background-color: #f7f4f9;
+  border-radius: 0;
+}
+
+.color-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+}
+.fc-content {
+    margin-left: 20px;
+    height: 100%;
+    padding-left: 5px;
+    /*margin-top: 5px;*/
+    -webkit-box-shadow: inset 0px -10px 15px -10px rgba(107,107107,69,1);
+    -moz-box-shadow: inset 0px -10px 15px -10px rgba(107,107,107,1);
+    box-shadow: inset 0px -10px 15px -10px rgba(107,107,107,1);
+}
+.background-Color {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+.right-bar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 30px;
+  padding-top: 3px;
+}
+
+#checkin, #history {
+  img {
+    height: 20px;
+  }
+}
+.fc-bg {
+  z-index: 1;
+  margin-left: 30px !important;
+}
+
+#appointment.darkened {
+  background-color: #ccc !important;
+}
+#appointment.event-selected {
+  border: solid 1px #B1C617 !important;
+}
+
+::ng-deep .fc-time-grid-event {
+  border: none !important;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px grey;
+  .fc-short {
+    font-size: inherit!important;
+  }
+}
+
+::ng-deep .billing-status-icon svg {
+  height: 20px;
+}
+::ng-deep .billing-status-icon.unconfirmed svg {
+  fill: #757F88;
+}
+::ng-deep .billing-status-icon.confirmed svg {
+  fill: #016DBF;
+}
+::ng-deep .billing-status-icon.no-show svg {
+  fill: #DA5140;
+}
+::ng-deep .billing-status-icon.checked-in svg {
+  fill: #BED82A;
+}

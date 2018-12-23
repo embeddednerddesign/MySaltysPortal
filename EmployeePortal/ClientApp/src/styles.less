@@ -1,0 +1,186 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/dist/css/bootstrap.css";
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+@import "../node_modules/@progress/kendo-theme-default/dist/all.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url('https://pro-staging.fontawesome.com/releases/v5.0.8/css/all.css');
+
+body {
+  height: 100vh;
+ //  background-color: #212429;
+}
+
+/* SVG - IE doesn't read inline SVG styles */
+.emily-logo-0 {
+  enable-background: new;
+}
+
+.emily-logo-1 {
+  fill: #B1D100;
+}
+
+/* SVG - end */
+
+.hidden {
+  display: none;
+}
+
+.content.ng-star-inserted {
+  padding: 0 !important;
+  overflow: scroll!important;
+}
+
+.fc-resource-cell {
+  background-color: #252f38;
+  color: white;
+  text-transform: uppercase;
+  border: none !important;
+  padding: 5px 0 !important;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.ui-widget-header {
+  background-color: #252f38;
+}
+
+.fc-axis.ui-widget-header {
+  background: #252f38 !important;
+  border: none;
+}
+
+.fc-slats {
+  background-color: #e2e2e2;
+}
+.fc-time-grid-event.fc-short .fc-title {
+  font-size: initial!important;
+}
+
+.fc-axis.fc-time {
+  background-color: #252f38 !important;
+  color: white;
+  font-size: 14px;
+  text-align: right;
+  border: none !important;
+}
+
+tbody:nth-child(2) {
+  .fc-axis.fc-time {
+    /*background: #37434e !important;*/
+  }
+}
+
+.fc-content-skeleton {
+  tr td {
+  }
+}
+
+.fc-body {
+  position: relative;
+  > tr > td {
+    border-top: 0;
+  }
+}
+
+//Appointment scheduling
+p-schedule {
+  position: relative;
+
+  .ui-widget-content {
+    border-left: 0px;
+  }
+
+  .fc-head-container {
+    border: none;
+  }
+
+  .overlay-On {
+
+    .appointmentCard {
+      &::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        opacity: 0.4;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+  }
+
+  // .fc-time-grid-event {
+  //   border: none !important;
+  //   border-radius: 10px;
+  //   box-shadow: 5px 5px 5px grey;
+  //   .fc-short {
+  //     font-size: inherit!important;
+  //   }
+  // }
+
+  .fc-toolbar.fc-header-toolbar {
+    background-color: transparent;
+    margin-bottom: 0;
+    color: rgb(190, 217, 233);
+    position: absolute;
+    z-index: 10;
+    top: 2%;
+    width: 70px;
+
+    .fc-prev-button, .fc-next-button {
+      background: #313c48;
+      border: none;
+      color: rgb(192, 214, 213);
+      margin-left: 0;
+      margin-right: 0;
+      border-radius: 0px;
+    }
+  }
+
+
+
+  .overlay {
+    background-color: black;
+    opacity: 0.3;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    margin-left: 55px;
+  }
+
+  .active {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+
+    .appointmentCard {
+      &::after {
+        opacity: 0 !important;
+      }
+    }
+  }
+}
+
+app-sidenav {
+  height: 100%;
+ }
+ 
+ app-appointments .content.ng-star-inserted {
+  overflow: hidden !important;
+}
+
+.k-list-optionlabel, .k-list .k-item {
+  padding: 0;
+}
+.k-list .k-item svg{
+  fill: #435A6B;
+}
+.k-list .k-item {
+  padding-bottom: 2px !important;
+}
+

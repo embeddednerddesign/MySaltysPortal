@@ -1,0 +1,43 @@
+<div class="calnav">
+    <div class="header">
+
+        <app-current-date></app-current-date>
+
+        <div class="navigation">
+            <!-- <div class="header-btn" (click)="goBackOneWeek()" inlineSVG="../../../assets/svg/chevron-double-left.svg"></div> -->
+            <div class="header-btn" (click)="goBackOneDay()" inlineSVG="../../../assets/svg/chevron-double-left.svg"></div>
+            <button class="today-btn" (click)="gotoToday()">TODAY</button>
+            <div class="header-btn" (click)="goForwardOneDay()" inlineSVG="../../../assets/svg/chevron-double-right.svg"></div>
+            <!-- <div class="header-btn" (click)="goForwardOneWeek()" inlineSVG="../../../assets/svg/chevron-double-right.svg"></div> -->
+            <div class="scroll-arrows">
+                <div class="icon" (click)="goBackOneMonth(true)" inlineSVG="../../../assets/svg/up-chevron-button.svg"></div>
+                <div class="icon" (click)="goForwardOneMonth(true)" inlineSVG="../../../assets/svg/chevron-sign-down.svg"></div>
+            </div>
+        </div>
+    </div>
+    <mat-calendar [startAt]="currentDate" [selected]="currentDate" #myCalendar1 (selectedChange)="selectedChange($event)" [dateFilter]="dateFilter"></mat-calendar>
+    <app-calnav-noheader #myCalendar2 [calendarNumber]='2' [company]="currentDataService.company" (changeDate)="selectedChange($event)"></app-calnav-noheader>
+    <app-calnav-noheader #myCalendar3 [calendarNumber]='3' [company]="currentDataService.company" (changeDate)="selectedChange($event)"></app-calnav-noheader>
+    <!-- <app-calnav-noheader #myCalendar4 [calendarNumber]='4' [company]="company" (changeDate)="selectedChange($event)"></app-calnav-noheader> -->
+
+    <!-- <div class="scroll-arrows">
+        <div class="icon" (click)="goBackOneMonth(true)" inlineSVG="../../../assets/svg/up-chevron-button.svg"></div>
+        <div class="icon" (click)="goForwardOneMonth(true)" inlineSVG="../../../assets/svg/chevron-sign-down.svg"></div>
+    </div>-->
+    <button class="calender-btn" (click)="scheduleViews()">
+        <img class="calender-btn-img icon" src="../../assets/svg/calendar.svg" alt="">
+        <span class="calender-btn-text">SCHEDULE VIEWS</span>
+    </button>
+    <button class="calender-btn">
+        <img class="calender-btn-img icon" src="../../assets/svg/list.svg" alt="">
+        <span class="calender-btn-text">CANCELLATION LIST</span>
+    </button>
+    <div class="toggle-group">
+        <mat-slide-toggle (change)="planningMode()">PLANNING</mat-slide-toggle>
+    </div>
+
+    <div class="settings">
+        <img class="icon" src="../../assets/svg/settings.svg" alt="">
+        <span class="settings-text">SCHEDULE SETTINGS</span>
+    </div>
+</div>

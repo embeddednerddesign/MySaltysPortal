@@ -1,0 +1,91 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<ngx-loading [show]="disableGrid" id="gridDisableDiv"></ngx-loading>
+
+<!-- <div id="tui-image-editor"></div> -->
+
+<div class="panel-flex-row">
+  <div class="panel-flex-column-1">
+    <div class="panel-flex-row">
+      <div class="column-header">Patient Photos</div>
+    </div>
+    <div class="panel-flex-column-thumbnails">
+      <div *ngFor="let photo of fullListOfPatientPhotos" class="thumbs-box">
+        <div class="panel-flex-row thumb-size" (click)="updateSelectedPhoto(photo)">
+          <img src={{photo}} alt="">
+        </div>
+      </div>
+    </div>
+    <div class="panel-flex-row">
+      <input class="hidden-input-button" type="file" capture="camera" accept="image/*" id="cameraInput" name="cameraInput" (change)="onFileSelected($event)">
+      <div class="schedNewCommButton">
+        <div class="schedNewCommButtonIcon"><i class="fa fa-plus"></i></div>
+        <label for="cameraInput" class="schedNewCommButtonText">Add Photos</label>
+      </div>
+    </div>
+    <div class="panel-flex-row">
+      <div class="schedNewCommButton">
+        <div class="schedNewCommButtonIcon"><i class="far fa-image"></i></div>
+        <div class="schedNewCommButtonText">view global photos</div>
+      </div>
+    </div>
+    <div class="panel-flex-row">
+      <div class="schedNewCommButton">
+        <div class="schedNewCommButtonIcon"><i class="fas fa-exchange-alt"></i></div>
+        <div class="schedNewCommButtonText">Compare photos</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-flex-column-2">
+    <div class="panel-flex-colum-full">
+      <div class="panel-flex-row">
+
+        <!-- <ngx-image-editor [config]="config" (close)="close($event)" (file)="getEditedFile($event)"></ngx-image-editor> -->
+        <!-- <div id="tui-image-editor"></div> -->
+        <div class="main-photo">
+          <img src={{currentlySelectedPhoto}} alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-flex-column-1 patient-photos">
+    <div class="panel-flex-column-full" [ngStyle]="{'background':'transparent','border':'none'}">
+      <div class="panel-flex-row">
+        <div class="column-header">Patient Photos</div>
+      </div>
+      <div class="panel-flex-column">
+        <div class="panel-flex-row">
+          <div class="nudge-icon"><i class="far fa-calendar-alt"></i></div>
+          <div class="field-content">January 15, 2018</div>
+        </div>
+      </div>
+      <div class="panel-flex-column">
+        <div class="panel-flex-row">
+          <div class="nudge-icon"><i class="far fa-book"></i></div>
+          <div class="field-content">Scar Healing Nicely</div>
+        </div>
+      </div>
+      <div class="panel-flex-column">
+        <div class="panel-flex-row">
+          <div class="nudge-icon"><i class="far fa-list"></i></div>
+          <div class="field-content">Annotations can go here...</div>
+        </div>
+      </div>
+      <div class="panel-flex-column">
+        <div class="panel-flex-row">
+          <div class="nudge-icon"><i class="far fa-tags"></i></div>
+          <div class="field-content">Face, Cheek, Nose</div>
+        </div>
+      </div>
+      <div class="panel-flex-row">
+        <div class="schedNewCommButton">
+          <div class="schedNewCommButtonIcon"><i class="fas fa-share-square"></i></div>
+          <div class="schedNewCommButtonText">Share Photo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p-overlayPanel #hoverPanel id="hoverPanel" [dismissable]="'false'">
+    Content
+  </p-overlayPanel>
+  <app-actionpanel></app-actionpanel>

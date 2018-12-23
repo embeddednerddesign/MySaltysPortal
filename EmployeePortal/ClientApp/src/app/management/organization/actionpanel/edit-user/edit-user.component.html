@@ -1,0 +1,139 @@
+<mat-expansion-panel id="edituser" [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{addOrEdit}} User
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input autocomplete="off"  matInput placeholder="First Name" class="capitalized" aria-label="First Name"
+        [(ngModel)]="editedUser.firstName" (change)="formatterService.textCapitalize(firstName)" [formControl]="firstName">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input autocomplete="off" matInput placeholder="Last Name" class="capitalized" aria-label="Last Name"
+        [(ngModel)]="editedUser.lastName" (change)="formatterService.textCapitalize(lastName)" [formControl]="lastName">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field *ngIf="addOrEdit === 'Add'" class="panel-flex-row-item">
+      <input autocomplete="off" matInput required placeholder="Enter password" type="password" aria-label="Password" [formControl]="password"
+        (change)="confirmPasswordMatch();updateSubmitButtonState()"
+        (focusout)="confirmPasswordMatch();updateSubmitButtonState()">
+      <mat-error *ngIf="password.invalid">Passwords do not match</mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="addOrEdit === 'Add'" class="panel-flex-row-item">
+      <input autocomplete="off" matInput required placeholder="Confirm password" type="password" aria-label="Password" [formControl]="passwordConfirm"
+        (change)="confirmPasswordMatch();updateSubmitButtonState()"
+        (focusout)="confirmPasswordMatch();updateSubmitButtonState()">
+      <mat-error *ngIf="passwordConfirm.invalid">Passwords do not match</mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="addOrEdit === 'Edit'" class="panel-flex-row-item">
+      <input autocomplete="off" matInput placeholder="Enter new password (optional)" type="password" aria-label="Password" [formControl]="password"
+        (change)="confirmPasswordMatch();updateSubmitButtonState()"
+        (focusout)="confirmPasswordMatch();updateSubmitButtonState()">
+      <mat-error *ngIf="password.invalid">Passwords do not match</mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="addOrEdit === 'Edit'" class="panel-flex-row-item">
+      <input autocomplete="off" matInput placeholder="Confirm password" type="password" aria-label="Password" [formControl]="passwordConfirm"
+        (change)="confirmPasswordMatch();updateSubmitButtonState()"
+        (focusout)="confirmPasswordMatch();updateSubmitButtonState()">
+      <mat-error *ngIf="passwordConfirm.invalid">Passwords do not match</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input autocomplete="off" matInput placeholder="Address 1" class="capitalized" aria-label="Address1" [(ngModel)]="editedUser.address.address1" [formControl]="addressAddress1"
+        (change)="formatterService.textCapitalize(addressAddress1)"
+        (focusout)="formatterService.textCapitalize(addressAddress1)">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input autocomplete="off" matInput placeholder="Address 2" class="capitalized" aria-label="Address2" [(ngModel)]="editedUser.address.address2" [formControl]="addressAddress2"
+        (change)="formatterService.textCapitalize(addressAddress2)"
+        (focusout)="formatterService.textCapitalize(addressAddress2)">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input autocomplete="off" matInput placeholder="City" class="capitalized" aria-label="City" [(ngModel)]="editedUser.address.city" [formControl]="addressCity"
+        (change)="formatterService.textCapitalize(addressCity)"
+        (focusout)="formatterService.textCapitalize(addressCity)">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select [(ngModel)]="editedUser.address.province" name="usStates">
+        <mat-option *ngFor="let provinceState of provincesAndStates" [value]="provinceState">
+          {{ provinceState }}
+        </mat-option>
+      </mat-select>
+      <mat-placeholder class="placeholder">{{editedUser.address.country == 'United States' ? 'State' : 'Province'}}</mat-placeholder>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select placeholder="Country" [(ngModel)]="editedUser.address.country" name="usStates" (change)="onChangeCountry()">
+        <mat-option *ngFor="let country of countriesOfTheWorld" [value]="country">
+          {{ country }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input autocomplete="off" matInput aria-label="Postal Code" class="uppercased" [(ngModel)]="editedUser.address.postalCode" [formControl]="addressPostalCode"
+        (change)="formatterService.textUppercase(addressPostalCode);updateSubmitButtonState()"
+        (focusout)="formatterService.textUppercase(addressPostalCode);updateSubmitButtonState()">
+      <mat-placeholder class="placeholder">{{editedUser.address.country == 'United States' ? 'Zip Code' : 'Postal Code'}}</mat-placeholder>
+      <mat-error *ngIf="addressPostalCode.invalid">{{editedUser.address.country == 'United States' ? 'Not a Valid Zip Code' : 'Not a Valid Postal Code'}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input autocomplete="off" matInput placeholder="Phone Number" aria-label="Phone Number" [(ngModel)]="editedUser.phoneNumber"
+        (change)="formatterService.formatPhoneNumber(phoneNumber);updateSubmitButtonState()" [formControl]="phoneNumber">
+      <mat-error *ngIf="phoneNumber.invalid">Not a Valid Phone #</mat-error>
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Email" aria-label="Email" [(ngModel)]="editedUser.email" [formControl]="email" (change)="updateSubmitButtonState()" >
+      <mat-error *ngIf="email.invalid">Not a Valid Email</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field id="userServiceProviderFormField" class="panel-flex-row-item">
+      <mat-select placeholder="Service Provider" [(ngModel)]="editedUser.serviceProvider" name="serviceProvider">
+        <mat-option *ngFor="let boolChoice of boolChoices" [value]="boolChoice == 'Yes' ? true : false">
+          {{ boolChoice }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input autocomplete="off" matInput placeholder="Avatar" aria-label="Avatar" [(ngModel)]="editedUser.avatar"
+            [formControl]="avatar" (click)="onAvatarSelectClick()">
+      <input id="avatarToUpload" type="file" style="display: none" (change)="onAvatarSelected($event)">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select placeholder="User Category" [(ngModel)]="editedUser.userCategoryId" name="usercategory">
+        <mat-option *ngFor="let userCat of userCategories" [value]="userCat.userCategoryId">
+          {{ userCat.categoryName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field id="usercanSetBreaksFormField" class="panel-flex-row-item">
+        <mat-select placeholder="Can Set Breaks" [(ngModel)]="editedUser.canSetBreaks" name="canSetBreaks">
+          <mat-option *ngFor="let boolChoice of boolChoices" [value]="boolChoice == 'Yes' ? true : false">
+            {{ boolChoice }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header [style.display]="'none'">
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <div>
+      <button mat-button class="btn half" (click)="updateUser()" [disabled]="submitButtonDisabledState">{{addOrEdit == 'Add' ? 'Add' : 'Update'}} User</button>
+      <button mat-button class="btn half" (click)="cancelUpdate()">Cancel</button>
+    </div>
+  </div>
+</mat-expansion-panel>

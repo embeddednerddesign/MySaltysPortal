@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" (tap)="onTap($event)">
+  <a class="navbar-brand" routerLink="/schedule"><div class="logo" [inlineSVG]="'/assets/svg/emily-logo-new.svg'"></div></a>
+  <div class="navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item check-in">
+        <div class="nav-link" (click)="patientCheckInClicked()">
+          <span class="fas fa-calendar-check"></span>
+        </div>
+      </li>
+      <li class="nav-item check-in top-nav-button">
+        <div class="nav-link" (click)="addPatient()">
+          <span class="far fa-user-plus"></span>
+        </div>
+      </li>
+      <li class="nav-item search-patients">
+        <span class="fa fa-search"></span>
+        <mat-form-field class="example-full-width">
+          <input (keydown.enter)="patientSelected(searchCtrl.value)" matInput placeholder="Type here to Search Patients..." aria-label="Search Patients" [matAutocomplete]="auto" [formControl]="searchCtrl">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.firstName + ' ' +  patient.lastName" (onSelectionChange)="patientSelected($event.source.value)">
+              <span>{{patient.firstName}} {{patient.lastName}}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item undo top-nav-button-disabled">
+        <div class="nav-link">
+          <span class="fas fa-reply-all"></span>
+        </div>
+      </li>
+      <li class="nav-item redo top-nav-button-disabled">
+        <div class="nav-link">
+          <span class="fas fa-share-all"></span>
+        </div>
+      </li>
+      <li class="nav-item help top-nav-button-disabled">
+        <span class="fa fa-question"></span>
+      </li>
+    </ul>
+  </div>
+</nav>

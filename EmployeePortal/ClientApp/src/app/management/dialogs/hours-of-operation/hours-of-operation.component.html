@@ -1,0 +1,133 @@
+<h1 mat-dialog-title>Hours of Operation</h1>
+<div mat-dialog-content>
+  <div class="closedColumn">
+    <div class="itemRow">
+      <label>Closed</label>
+    </div>
+
+    <div class="itemRow">
+      <mat-checkbox [(ngModel)]="buzzOn.sun.closed"></mat-checkbox>
+    </div>
+    <div class="itemRow">
+      <mat-checkbox [(ngModel)]="buzzOn.mon.closed"></mat-checkbox>
+    </div>
+    <div class="itemRow">
+      <mat-checkbox [(ngModel)]="buzzOn.tue.closed"></mat-checkbox>
+    </div>
+    <div class="itemRow">
+      <mat-checkbox [(ngModel)]="buzzOn.wed.closed"></mat-checkbox>
+    </div>
+    <div class="itemRow">
+      <mat-checkbox [(ngModel)]="buzzOn.thu.closed"></mat-checkbox>
+    </div>
+    <div class="itemRow">
+      <mat-checkbox [(ngModel)]="buzzOn.fri.closed"></mat-checkbox>
+    </div>
+    <div class="itemRow">
+      <mat-checkbox [(ngModel)]="buzzOn.sat.closed"></mat-checkbox>
+    </div>
+  </div>
+
+  <div class="dayOfWeekColumn">
+    <div class="itemRow">
+      <label>Day of Week</label>
+    </div>
+
+    <div class="itemRow">
+      <label>Sunday</label>
+    </div>
+    <div class="itemRow">
+      <label>Monday</label>
+    </div>
+    <div class="itemRow">
+      <label>Tuesday</label>
+    </div>
+    <div class="itemRow">
+      <label>Wednesday</label>
+    </div>
+    <div class="itemRow">
+      <label>Thursday</label>
+    </div>
+    <div class="itemRow">
+      <label>Friday</label>
+    </div>
+    <div class="itemRow">
+      <label for="startTime">Saturday</label>
+    </div>
+  </div>
+
+  <div class="startEndTimeColumn">
+    <div class="itemRow">
+      <label>Opening Time</label>
+    </div>
+
+    <div class="itemRow">
+      <kendo-timepicker name="startTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.sun.openTime" [(value)]="buzzOn.sun.openTime"
+        [disabled]="buzzOn.sun.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="startTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.mon.openTime" [(value)]="buzzOn.mon.openTime"
+        [disabled]="buzzOn.mon.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="startTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.tue.openTime" [(value)]="buzzOn.tue.openTime"
+        [disabled]="buzzOn.tue.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="startTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.wed.openTime" [(value)]="buzzOn.wed.openTime"
+        [disabled]="buzzOn.wed.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="startTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.thu.openTime" [(value)]="buzzOn.thu.openTime"
+        [disabled]="buzzOn.thu.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="startTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.fri.openTime" [(value)]="buzzOn.fri.openTime"
+        [disabled]="buzzOn.fri.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="startTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.sat.openTime" [(value)]="buzzOn.sat.openTime"
+        [disabled]="buzzOn.sat.closed"></kendo-timepicker>
+    </div>
+  </div>
+
+  <div class="startEndTimeColumn">
+    <div class="itemRow">
+      <label>Closing Time</label>
+    </div>
+
+    <div class="itemRow">
+      <kendo-timepicker name="endTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.sun.closeTime" [(value)]="buzzOn.sun.closeTime"
+        [disabled]="buzzOn.sun.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="endTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.mon.closeTime" [(value)]="buzzOn.mon.closeTime"
+        [disabled]="buzzOn.mon.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="endTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.tue.closeTime" [(value)]="buzzOn.tue.closeTime"
+        [disabled]="buzzOn.tue.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="endTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.wed.closeTime" [(value)]="buzzOn.wed.closeTime"
+        [disabled]="buzzOn.wed.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="endTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.thu.closeTime" [(value)]="buzzOn.thu.closeTime"
+        [disabled]="buzzOn.thu.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="endTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.fri.closeTime" [(value)]="buzzOn.fri.closeTime"
+        [disabled]="buzzOn.fri.closed"></kendo-timepicker>
+    </div>
+    <div class="itemRow">
+      <kendo-timepicker name="endTime" [steps]="{ minute: 5 }" [(ngModel)]="buzzOn.sat.closeTime" [(value)]="buzzOn.sat.closeTime"
+        [disabled]="buzzOn.sat.closed"></kendo-timepicker>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button (click)="save()" cdkFocusInitial>Set</button>
+</div>

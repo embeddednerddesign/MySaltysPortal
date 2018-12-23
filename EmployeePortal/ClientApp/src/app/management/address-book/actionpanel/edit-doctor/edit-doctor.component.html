@@ -1,0 +1,99 @@
+<mat-expansion-panel id="editdoctor" [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{addOrEdit}} Doctor
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Title" class="capitalized" aria-label="Title" [(ngModel)]="editedDoctor.proTitle" (change)="formatterService.textCapitalize(proTitle)" [formControl]="proTitle">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="First Name" class="capitalized" aria-label="First Name" [(ngModel)]="editedDoctor.firstName" (change)="formatterService.textCapitalize(firstName)" [formControl]="firstName">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Last Name" class="capitalized" aria-label="Last Name" [(ngModel)]="editedDoctor.lastName" (change)="formatterService.textCapitalize(lastName)" [formControl]="lastName">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Address 1" class="capitalized" aria-label="Address1" [(ngModel)]="editedDoctor.address.address1" (change)="formatterService.textCapitalize(addressAddress1)" [formControl]="addressAddress1">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Address 2" class="capitalized" aria-label="Address2" [(ngModel)]="editedDoctor.address.address2" (change)="formatterService.textCapitalize(addressAddress2)" [formControl]="addressAddress2">
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="City" class="capitalized" aria-label="City" [(ngModel)]="editedDoctor.address.city" (change)="formatterService.textCapitalize(addressCity)" [formControl]="addressCity">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select [(ngModel)]="editedDoctor.address.province" name="usStates">
+        <mat-option *ngFor="let provinceState of provincesAndStates" [value]="provinceState">
+          {{ provinceState }}
+        </mat-option>
+      </mat-select>
+      <mat-placeholder class="placeholder">{{editedDoctor.address.country == 'United States' ? 'State' : 'Province'}}</mat-placeholder>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select placeholder="Country" [(ngModel)]="editedDoctor.address.country" name="usStates" (change)="onChangeCountry()">
+        <mat-option *ngFor="let country of countriesOfTheWorld" [value]="country">
+          {{ country }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput class="uppercased" aria-label="Postal Code" [(ngModel)]="editedDoctor.address.postalCode" (change)="formatterService.textUppercase(addressPostalCode);updateSubmitButtonState()" [formControl]="addressPostalCode">
+      <mat-placeholder class="placeholder">{{editedDoctor.address.country == 'United States' ? 'Zip Code' : 'Postal Code'}}</mat-placeholder>
+      <mat-error *ngIf="addressPostalCode.invalid">{{editedDoctor.address.country == 'United States' ? 'Not a Valid Zip Code' : 'Not a Valid Postal Code'}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Phone Number" aria-label="Phone Number" [(ngModel)]="editedDoctor.phoneNumber" (change)="formatterService.formatPhoneNumber(phoneNumber);updateSubmitButtonState()" [formControl]="phoneNumber">
+      <mat-error *ngIf="phoneNumber.invalid">Not a Valid Phone #</mat-error>
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Fax Number" aria-label="Fax Number" [(ngModel)]="editedDoctor.faxNumber" (change)="formatterService.formatPhoneNumber(faxNumber);updateSubmitButtonState()" [formControl]="faxNumber">
+      <mat-error *ngIf="faxNumber.invalid">Not a Valid Fax #</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Email" aria-label="Email" [(ngModel)]="editedDoctor.email" [formControl]="email" (change)="updateSubmitButtonState()">
+      <mat-error *ngIf="email.invalid">Not a Valid Email</mat-error>
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <input matInput placeholder="Website" aria-label="Website" [(ngModel)]="editedDoctor.website" [formControl]="website">
+      <mat-error *ngIf="website.invalid">Not a Valid URL</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="panel-flex-row">
+    <mat-form-field id="hoursOfOperationInput" class="panel-flex-row-item">
+      <input matInput placeholder="Hours of Operation" (click)="openHoursOfOperationDialog()" aria-label="Hours of Operation" [(ngModel)]="editedDoctor.hoursOfOperation" [formControl]="hoursOfOperation">
+    </mat-form-field>
+    <mat-form-field class="panel-flex-row-item">
+      <mat-select placeholder="Specialty" [(ngModel)]="editedDoctor.specialty" name="specialty">
+        <mat-option *ngFor="let specialty of specialties" [value]="specialty">
+          {{ specialty }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header [style.display]="'none'">
+  </mat-expansion-panel-header>
+  <div class="panel-flex-row">
+    <div>
+      <button mat-button class="btn half" (click)="updateDoctor()" [disabled]="submitButtonDisabledState">{{addOrEdit == 'Add' ? 'Add' : 'Update'}} Doctor</button>
+      <button mat-button class="btn half" (click)="cancelUpdate()">Cancel</button>
+    </div>
+  </div>
+</mat-expansion-panel>

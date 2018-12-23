@@ -1,0 +1,296 @@
+:host {
+    min-width: 180px;
+    max-width: 180px;
+    height: calc(100vh - 70px);
+    background-color: #252F38;
+    display: flex;
+    flex-flow: column;
+    font-family: 'Lato', sans-serif;
+}
+
+.calnav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    // background-color: #252F38;
+    min-width: 180px;
+    max-width: 180px;
+    background-color: #475B6B;
+}
+
+:host /deep/ .mat-calendar-header {
+    display: none;
+}
+
+:host /deep/ .mat-calendar-class {
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+
+:host /deep/ .mat-calendar-body-selected {
+    background-color: #252F38;
+    color: white;
+}
+
+:host /deep/ .mat-calendar-body-today {
+    background-color: transparent;
+    border: none;
+    box-shadow: unset !important;
+    color: white;
+}
+
+:host /deep/ .mat-calendar-body-disabled > .mat-calendar-body-selected {
+    background-color: fade-out(#252F38, 0.6);
+}
+
+:host /deep/ .mat-calendar-body-today.mat-calendar-body-selected {
+    box-shadow: inset 0 0 0 1px #252F38;
+}
+
+:host /deep/ .mat-calendar-arrow {
+    border-top-color: white;
+}
+
+// The prev/next buttons need a bit more specificity to
+// avoid being overwritten by the .mat-icon-button.
+:host /deep/ .mat-datepicker-toggle,
+.mat-datepicker-popup .mat-calendar-next-button,
+.mat-datepicker-popup .mat-calendar-previous-button {
+    color: white;
+}
+
+:host /deep/ .mat-calendar-table-header {
+    color: white;
+}
+
+:host /deep/ .mat-calendar-table-header-divider::after {
+    background: #252F38
+}
+
+:host /deep/ .mat-calendar-body-label {
+    color: white;
+}
+
+:host /deep/ .mat-calendar-body-cell-content {
+    color: white;
+    border-color: transparent;
+}
+
+:host /deep/ .mat-calendar-body-disabled > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+    color: white;
+}
+
+:host /deep/ .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover,
+.cdk-keyboard-focused .mat-calendar-body-active,
+.cdk-program-focused .mat-calendar-body-active {
+    & > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+        background-color: #252F38;
+    }
+}
+
+:host /deep/ .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+    // Note: though it's not text, the border is a hint about the fact that this is today's date,
+    // so we use the hint color.
+    border-color: white;
+}
+
+:host /deep/ .mat-calendar-body-disabled > .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+    border-color: fade-out(white, 0.2);
+}
+
+:host /deep/ .mat-datepicker-content {
+    background-color: #252F38;
+    color: white;
+}
+
+:host /deep/ .mat-datepicker-toggle-active {
+    color: white;
+
+    &.mat-accent {
+        color: white;
+    }
+
+    &.mat-warn {
+        color: white
+    }
+}
+
+:host /deep/ .mat-calendar {
+    font-family: 'Lato', sans-serif;
+}
+
+:host /deep/ .mat-calendar-body {
+    font-size: 13px;
+}
+
+:host /deep/ .mat-calendar-body-selected {
+    background-color: #B1D100;
+    color:#000;
+    border-color:#B1D100 !important;
+}
+
+:host /deep/ .mat-calendar-body-label {
+    font-size: 18px;
+}
+
+:host /deep/ .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected){
+    background-color: #c2ca99 !important;
+    color: #000;
+}
+
+:host /deep/ .mat-calendar-controls{
+    margin: 0px !important;
+    background-color: #2F3B47;
+    padding: 5px;
+}
+
+:host /deep/ .mat-calendar-controls > .mat-calendar-period-button.mat-button{
+    display: none;
+}
+
+:host /deep/ .mat-calendar-header {
+    padding: 0px 0px 16px 0px !important;
+}
+
+:host /deep/ .content.date-picker-visible{
+    background-color: #B1D100;
+}
+
+.calender-btn {
+    background-color: #2F3B47;
+    color: #fff;
+    width: 160px;
+    margin: 0px 10px;
+    margin-top: 10px;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.calender-btn-text {
+    padding-left: 7px;
+    font-size: 12px
+}
+
+.calender-btn-img {
+    margin-top: -2px;
+}
+
+.settings-text {
+    color: #758795;
+    font-size: 12px;
+    padding-left: 5px;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+:host /deep/ .icon svg {
+    height: 20px;
+    width: 20px;
+}
+
+.settings{
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 13px;
+}
+
+.scroll-arrows{
+    text-align: right;
+}
+
+:host /deep/ .mat-button-wrapper{
+    color:#B1D100;
+}
+.header {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+
+}
+.header .navigation > div {
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
+.header .navigation {
+    text-align: center;
+    height: 25px;
+    margin: 0px 6px 10px 6px;
+}
+
+.header-btn {
+    margin: 0px 0px 0px ;
+    cursor: pointer;
+}
+
+:host /deep/ .header svg {
+    height: 22px;
+    fill: #E5ECEE;
+    padding-top:.2em;
+}
+.header .today-btn {
+    background: transparent;
+    color: white;
+    text-transform: uppercase;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin: 0 .5em;
+    display: inline-block;
+    padding: 0;
+    height:100%;
+    outline: 0;
+}
+.header .day-of-week {
+    text-align: center;
+    text-transform: uppercase;
+    color: #A8C709;
+    font-size: 12px;
+}
+
+.header .selected-date {
+    text-align: center;
+    color: #E5ECEE;
+    font-size: 14px;
+}
+.header {
+    background-color: #2F3B47;
+}
+
+@media (max-width: 991px) {
+  app-current-date {
+    display: none;
+  }
+}
+
+.header {
+    background-color: #2F3B47;
+}
+
+
+.toggle-group{
+    position: relative;
+    height: 27px;
+    left: 30px;
+    top: 6px;
+    font-size: 12px;
+    color: #fff;
+}
+
+:host /deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #B1D100;
+}
+:host /deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb{
+    background-color: #B1D100;
+
+}

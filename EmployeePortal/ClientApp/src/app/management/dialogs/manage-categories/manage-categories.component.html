@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{title}}</h1>
+
+<div mat-dialog-content #content>
+  <app-category-item *ngFor="let item of list" [data]="item" [categoryType]="categoryType" (deleted)="remove(item.id)"></app-category-item>
+</div>
+
+<div mat-dialog-actions class="add-category-div">
+  <button mat-button class="add-category-button" (click)="addCategory()">Add Category</button>
+  <button mat-button (click)="close()">Cancel</button>
+</div>

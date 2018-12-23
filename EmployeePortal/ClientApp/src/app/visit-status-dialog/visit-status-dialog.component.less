@@ -1,0 +1,51 @@
+::ng-deep .billing-status-icon svg {
+    height: 20px;
+}
+::ng-deep .billing-status-icon.unconfirmed svg {
+    fill: #757F88;
+}
+::ng-deep .billing-status-icon.confirmed svg {
+    fill: #016DBF;
+}
+::ng-deep .billing-status-icon.no-show svg {
+    fill: #DA5140;
+}
+::ng-deep .billing-status-icon.checked-in svg {
+    fill: #BED82A;
+}
+
+ul {
+    padding-left: 0;
+}
+
+li {
+    list-style: none;
+    cursor: pointer;
+    padding: 4px 2px;
+    display: inline-block;
+}
+
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+    padding-bottom: 0.25em;
+}
+
+.label {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 1em;
+}
+
+:host /deep/ .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #5B7381;
+}
+
+:host /deep/ .mat-checkbox-layout {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+:host /deep/ .mat-dialog-actions {
+  justify-content: center;
+}

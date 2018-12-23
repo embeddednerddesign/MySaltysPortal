@@ -1,0 +1,10 @@
+<ngx-loading [show]="masterOverlayEnabled" id="overlayDisableDiv"></ngx-loading>
+
+<app-topnav></app-topnav>
+<app-sidenav [ngClass]="{ 'sideNavCollapsed': !sideNavExpanded }"></app-sidenav>
+<app-viewer [ngClass]="{ 'sideNavCollapsed': !sideNavExpanded }"></app-viewer>
+
+<!-- <p-overlayPanel #hoverPanel id="hoverPanel" [dismissable]="'false'">
+    Content
+  </p-overlayPanel>
+<app-actionpanel></app-actionpanel> -->
