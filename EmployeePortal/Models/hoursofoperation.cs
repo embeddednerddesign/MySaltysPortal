@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 
-namespace EmilyEMRVS.Models
+namespace EmployeePortal.Models
 {
     public class HoursOfOperation {
         public int hoursOfOperationId { get; set; }

@@ -1,7 +1,7 @@
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 using System.Collections.Generic;
 
-namespace EmilyEMRVS.Models
+namespace EmployeePortal.Models
 {
     public class ClinicProduct {
         public int ClinicProductId { get; set; }

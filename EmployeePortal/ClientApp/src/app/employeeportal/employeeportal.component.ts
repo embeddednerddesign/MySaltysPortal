@@ -4,11 +4,11 @@ import { NavStateService } from '../services/navstate.service';
 import { MasterOverlayService } from '../services/actionpanel.service';
 
 @Component({
-  selector: 'app-emily',
-  templateUrl: './emily.component.html',
-  styleUrls: ['./emily.component.less']
+  selector: 'app-employeeportal',
+  templateUrl: './employeeportal.component.html',
+  styleUrls: ['./employeeportal.component.less']
 })
-export class EmilyComponent implements OnInit, OnDestroy {
+export class EmployeePortalComponent implements OnInit, OnDestroy {
 
   unsub: Subject<void> = new Subject<void>();
   sideNavExpanded: boolean;

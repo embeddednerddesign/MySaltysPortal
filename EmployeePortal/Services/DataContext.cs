@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace EmilyEMRVS
+namespace EmployeePortal
 {
     public class DataContext : IdentityDbContext<User>
     {

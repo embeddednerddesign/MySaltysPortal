@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EmilyEMRVS;
-using EmilyEMRVS.Models;
-using static EmilyEMRVS.Lib.Fun;
+using EmployeePortal;
+using EmployeePortal.Models;
+using static EmployeePortal.Lib.Fun;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Net.Http.Headers;
 
-namespace EmilyEMRVS.Controllers
+namespace EmployeePortal.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]

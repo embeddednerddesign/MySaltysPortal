@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 using Newtonsoft.Json;
 
-namespace EmilyEMRVS.Models
+namespace EmployeePortal.Models
 {
    
     public class Appointment {

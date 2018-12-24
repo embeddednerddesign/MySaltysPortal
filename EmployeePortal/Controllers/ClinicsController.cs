@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace EmilyEMRVS.Controllers
+namespace EmployeePortal.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]

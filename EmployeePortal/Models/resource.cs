@@ -1,6 +1,6 @@
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 
-namespace EmilyEMRVS.Models
+namespace EmployeePortal.Models
 {
     public class Resource {
         public int ResourceId { get; set; }

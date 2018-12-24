@@ -38,7 +38,7 @@ import { EditPackageComponent } from './management/catalogue/actionpanel/edit-pa
 import { EditProductComponent } from './management/catalogue/actionpanel/edit-product/edit-product.component';
 import { EditResourceComponent } from './management/organization/actionpanel/edit-resource/edit-resource.component';
 import { EditUserComponent } from './management/organization/actionpanel/edit-user/edit-user.component';
-import { EmilyComponent } from './emily/emily.component';
+import { EmployeePortalComponent } from './employeeportal/employeeportal.component';
 import { AuthGuard } from './app.auth.guard';
 import { AddressBookDoctorsComponent } from './management/address-book/address-book-doctors/address-book-doctors.component';
 import { EditDoctorComponent } from './management/address-book/actionpanel/edit-doctor/edit-doctor.component';
@@ -117,7 +117,7 @@ const appRoutes: Routes = [
   { path: '',  redirectTo: 'schedule', pathMatch: 'full' },
   {
     path: '',
-    component: EmilyComponent,
+    component: EmployeePortalComponent,
     children: [
       {
         path: 'schedule',

@@ -24,7 +24,7 @@ if (environment.hmr) {
 } else {
   document.addEventListener('DOMContentLoaded', () => {
     bootstrap()
-      .then(() => console.log(`Emily EMR is running.`))
+      .then(() => console.log(`Employee Portal is running.`))
       .catch(err => console.error(err));
   });
 }

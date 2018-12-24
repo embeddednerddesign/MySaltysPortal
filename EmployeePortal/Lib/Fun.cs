@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmilyEMRVS.Lib
+namespace EmployeePortal.Lib
 {
     public static class Fun
     {

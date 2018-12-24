@@ -1,9 +1,9 @@
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
 
-namespace EmilyEMRVS.Models
+namespace EmployeePortal.Models
 {
     public class Visit {
         

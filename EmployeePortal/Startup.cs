@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,7 +22,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace EmilyEMRVS
+namespace EmployeePortal
 {
     public class Startup
     {
@@ -76,7 +76,7 @@ namespace EmilyEMRVS
             services.Configure<JwtSettings>(Configuration.GetSection("JWT"));
             //services.AddSwaggerGen(c =>
             //{
-            //    c.SwaggerDoc("v1", new Info { Title = "EmilyEMRAPI", Version = "v1" });
+            //    c.SwaggerDoc("v1", new Info { Title = "EmployeePortalAPI", Version = "v1" });
             //});
 
             // In production, the Angular files will be served from this directory
@@ -135,7 +135,7 @@ namespace EmilyEMRVS
             //// specifying the Swagger JSON endpoint.
             //app.UseSwaggerUI(c =>
             //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "EmilyEMRAPI V1");
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "EmployeePortalAPI V1");
             //});
             
             using (var serviceScope = app.ApplicationServices.CreateScope())

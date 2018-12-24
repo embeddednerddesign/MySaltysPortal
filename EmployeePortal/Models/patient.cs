@@ -1,8 +1,8 @@
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 using System;
 using System.Collections.Generic;
 
-namespace EmilyEMRVS.Models
+namespace EmployeePortal.Models
 {
     public class Patient {
         public int PatientId { get; set; }

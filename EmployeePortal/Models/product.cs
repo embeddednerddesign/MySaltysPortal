@@ -1,8 +1,8 @@
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace EmilyEMRVS.Models
+namespace EmployeePortal.Models
 {
     public class Product {
 

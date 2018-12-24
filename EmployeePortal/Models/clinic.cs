@@ -1,8 +1,8 @@
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace EmilyEMRVS.Models
+namespace EmployeePortal.Models
 {
     public class Clinic {
 

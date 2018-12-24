@@ -1,8 +1,8 @@
-using EmilyEMRVS.Models;
+using EmployeePortal.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
-namespace EmilyEMRVS.Models
+namespace EmployeePortal.Models
 {
     public class User: IdentityUser {
         // public int UserId { get; set; }

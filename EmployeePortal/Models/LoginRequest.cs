@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmilyEMRVS.Models
+namespace EmployeePortal.Models
 {
     public class LoginRequest
     {

@@ -129,7 +129,7 @@ import { EditProductComponent } from './management/catalogue/actionpanel/edit-pr
 import { EditResourceComponent } from './management/organization/actionpanel/edit-resource/edit-resource.component';
 import { EditUserComponent } from './management/organization/actionpanel/edit-user/edit-user.component';
 import { IntlModule } from '@progress/kendo-angular-intl';
-import { EmilyComponent } from './emily/emily.component';
+import { EmployeePortalComponent } from './employeeportal/employeeportal.component';
 import { AuthGuard } from './app.auth.guard';
 import { CancelVisitDialogComponent } from './schedule/appointments/actionpanel/cancel-visit-dialog/cancel-visit-dialog.component';
 import { ConfirmDeleteDialogComponent } from './management/dialogs/confirm-delete/confirm-delete.component';
@@ -238,7 +238,7 @@ import { NgxImageEditorModule } from 'ngx-image-editor';
     DragMoveDirective,
     CreateVisitComponent,
     AuthComponent,
-    EmilyComponent,
+    EmployeePortalComponent,
     CancelVisitDialogComponent,
     CancelVisitComponent,
     ConfirmDeleteDialogComponent,
