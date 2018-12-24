@@ -257,18 +257,12 @@ constructor(private usersService: UsersService,
       firstName: '',
       lastName: '',
       avatar: '',
-      // password: '',
+      role: 'staff',
       phoneNumber: '',
+      // password: '',
       email: '',
       // addressId: address.id,
-      address: address,
-      clinics: null,
-      canSetBreaks: false,
-      userCategory: this.userCategories[0],
-      userCategoryId: this.userCategories[0].userCategoryId,
-      // roles: Role[];
-      // groups: Group[];
-      serviceProvider: false
+      address: address
     };
     return theuser;
   }

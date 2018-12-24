@@ -97,34 +97,11 @@
     </mat-form-field>
   </div>
   <div class="panel-flex-row">
-    <mat-form-field id="userServiceProviderFormField" class="panel-flex-row-item">
-      <mat-select placeholder="Service Provider" [(ngModel)]="editedUser.serviceProvider" name="serviceProvider">
-        <mat-option *ngFor="let boolChoice of boolChoices" [value]="boolChoice == 'Yes' ? true : false">
-          {{ boolChoice }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
     <mat-form-field class="panel-flex-row-item">
       <input autocomplete="off" matInput placeholder="Avatar" aria-label="Avatar" [(ngModel)]="editedUser.avatar"
             [formControl]="avatar" (click)="onAvatarSelectClick()">
       <input id="avatarToUpload" type="file" style="display: none" (change)="onAvatarSelected($event)">
     </mat-form-field>
-  </div>
-  <div class="panel-flex-row">
-    <mat-form-field class="panel-flex-row-item">
-      <mat-select placeholder="User Category" [(ngModel)]="editedUser.userCategoryId" name="usercategory">
-        <mat-option *ngFor="let userCat of userCategories" [value]="userCat.userCategoryId">
-          {{ userCat.categoryName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field id="usercanSetBreaksFormField" class="panel-flex-row-item">
-        <mat-select placeholder="Can Set Breaks" [(ngModel)]="editedUser.canSetBreaks" name="canSetBreaks">
-          <mat-option *ngFor="let boolChoice of boolChoices" [value]="boolChoice == 'Yes' ? true : false">
-            {{ boolChoice }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
   </div>
 </mat-expansion-panel>
 <mat-expansion-panel [expanded]="true">

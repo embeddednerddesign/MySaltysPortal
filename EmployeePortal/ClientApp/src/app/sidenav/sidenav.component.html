@@ -20,7 +20,7 @@
       <!-- <li class="nav-item no-parent" routerLinkActive="active">
         <a class="nav-link" routerLink="/gallery"><i class="fas fa-images"></i><span>Gallery</span></a>
       </li> -->
-      <li class="nav-item" [ngClass]="{ 'active': adminOpen }">
+      <li *ngIf="loggedInUserRole === 'admin'" class="nav-item">
         <a class="nav-link" (clickOutside)="closeSubMenu()" (click)="organizationClick()"><i class="fa fa-cog"></i><span>Management</span></a>
       </li>
       <!-- <div class="sub-menu-panel" [ngClass]="{ 'inactive': !adminOpen }">

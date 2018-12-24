@@ -20,12 +20,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   loggedInUserName = '';
   loggedInUserAvatar = '';
+  loggedInUserRole = '';
 
   unsub: Subject<void> = new Subject<void>();
 
   constructor(private authService: AuthService,
               private userService: UsersService,
-              private navStateService: NavStateService,
               private masterOverlayService: MasterOverlayService,
               private patientService: PatientService,
               private route: ActivatedRoute,
@@ -34,10 +34,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loggedInUserName = this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName;
     this.loggedInUserAvatar = 'assets/Avatars/' + this.userService.loggedInUser.avatar;
+    this.loggedInUserRole = this.userService.loggedInUser.role;
 
     this.userService.loggedInUserUpdated$.takeUntil(this.unsub).subscribe(u => {
       this.loggedInUserName = this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName;
       this.loggedInUserAvatar = 'assets/Avatars/' + this.userService.loggedInUser.avatar;
+      this.loggedInUserRole = this.userService.loggedInUser.role;
     });
   }
 

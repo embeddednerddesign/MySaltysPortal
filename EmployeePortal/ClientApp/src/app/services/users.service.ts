@@ -16,6 +16,7 @@ export class UsersService {
     firstName: '',
     lastName: '',
     avatar: '',
+    role: 'staff',
     phoneNumber: '',
     email: '',
     address: {
@@ -25,15 +26,7 @@ export class UsersService {
       province: 'British Columbia',
       country: 'Canada',
       postalCode: ''
-    },
-    clinics: [],
-    userCategoryId: 0,
-    userCategory: {
-      userCategoryId: 0,
-      categoryName: ''
-    },
-    serviceProvider: false,
-    canSetBreaks: false,
+    }
   };
 
   constructor(private http: HttpClient) { }

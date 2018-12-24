@@ -7,16 +7,10 @@ export interface User {
     firstName: string;
     lastName: string;
     avatar: string;
-    // password: string;
+    role: string;
     phoneNumber: string;
+    // password: string;
     email: string;
     // addressId: number;
     address: Address;
-    clinics: Clinic[];
-    // roles: Role[];
-    // groups: Group[];
-    userCategoryId: number;
-    userCategory: UserCategory;
-    serviceProvider: boolean;
-    canSetBreaks: boolean;
 }

@@ -46,17 +46,6 @@
 <kendo-grid-column field="avatar" title="Avatar" width="125px"></kendo-grid-column>
 <kendo-grid-column field="phoneNumber" title="Phone #" width="125px"></kendo-grid-column>
 <kendo-grid-column field="email" title="Email" width="125px"></kendo-grid-column>
-<kendo-grid-column field="userCategory.categoryName" title="User Category" width="125px"></kendo-grid-column>
-<kendo-grid-column field="serviceProvider" title="Service Provider" width="85px">
-    <ng-template kendoGridCellTemplate let-dataItem>
-    {{dataItem.serviceProvider ? 'Yes' : 'No'}}
-  </ng-template>
-</kendo-grid-column>
-<kendo-grid-column field="canSetBreaks" title="Can Set Breaks" width="85px">
-    <ng-template kendoGridCellTemplate let-dataItem>
-    {{dataItem.canSetBreaks ? 'Yes' : 'No'}}
-  </ng-template>
-</kendo-grid-column>
 <kendo-grid-command-column title="Actions" width="100px">
   <ng-template kendoGridCellTemplate let-isNew="isNew">
     <button kendoGridEditCommand iconClass="fal fa-edit" style="background: none; border: none; height: 100%; font-size: 20px"></button>

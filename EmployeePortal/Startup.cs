@@ -425,24 +425,13 @@ namespace EmployeePortal
                     FirstName = "Donovan",
                     LastName = "Rogall",
                     Avatar = "avatar",
+                    Role = "admin",
                     PhoneNumber = "555-555-5555",
                     Email = "email@email.com",
                     UserName = "email@email.com",
                     AddressId = context.Addresses.FirstOrDefault().AddressId,
-                    UserCategory = context.UserCategories.FirstOrDefault(),
-                    ServiceProvider = false
                 };
                 var result = await userManagerService.CreateAsync(user, "password123");
-            }
-            else
-            {
-                foreach (User u in context.Users)
-                {
-                    if (u.UserCategoryId == null)
-                    {
-                        u.UserCategory = context.UserCategories.FirstOrDefault();
-                    }
-                }
             }
 
             if (context.Staff.Count() == 0)

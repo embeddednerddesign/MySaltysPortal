@@ -107,18 +107,13 @@ export class OrgUsersComponent implements OnInit {
           firstName: docData.firstName,
           lastName: docData.lastName,
           avatar: docData.avatar,
+          role: docData.role,
           // password: docData.password,
           phoneNumber: docData.phoneNumber,
           email: docData.email,
+
           // addressId: docData.addressId,
           address: docData.address,
-          clinics: docData.clinics,
-          userCategory: docData.userCategory,
-          userCategoryId: docData.userCategoryId,
-          // roles: Role[];
-          // groups: Group[];
-          serviceProvider: docData.serviceProvider,
-          canSetBreaks: docData.canSetBreaks
         };
         this.users.push(pushItem);
       });
@@ -171,19 +166,12 @@ export class OrgUsersComponent implements OnInit {
           firstName: dataItem.firstName,
           lastName: dataItem.lastName,
           avatar: dataItem.avatar,
+          role: dataItem.role,
           password: dataItem.password,
           phoneNumber: dataItem.phoneNumber,
           email: dataItem.email,
           // addressId: dataItem.addressId,
           address: dataItem.address,
-          clinics: dataItem.clinics,
-          userCategory: dataItem.userCategory,
-          userCategoryId: dataItem.userCategoryId,
-          // roles: Role[];
-          // groups: Group[];
-          serviceProvider: dataItem.serviceProvider,
-          canSetBreaks: dataItem.canSetBreaks
-
         };
         this.usersService.removeUser(dataItemToRemove).subscribe(() => {
           this.refreshData();

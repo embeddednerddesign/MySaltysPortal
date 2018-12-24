@@ -37,7 +37,7 @@ namespace EmployeePortal.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            var users = await _context.Users.Include(u => u.Address).Include(u => u.UserCategory).ToListAsync();
+            var users = await _context.Users.Include(u => u.Address).ToListAsync();
             return users;
                 
         }
@@ -46,7 +46,7 @@ namespace EmployeePortal.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUser([FromRoute] string id)
         {
-            var user = await _context.Users.Include(u => u.Address).Include(u => u.UserCategory).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _context.Users.Include(u => u.Address).FirstOrDefaultAsync(u => u.Id == id);
 
             return Ok(user);
 
@@ -81,11 +81,9 @@ namespace EmployeePortal.Controllers
                 userToUpdate.FirstName = user.FirstName;
                 userToUpdate.LastName = user.LastName;
                 userToUpdate.PhoneNumber = user.PhoneNumber;
+                userToUpdate.Role = user.Role;
                 userToUpdate.Email = user.Email;
-                userToUpdate.ServiceProvider = user.ServiceProvider;
                 userToUpdate.Avatar = user.Avatar;
-                userToUpdate.UserCategoryId = user.UserCategoryId;
-                userToUpdate.CanSetBreaks = user.CanSetBreaks;
                 var result = await _userManager.UpdateAsync(userToUpdate);
                 return Ok(user);
             }
@@ -135,12 +133,11 @@ namespace EmployeePortal.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Avatar = user.Avatar,
+                Role = user.Role,
                 PhoneNumber = user.PhoneNumber,
                 Email = user.Email,
                 UserName = user.Email,
                 AddressId = user.Address.AddressId,
-                UserCategoryId = user.UserCategoryId,
-                ServiceProvider = user.ServiceProvider
             };
 
             var result = await _userManager.CreateAsync(userToAdd, password);
