@@ -1,41 +1,37 @@
 
-<div class="sidenav" [ngClass]="{ 'sideNavCollapsed': !sideNavExpanded }">
+<div class="sidenav">
   <div class="profile">
     <div class="img-container">
         <img class="img-avatar" src={{loggedInUserAvatar}} alt="">
     </div>
-    <div [ngClass]="{ 'inactive': !sideNavExpanded }" class="info">
+    <div class="info">
       <h4>{{loggedInUserName}}</h4>
-      <h5><a>Messenger</a><span class="divider">|</span><a class="logout-link" (click)="logout()">Log Out</a></h5>
-    </div>
-    <div [ngClass]="{ 'inactive': sideNavExpanded }" class="info">
-      <h5 class="logout-link-collapsed"><a class="logout-link" (click)="logout()">Log Out</a></h5>
+      <h5><a class="logout-link" (click)="logout()">Log Out</a></h5>
     </div>
   </div>
   <div class="navbar">
     <ul class="nav flex-column">
       <li class="nav-item no-parent" routerLinkActive="active">
-          <a class="nav-link" routerLink="/schedule"><i class="fa fa-home"></i><span [ngClass]="{ 'inactive': !sideNavExpanded }">Schedule</span></a>
+          <a class="nav-link" routerLink="/home"><i class="fa fa-home"></i><span >Home</span></a>
       </li>
       <li class="nav-item no-parent" routerLinkActive="active">
-        <a class="nav-link" routerLink="/nudges"><i class="fa fa-list"></i><span [ngClass]="{ 'inactive': !sideNavExpanded }">Nudges</span></a>
+        <a class="nav-link" routerLink="/schedule"><i class="fa fa-calendar"></i><span>Schedule</span></a>
       </li>
-      <li class="nav-item no-parent" routerLinkActive="active">
-        <a class="nav-link" routerLink="/gallery"><i class="fas fa-images"></i><span [ngClass]="{ 'inactive': !sideNavExpanded }">Gallery</span></a>
-    </li>
-      <li class="nav-item" [ngClass]="{ 'active': adminOpen }"><a class="nav-link" (clickOutside)="closeSubMenu()" (click)="adminClick()"><i class="fa fa-cog"></i><span [ngClass]="{ 'inactive': !sideNavExpanded }">Management</span></a></li>
-        <div class="sub-menu-panel" [ngClass]="{ 'inactive': !adminOpen }">
-          <li class="sub-menu-item" [ngClass]="{ 'inactive': !adminOpen }" routerLinkActive="active"><p class="top-item">&#9664;</p><a (click)="addressBookClick()">Address Book</a></li>
-          <li class="sub-menu-item" [ngClass]="{ 'inactive': !adminOpen }" routerLinkActive="active"><a (click)="catalogueClick()">Catalogue</a></li>
-          <li class="sub-menu-item" [ngClass]="{ 'inactive': !adminOpen }" routerLinkActive="active"><a (click)="communicationsClick()">Communications</a></li>
-          <li class="sub-menu-item" [ngClass]="{ 'inactive': !adminOpen }" routerLinkActive="active"><a (click)="billingClick()">Billing</a></li>
-          <li class="sub-menu-item" [ngClass]="{ 'inactive': !adminOpen }" routerLinkActive="active"><a (click)="organizationClick()">Organization</a></li>
-        </div>
+      <!-- <li class="nav-item no-parent" routerLinkActive="active">
+        <a class="nav-link" routerLink="/gallery"><i class="fas fa-images"></i><span>Gallery</span></a>
+      </li> -->
+      <li class="nav-item" [ngClass]="{ 'active': adminOpen }">
+        <a class="nav-link" (clickOutside)="closeSubMenu()" (click)="organizationClick()"><i class="fa fa-cog"></i><span>Management</span></a>
+      </li>
+      <!-- <div class="sub-menu-panel" [ngClass]="{ 'inactive': !adminOpen }">
+        <li class="sub-menu-item" [ngClass]="{ 'inactive': !adminOpen }" routerLinkActive="active"><p class="top-item">&#9664;</p><a (click)="addressBookClick()">Address Book</a></li>
+        <li class="sub-menu-item" [ngClass]="{ 'inactive': !adminOpen }" routerLinkActive="active"><a (click)="catalogueClick()">Catalogue</a></li>
+        <li class="sub-menu-item" [ngClass]="{ 'inactive': !adminOpen }" routerLinkActive="active"><a (click)="communicationsClick()">Communications</a></li>
+        <li class="sub-menu-item" [ngClass]="{ 'inactive': !adminOpen }" routerLinkActive="active"><a (click)="billingClick()">Billing</a></li>
+        <li class="sub-menu-item" [ngClass]="{ 'inactive': !adminOpen }" routerLinkActive="active"><a (click)="organizationClick()">Organization</a></li>
+      </div> -->
     </ul>
     <hr/>
-    <app-quick-links></app-quick-links>
-  </div>
-  <div class="expand-control" [ngClass]="{ 'sideNavCollapsed': !sideNavExpanded }" (click)="sideNavExpandClick()">
-    <span class="fal" [class.fa-chevron-double-left]="sideNavExpanded" [class.fa-chevron-double-right]="!sideNavExpanded"></span>
+    <!-- <app-quick-links></app-quick-links> -->
   </div>
 </div>

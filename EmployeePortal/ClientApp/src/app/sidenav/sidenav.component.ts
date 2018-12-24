@@ -18,8 +18,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   scheduleOpen = false;
 
-  sideNavExpanded = false;
-
   loggedInUserName = '';
   loggedInUserAvatar = '';
 
@@ -41,7 +39,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
       this.loggedInUserName = this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName;
       this.loggedInUserAvatar = 'assets/Avatars/' + this.userService.loggedInUser.avatar;
     });
-
   }
 
   ngOnDestroy() {
@@ -82,11 +79,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.router.navigate(['/management/organization']);
   }
 
-  sideNavExpandClick() {
-    this.sideNavExpanded = !this.sideNavExpanded;
-    this.navStateService.sideNavExpandState(this.sideNavExpanded);
-  }
-
   addPatient() {
     this.patientService.editPatientSourceURL = this.router.url;
     this.masterOverlayService.masterOverlayState(true);
@@ -96,7 +88,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   openPatientPanel() {
     // this.masterOverlayService.masterOverlayState(true);
     // this.router.navigate([this.router.url, { outlets: {'action-panel': ['patient', '_']}}]);
-    this.router.navigate(['/patient'])
+    this.router.navigate(['/patient']);
   }
 
   logout() {

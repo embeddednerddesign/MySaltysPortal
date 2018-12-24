@@ -5,14 +5,14 @@
     left: 0;
     height: 70px !important;
     font-family: 'Lato', sans-serif;
-    border-bottom: 2px solid #44637D;
+    border-bottom: 2px solid #33353e;
     padding-right: 0;
     padding-left: 0;
 }
 
 .navbar .navbar-brand {
-    background-color: #1F262D;
-    color: #A3C104;
+    background-color: #DF4931;
+    color: #33353e;
     padding: 0em;
     font-size: 28px;
     margin-right: 0;
@@ -20,13 +20,14 @@
 
 .navbar-brand .logo {
     padding-top: 0px;
-    width: 275px;
+    width: 240px;
     height: 68px;
 }
 
-:host /deep/ .logo svg {
-    width: 100%;
+:host /deep/ .logo img {
+    width: auto;
     height: 100%;
+    max-height: 68px;
 }
 
 .navbar-nav {
@@ -43,41 +44,6 @@
     &:hover {
         cursor: not-allowed;
     }
-}
-
-.check-in {
-    width: 3.5em;
-    background-color: #2A353F;
-    padding-top: 0.7em;
-    text-align: center;
-    cursor: pointer;
-}
-
-.undo {
-    padding-left: 1em;
-    background-color: #2A353F;
-    padding-top: 0.7em;
-
-    & span {
-        color: lightblue !important;
-    }
-}
-
-.redo {
-    background-color: #2A353F;
-    padding-top: 0.7em;
-
-    & span {
-        color: lightblue !important;
-    }
-}
-
-.reminders {
-    width: 4em;
-    background-color: #2A353F;
-    padding-top: 0.7em;
-    padding-left: 1em;
-    padding-right: 0.3em;
 }
 
 .nav-link span {
@@ -99,33 +65,24 @@
 }
 
 :host /deep/ .mat-input-element {
-    color:#A1AEAF;
+    color:#33353e;
 }
 
 :host /deep/ .mat-form-field-label {
-    color:#A1AEAF;
+    color:#33353e;
     font-family: 'Lato', sans-serif;
 }
 
 :host /deep/ .mat-form-field-underline {
-    background-color: #A1AEAF;
+    background-color: #33353e;
 }
 
 :host /deep/ .mat-form-field-ripple {
-    background-color: #B1D100;
+    background-color: #33353e;
 }
 
-.help {
-    width: 3.5em;
-    background-color: #2A353F;
-    padding-top: 1em;
-    padding-right: 0.3em;
-    text-align: center;
-}
-
-.help .fa {
-    color:white;
-    font-size:36px;
+.navbar-collapse {
+  background-color: #DF4931;
 }
 
 @media(max-width: 992px) {

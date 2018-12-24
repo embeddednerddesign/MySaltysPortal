@@ -1,6 +1,6 @@
 <ngx-loading [show]="loading"></ngx-loading>
 
-<mat-expansion-panel id="companyDetails" [expanded]="true">
+<!-- <mat-expansion-panel id="companyDetails" [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
       Company - Clinics
@@ -42,7 +42,7 @@
       </mat-autocomplete>
     </div>
   </div>
-</mat-expansion-panel>
+</mat-expansion-panel> -->
 <mat-expansion-panel [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -126,30 +126,6 @@
       </mat-select>
     </mat-form-field>
   </div>
-</mat-expansion-panel>
-<mat-expansion-panel [expanded]="true">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      Company - Branding
-    </mat-panel-title>
-    <mat-panel-description>
-    </mat-panel-description>
-  </mat-expansion-panel-header>
-  <div class="panel-flex-row">
-    <mat-form-field id="brandingColourPickerFormField" class="panel-flex-row-item">
-      <input matInput placeholder="Primary Colour" aria-label="Primary Colour" [formControl]="primaryColour">
-      <p-colorPicker [(ngModel)]="editedCompany.primaryBrandingColour"></p-colorPicker>
-    </mat-form-field>
-    <mat-form-field id="brandingColourPickerFormField" class="panel-flex-row-item">
-      <input matInput placeholder="Accent Colour" aria-label="Accent Colour" [formControl]="accentColour">
-      <p-colorPicker [(ngModel)]="editedCompany.accentBrandingColour"></p-colorPicker>
-    </mat-form-field>
-  </div>
-  <!-- <div class="panel-flex-row">
-    <div class="panel-flex-row-item">
-      <p-fileUpload mode="basic" name="fileToUpload" url="" maxFileSize="1000000" (onUpload)="onBasicUpload($event)" auto="true"></p-fileUpload>
-    </div>
-  </div> -->
 </mat-expansion-panel>
 <mat-expansion-panel [expanded]="true">
   <mat-expansion-panel-header [style.display]="'none'">

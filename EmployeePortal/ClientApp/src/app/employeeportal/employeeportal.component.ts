@@ -11,16 +11,11 @@ import { MasterOverlayService } from '../services/actionpanel.service';
 export class EmployeePortalComponent implements OnInit, OnDestroy {
 
   unsub: Subject<void> = new Subject<void>();
-  sideNavExpanded: boolean;
   masterOverlayEnabled: boolean;
 
-  constructor(private navStateService: NavStateService,
-              private masterOverlayService: MasterOverlayService ) { }
+  constructor(private masterOverlayService: MasterOverlayService ) { }
 
   ngOnInit() {
-    this.navStateService.sideNavExpanded.takeUntil(this.unsub).subscribe(exp => {
-      this.sideNavExpanded = exp;
-    });
     this.masterOverlayService.masterOverlayEnabled.takeUntil(this.unsub).subscribe(ovr => {
       this.masterOverlayEnabled = ovr;
     });

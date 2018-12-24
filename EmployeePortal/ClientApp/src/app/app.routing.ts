@@ -114,40 +114,13 @@ const patientPanel: Route = {
 
 const appRoutes: Routes = [
   { path: 'login', component: AuthComponent },
-  { path: '',  redirectTo: 'schedule', pathMatch: 'full' },
+  { path: '',  redirectTo: 'home', pathMatch: 'full' },
   {
     path: '',
     component: EmployeePortalComponent,
     children: [
       {
-        path: 'schedule',
-        component: AppointmentsComponent,
-        canActivate: [AuthGuard],
-        children: [
-          addEditPatient,
-          patientPanel,
-          {
-            path: 'create-visit',
-            component: CreateVisitComponent,
-            canActivate: [AuthGuard],
-            outlet: 'action-panel'
-          },
-          {
-            path: 'visit-details/:id',
-            component: VisitsComponent,
-            canActivate: [AuthGuard],
-            outlet: 'action-panel'
-          },
-          {
-            path: 'preferred-appointments',
-            component: PreferredAppointmentsComponent,
-            canActivate: [AuthGuard],
-            outlet: 'action-panel'
-          },
-        ]
-      },
-      {
-        path: 'schedule/tasks',
+        path: 'home',
         component: TasksComponent,
         canActivate: [AuthGuard],
         children: [
@@ -156,35 +129,10 @@ const appRoutes: Routes = [
         ]
       },
       {
-        path: 'schedule/rooms',
-        component: RoomsComponent,
+        path: 'schedule',
+        component: AppointmentsComponent,
         canActivate: [AuthGuard],
-        children: [
-          addEditPatient,
-          patientPanel
-        ]
-      },
-      {
-        path: 'schedule/employee-schedule',
-        component: EmployeeScheduleComponent,
-        canActivate: [AuthGuard],
-        children: [
-        addEditPatient,
-        patientPanel,
-        {
-          path: 'create-shift',
-          component: CreateShiftComponent,
-          canActivate: [AuthGuard],
-          outlet: 'action-panel'},
-        ]
-      },
-      {
-        path: 'nudges',
-        component: NudgesComponent,
-        children: [
-          addEditPatient,
-          patientPanel
-        ]
+        children: []
       },
       {
         path: 'management',

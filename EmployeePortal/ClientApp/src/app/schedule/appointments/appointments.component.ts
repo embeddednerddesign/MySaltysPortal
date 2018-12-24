@@ -226,7 +226,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
         this.currentDataService.visits.forEach(v => {
           v.patient = this.currentDataService.patients.find(p => p.patientId === v.patientId);
         });
-        this.getStaffUnavailability();
+        // this.getStaffUnavailability();
         this.getAppointments(this.currentDataService.visits);
         this.scheduleSetup();
       });
@@ -767,7 +767,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
         this.currentDataService.visits.forEach(v => {
           v.patient = this.currentDataService.patients.find(p => p.patientId === v.patientId);
         });
-        this.getStaffUnavailability();
+        // this.getStaffUnavailability();
         this.getAppointments(this.currentDataService.visits);
       });
     }
@@ -872,198 +872,198 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
       });
     }
 
-    getStaffUnavailability() {
-      let activeDay = this.currentDate;
-      activeDay.setDate(activeDay.getDate() - 14);
-      const startOfBusinessDay = moment(new Date).hour(0).minute(0).second(0);
-      const endOfBusinessDay = moment(new Date).hour(23).minute(59).second(59);
-      const allStaffSchedules: Event[] = [];
-      this.tempAppointments = [];
-      const ss = this.currentDataService.staffSchedules;
-      ss.forEach(sched => {
-        const scheduleData: Event = {
-          appointmentId: null,
-          title: sched.title,
-          allDay: null,
-          start: sched.start,
-          end: sched.end,
-          url: null,
-          className: [],
-          editable: null,
-          startEditable: null,
-          durationEditable: null,
-          resourceEditable: null,
-          // background or inverse-background or empty
-          rendering: 'background',
-          overlap: null,
-          constraint: null,
-          // automatically populated
-          source: null,
-          resourceId: sched.staffId.toString(),
-          backgroundColor: this.staffUnavailabilityColor,
-          borderColor: null,
-          textColor: null,
-          staffScheduleId: sched.staffScheduleId,
-          staffId: sched.staffId,
-          recurrence: sched.recurrence,
-          notes: sched.notes,
-          endDate: sched.endDate
-        };
-        allStaffSchedules.push(scheduleData);
-      });
-      // now we have all the staff schedules
-      for (let i = 0; i < 84; i++) {
-        // do all the things
-        let staffMemberSchedules: Event[] = [];
-        this.currentDataService.staff.forEach(staffMember => {
-            staffMemberSchedules = allStaffSchedules.filter(ss => (ss.staffId === staffMember.staffId) &&
-                                                            (moment(ss.start).isSame(activeDay, 'day')));
-            // now sort ascending by start time
-            staffMemberSchedules.sort((n1, n2) => {
-                if (moment(n1.start) > moment(n2.title)) {
-                return 1;
-                }
-                if (moment(n1.start) < moment(n2.title)) {
-                    return -1;
-                }
-                return 0;
-            });
-            // now create unavailable events for all timeslots not filled by a schedule
-            // if (isNullOrUndefined(this.startOfBusinessToday)) {
-            //   this.startOfBusinessToday = moment(new Date).hour(9).minute(0).second(0);
-            // }
-            // if (isNullOrUndefined(this.endOfBusinessToday)) {
-            //   this.endOfBusinessToday = moment(new Date).hour(17).minute(0).second(0);
-            // }
-            let startMarker = startOfBusinessDay;
-            const endMarker = endOfBusinessDay;
-            let startMarkerTime = startOfBusinessDay.minutes() + startOfBusinessDay.hour() * 60;
-            const endMarkerTime = endOfBusinessDay.minutes() + endOfBusinessDay.hour() * 60;
-            staffMemberSchedules.forEach(staffSched => {
-              const staffSchedStartTime = moment(staffSched.start).minutes() + moment(staffSched.start).hour() * 60;
-              if ((startMarkerTime < endMarkerTime) && (staffSchedStartTime > startMarkerTime)) {
-                  const staffUnavailSched: Event = {
-                      appointmentId: null,
-                      title: staffSched.title,
-                      allDay: null,
-                      start: staffSched.start,
-                      end: staffSched.start,
-                      url: null,
-                      className: [],
-                      editable: null,
-                      startEditable: null,
-                      durationEditable: null,
-                      resourceEditable: null,
-                      // background or inverse-background or empty
-                      rendering: 'background',
-                      overlap: null,
-                      constraint: null,
-                      // automatically populated
-                      source: null,
-                      resourceId: staffSched.staffId.toString(),
-                      backgroundColor: this.staffUnavailabilityColor,
-                      borderColor: null,
-                      textColor: null,
-                      staffScheduleId: staffSched.staffScheduleId,
-                      staffId: staffSched.staffId,
-                      recurrence: staffSched.recurrence,
-                      notes: staffSched.notes,
-                      endDate: staffSched.endDate,
-                      service: {
-                          serviceId: 0,
-                          serviceName: '',
-                          quantity: 0,
-                          serviceCategoryId: 0,
-                          category: {
-                              serviceCategoryId: 0,
-                              name: ''
-                          },
-                          serviceReqProductsString: '',
-                          serviceRecProductsString: ''
-                      }
-                  };
-                  const staffSchedStart = moment(activeDay);
-                  // staffSchedStart.date(moment(staffUnavailSched.start).date());
-                  staffSchedStart.hours(startMarker.hours());
-                  staffSchedStart.minutes(startMarker.minutes());
-                  staffUnavailSched.start = staffSchedStart.utc(true).toISOString();
-                  this.tempAppointments.push(staffUnavailSched);
-                  startMarker = moment(staffSched.end);
-                  startMarkerTime = startOfBusinessDay.minutes() + startOfBusinessDay.hour() * 60;
-              } else {
-                startMarker = moment(staffSched.end);
-                startMarkerTime = startOfBusinessDay.minutes() + startOfBusinessDay.hour() * 60;
-              }
-            });
-            if (startMarker !== endMarker) {
-              const staffUnavailSched: Event = {
-                appointmentId: null,
-                title: staffMember.name,
-                allDay: null,
-                start: '',
-                end: '',
-                url: null,
-                className: [],
-                editable: null,
-                startEditable: null,
-                durationEditable: null,
-                resourceEditable: null,
-                // background or inverse-background or empty
-                rendering: 'background',
-                overlap: null,
-                constraint: null,
-                // automatically populated
-                source: null,
-                resourceId: staffMember.staffId.toString(),
-                backgroundColor: this.staffUnavailabilityColor,
-                borderColor: null,
-                textColor: null,
-                staffScheduleId: 0,
-                staffId: staffMember.staffId,
-                recurrence: null,
-                notes: '',
-                endDate: '',
-                service: {
-                    serviceId: 0,
-                    serviceName: '',
-                    quantity: 0,
-                    serviceCategoryId: 0,
-                    category: {
-                        serviceCategoryId: 0,
-                        name: ''
-                    },
-                    serviceReqProductsString: '',
-                    serviceRecProductsString: ''
-                  }
-              };
-              const staffSchedStart = moment(activeDay);
-              staffSchedStart.hours(startMarker.hours());
-              staffSchedStart.minutes(startMarker.minutes());
-              staffUnavailSched.start = staffSchedStart.utc(true).toISOString();
-              const staffSchedEnd = moment(activeDay);
-              staffSchedEnd.hours(endOfBusinessDay.hours());
-              staffSchedEnd.minutes(endOfBusinessDay.minutes());
-              staffUnavailSched.end = staffSchedEnd.utc(true).toISOString();
-              this.tempAppointments.push(staffUnavailSched);
-          }
-        });
-        // increment the day
-        activeDay.setDate(activeDay.getDate() + 1);
-      }
-      this.currentDataService.appointments = this.currentDataService.appointments.filter(app => app.rendering !== 'background');
-      this.tempAppointments.forEach(ta => {
-        if (isNullOrUndefined(ta.appointmentId)) {
-          if (!this.currentDataService.appointments.find(a => (a.title === ta.title && a.start === ta.start))) {
-            this.currentDataService.appointments.push(ta);
-          }
-        }
-        else {
-          if (!this.currentDataService.appointments.find(a => (a.appointmentId === ta.appointmentId))) {
-            this.currentDataService.appointments.push(ta);
-          }
-        }
-      });
-    }
+    // getStaffUnavailability() {
+    //   let activeDay = this.currentDate;
+    //   activeDay.setDate(activeDay.getDate() - 14);
+    //   const startOfBusinessDay = moment(new Date).hour(0).minute(0).second(0);
+    //   const endOfBusinessDay = moment(new Date).hour(23).minute(59).second(59);
+    //   const allStaffSchedules: Event[] = [];
+    //   this.tempAppointments = [];
+    //   const ss = this.currentDataService.staffSchedules;
+    //   ss.forEach(sched => {
+    //     const scheduleData: Event = {
+    //       appointmentId: null,
+    //       title: sched.title,
+    //       allDay: null,
+    //       start: sched.start,
+    //       end: sched.end,
+    //       url: null,
+    //       className: [],
+    //       editable: null,
+    //       startEditable: null,
+    //       durationEditable: null,
+    //       resourceEditable: null,
+    //       // background or inverse-background or empty
+    //       rendering: 'background',
+    //       overlap: null,
+    //       constraint: null,
+    //       // automatically populated
+    //       source: null,
+    //       resourceId: sched.staffId.toString(),
+    //       backgroundColor: this.staffUnavailabilityColor,
+    //       borderColor: null,
+    //       textColor: null,
+    //       staffScheduleId: sched.staffScheduleId,
+    //       staffId: sched.staffId,
+    //       recurrence: sched.recurrence,
+    //       notes: sched.notes,
+    //       endDate: sched.endDate
+    //     };
+    //     allStaffSchedules.push(scheduleData);
+    //   });
+    //   // now we have all the staff schedules
+    //   for (let i = 0; i < 84; i++) {
+    //     // do all the things
+    //     let staffMemberSchedules: Event[] = [];
+    //     this.currentDataService.staff.forEach(staffMember => {
+    //         staffMemberSchedules = allStaffSchedules.filter(ss => (ss.staffId === staffMember.staffId) &&
+    //                                                         (moment(ss.start).isSame(activeDay, 'day')));
+    //         // now sort ascending by start time
+    //         staffMemberSchedules.sort((n1, n2) => {
+    //             if (moment(n1.start) > moment(n2.title)) {
+    //             return 1;
+    //             }
+    //             if (moment(n1.start) < moment(n2.title)) {
+    //                 return -1;
+    //             }
+    //             return 0;
+    //         });
+    //         // now create unavailable events for all timeslots not filled by a schedule
+    //         // if (isNullOrUndefined(this.startOfBusinessToday)) {
+    //         //   this.startOfBusinessToday = moment(new Date).hour(9).minute(0).second(0);
+    //         // }
+    //         // if (isNullOrUndefined(this.endOfBusinessToday)) {
+    //         //   this.endOfBusinessToday = moment(new Date).hour(17).minute(0).second(0);
+    //         // }
+    //         let startMarker = startOfBusinessDay;
+    //         const endMarker = endOfBusinessDay;
+    //         let startMarkerTime = startOfBusinessDay.minutes() + startOfBusinessDay.hour() * 60;
+    //         const endMarkerTime = endOfBusinessDay.minutes() + endOfBusinessDay.hour() * 60;
+    //         staffMemberSchedules.forEach(staffSched => {
+    //           const staffSchedStartTime = moment(staffSched.start).minutes() + moment(staffSched.start).hour() * 60;
+    //           if ((startMarkerTime < endMarkerTime) && (staffSchedStartTime > startMarkerTime)) {
+    //               const staffUnavailSched: Event = {
+    //                   appointmentId: null,
+    //                   title: staffSched.title,
+    //                   allDay: null,
+    //                   start: staffSched.start,
+    //                   end: staffSched.start,
+    //                   url: null,
+    //                   className: [],
+    //                   editable: null,
+    //                   startEditable: null,
+    //                   durationEditable: null,
+    //                   resourceEditable: null,
+    //                   // background or inverse-background or empty
+    //                   rendering: 'background',
+    //                   overlap: null,
+    //                   constraint: null,
+    //                   // automatically populated
+    //                   source: null,
+    //                   resourceId: staffSched.staffId.toString(),
+    //                   backgroundColor: this.staffUnavailabilityColor,
+    //                   borderColor: null,
+    //                   textColor: null,
+    //                   staffScheduleId: staffSched.staffScheduleId,
+    //                   staffId: staffSched.staffId,
+    //                   recurrence: staffSched.recurrence,
+    //                   notes: staffSched.notes,
+    //                   endDate: staffSched.endDate,
+    //                   service: {
+    //                       serviceId: 0,
+    //                       serviceName: '',
+    //                       quantity: 0,
+    //                       serviceCategoryId: 0,
+    //                       category: {
+    //                           serviceCategoryId: 0,
+    //                           name: ''
+    //                       },
+    //                       serviceReqProductsString: '',
+    //                       serviceRecProductsString: ''
+    //                   }
+    //               };
+    //               const staffSchedStart = moment(activeDay);
+    //               // staffSchedStart.date(moment(staffUnavailSched.start).date());
+    //               staffSchedStart.hours(startMarker.hours());
+    //               staffSchedStart.minutes(startMarker.minutes());
+    //               staffUnavailSched.start = staffSchedStart.utc(true).toISOString();
+    //               this.tempAppointments.push(staffUnavailSched);
+    //               startMarker = moment(staffSched.end);
+    //               startMarkerTime = startOfBusinessDay.minutes() + startOfBusinessDay.hour() * 60;
+    //           } else {
+    //             startMarker = moment(staffSched.end);
+    //             startMarkerTime = startOfBusinessDay.minutes() + startOfBusinessDay.hour() * 60;
+    //           }
+    //         });
+    //         if (startMarker !== endMarker) {
+    //           const staffUnavailSched: Event = {
+    //             appointmentId: null,
+    //             title: staffMember.name,
+    //             allDay: null,
+    //             start: '',
+    //             end: '',
+    //             url: null,
+    //             className: [],
+    //             editable: null,
+    //             startEditable: null,
+    //             durationEditable: null,
+    //             resourceEditable: null,
+    //             // background or inverse-background or empty
+    //             rendering: 'background',
+    //             overlap: null,
+    //             constraint: null,
+    //             // automatically populated
+    //             source: null,
+    //             resourceId: staffMember.staffId.toString(),
+    //             backgroundColor: this.staffUnavailabilityColor,
+    //             borderColor: null,
+    //             textColor: null,
+    //             staffScheduleId: 0,
+    //             staffId: staffMember.staffId,
+    //             recurrence: null,
+    //             notes: '',
+    //             endDate: '',
+    //             service: {
+    //                 serviceId: 0,
+    //                 serviceName: '',
+    //                 quantity: 0,
+    //                 serviceCategoryId: 0,
+    //                 category: {
+    //                     serviceCategoryId: 0,
+    //                     name: ''
+    //                 },
+    //                 serviceReqProductsString: '',
+    //                 serviceRecProductsString: ''
+    //               }
+    //           };
+    //           const staffSchedStart = moment(activeDay);
+    //           staffSchedStart.hours(startMarker.hours());
+    //           staffSchedStart.minutes(startMarker.minutes());
+    //           staffUnavailSched.start = staffSchedStart.utc(true).toISOString();
+    //           const staffSchedEnd = moment(activeDay);
+    //           staffSchedEnd.hours(endOfBusinessDay.hours());
+    //           staffSchedEnd.minutes(endOfBusinessDay.minutes());
+    //           staffUnavailSched.end = staffSchedEnd.utc(true).toISOString();
+    //           this.tempAppointments.push(staffUnavailSched);
+    //       }
+    //     });
+    //     // increment the day
+    //     activeDay.setDate(activeDay.getDate() + 1);
+    //   }
+    //   this.currentDataService.appointments = this.currentDataService.appointments.filter(app => app.rendering !== 'background');
+    //   this.tempAppointments.forEach(ta => {
+    //     if (isNullOrUndefined(ta.appointmentId)) {
+    //       if (!this.currentDataService.appointments.find(a => (a.title === ta.title && a.start === ta.start))) {
+    //         this.currentDataService.appointments.push(ta);
+    //       }
+    //     }
+    //     else {
+    //       if (!this.currentDataService.appointments.find(a => (a.appointmentId === ta.appointmentId))) {
+    //         this.currentDataService.appointments.push(ta);
+    //       }
+    //     }
+    //   });
+    // }
 
     onRightClick(event, item) {
         if (this.hoveredEvent) {

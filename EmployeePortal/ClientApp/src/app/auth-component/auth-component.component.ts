@@ -82,7 +82,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         this._router.navigate([this.returnUrl]);
       } else {
         this.authService.setLoginToken(result.idToken, result.expiresIn);
-        this._router.navigate(['../schedule']);
+        this._router.navigate(['../home']);
       }
       this.loading = false;
     }, error => {

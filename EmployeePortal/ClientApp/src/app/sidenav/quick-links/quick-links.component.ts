@@ -16,18 +16,13 @@ export class QuickLinksComponent implements OnInit, AfterViewInit, OnDestroy {
   simple: any;
 
   unsub: Subject<void> = new Subject<void>();
-  sideNavExpanded: boolean;
 
   constructor(private renderer: Renderer2,
-              private navStateService: NavStateService,
               private masterOverlayService: MasterOverlayService,
               private patientService: PatientService,
               private router: Router ) { }
 
   ngOnInit() {
-    this.navStateService.sideNavExpanded.takeUntil(this.unsub).subscribe(exp => {
-      this.sideNavExpanded = exp;
-    });
   }
 
   ngAfterViewInit() {

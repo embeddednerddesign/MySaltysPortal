@@ -4,7 +4,7 @@
     min-width: 240px;
     max-width: 240px;
     margin-top: 70px;
-    background-color: #252F38;
+    background-color: gray;
 }
 
 &:host /deep/ .mat-calendar-header {
@@ -24,7 +24,7 @@
     color: black !important;
 }
 :host /deep/ .mat-calendar-body-disabled > .mat-calendar-body-selected {
-    background-color: fade-out(#252F38, 0.6);
+    background-color: fade-out(darkgray, 0.6);
 }
 
 :host /deep/ .mat-calendar-body-today.mat-calendar-body-selected {
@@ -48,7 +48,7 @@
 }
 
 :host /deep/ .mat-calendar-table-header-divider::after {
-    background: #252F38
+    background: darkgray
 }
 
 :host /deep/ .mat-calendar-body-label {
@@ -68,7 +68,7 @@
 .cdk-keyboard-focused .mat-calendar-body-active,
 .cdk-program-focused .mat-calendar-body-active {
     & > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
-        background-color: #252F38;
+        background-color: darkgray;
     }
 }
 
@@ -83,7 +83,7 @@
 }
 
 :host /deep/ .mat-datepicker-content {
-    background-color: #252F38;
+    background-color: darkgray;
     color: white;
 }
 
