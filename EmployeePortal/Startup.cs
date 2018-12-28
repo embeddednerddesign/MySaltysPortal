@@ -292,9 +292,9 @@ namespace EmployeePortal
 
             context.SaveChanges();
 
-            if (context.Companies.Where(c => c.name == "DermMedica Company").First().addressId == null)
+            if (context.Companies.First().addressId == null)
             {
-                context.Companies.Where(c => c.name == "DermMedica Company").First().addressId = context.Addresses.First().AddressId;
+                context.Companies.First().addressId = context.Addresses.First().AddressId;
             }
 
             if (context.Clinics.Count() == 0)

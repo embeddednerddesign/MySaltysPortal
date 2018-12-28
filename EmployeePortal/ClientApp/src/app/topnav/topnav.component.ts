@@ -13,6 +13,8 @@ import { PatientService } from '../services/patient.service';
 import { isNullOrUndefined } from 'util';
 import { MatDialog } from '@angular/material';
 import { VisitStatusDialogComponent } from '../visit-status-dialog/visit-status-dialog.component';
+import { UsersService } from '../services/users.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-topnav',
@@ -27,9 +29,16 @@ export class TopnavComponent implements OnInit {
   patients: Patient[] = [];
   currentDate: Date;
 
+  loggedInUserName = '';
+  loggedInUserAvatar = '';
+  loggedInUserRole = '';
+
+  unsub: Subject<void> = new Subject<void>();
+
   constructor(private authService: AuthService,
               private eventsService: EventsService,
               private patientService: PatientService,
+              private userService: UsersService,
               private masterOverlayService: MasterOverlayService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -44,6 +53,16 @@ export class TopnavComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loggedInUserName = this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName;
+    this.loggedInUserAvatar = 'assets/Avatars/' + this.userService.loggedInUser.avatar;
+    this.loggedInUserRole = this.userService.loggedInUser.role;
+
+    this.userService.loggedInUserUpdated$.takeUntil(this.unsub).subscribe(u => {
+      this.loggedInUserName = this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName;
+      this.loggedInUserAvatar = 'assets/Avatars/' + this.userService.loggedInUser.avatar;
+      this.loggedInUserRole = this.userService.loggedInUser.role;
+    });
+
     this.updatePatientList();
     this.eventsService.currentDate.subscribe(date => this.currentDate = date);
   }
