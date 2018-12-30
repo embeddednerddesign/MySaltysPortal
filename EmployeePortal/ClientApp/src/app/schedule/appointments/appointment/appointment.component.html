@@ -3,19 +3,18 @@
   <div class="fc-content">
     <div class="fc-title" id="apptTitle">
       {{patientName}} <br/>
-      <span *ngIf="!rendering">
+      <!-- <span *ngIf="!rendering">
         <span *ngIf="visitStatus == 'uncomfirmed'" id="checkin" class="billing-status-icon unconfirmed" inlineSVG="../../../../assets/svg/calendar-minus.svg" aria-hidden="true"></span>
         <span *ngIf="visitStatus == 'confirmed'" id="checkin" class="billing-status-icon confirmed" inlineSVG="../../../../assets/svg/calendar-check.svg" aria-hidden="true"></span>
         <span *ngIf="visitStatus == 'checkedIn'" id="checkin" class="billing-status-icon checked-in" inlineSVG="../../../../assets/svg/calendar-check.svg" aria-hidden="true"></span>
         <span *ngIf="visitStatus == 'noShow'" id="checkin" class="billing-status-icon no-show" inlineSVG="../../../../assets/svg/calendar-exclamation.svg" aria-hidden="true"></span>
-      </span>
-      <span>{{serviceName}}</span>
+      </span> -->
+      <!-- <span>{{serviceName}}</span> -->
     </div>
-    <div class="right-bar">
+    <!-- <div class="right-bar">
       <span id="history" *ngIf="!rendering" class="action-icon"><i class="fas fa-syringe"></i></span>
       <span id="checkin" *ngIf="!rendering"><i class="fas fa-notes-medical"></i></span>
-
-    </div>
+    </div> -->
     <div class="background-Color" [ngStyle]="{'background-color': color}"></div>
   </div>
   <div class="fc-bg" [ngStyle]="{'background': hexToTranslucentRgbA(color)}">

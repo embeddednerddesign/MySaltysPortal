@@ -118,8 +118,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
     @HostListener('document:mousedown', ['$event'])
     onMouseDown(e) {
       this.mouseIsDown = true;
-      this.savedStart = this.currentDataService.appointments[0].start;
-      this.savedEnd = this.currentDataService.appointments[0].end;
+      if (!isNullOrUndefined(this.currentDataService.appointments[0])) {
+        this.savedStart = this.currentDataService.appointments[0].start;
+        this.savedEnd = this.currentDataService.appointments[0].end;
+      }
     }
     @HostListener('document:mouseup', ['$event'])
     onMouseUp(e) {
@@ -287,13 +289,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
             resources: (callback) => {
                 const _resources = [];
                 this.currentDataService.staff.forEach(staff => {
-                    _resources.push({ id: staff.staffId, title: staff.name });
+                    _resources.push({ id: staff.staffId, title: moment(this.currentDate).format("dddd, MMMM Do, YYYY") });
                 });
                 callback(_resources);
             },
             select: (start, end, ev, view, resourceObj) => {
                 if (this.getDuration(start, end) === this.currentDataService.company.minimumDuration) {
-                    this.clickEvent = { isSelection: false, start: start, end: end, resourceId: resourceObj.id };
+                    this.clickEvent = { isSelection: true, start: start, end: end, resourceId: resourceObj.id };
                 } else {
                     this.clickEvent = { isSelection: true, start: start, end: end, resourceId: resourceObj.id };
                 }
@@ -563,8 +565,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
         component.instance.start = moment(event.start).format('h:mm a');
         component.instance.end = moment(event.end).format('h:mm a');
         component.instance.className = event.className;
-        component.instance.color = event.service.serviceIDColour;
-        component.instance.serviceName = event.service.serviceName;
+        component.instance.color = event.color;
+        component.instance.serviceName = '';
         component.instance.id = event.appointmentId;
         component.instance.resourceId = event.resourceId;
         component.instance.source = event.source;
@@ -1098,15 +1100,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
     }
 
     slotLabel() {
-        const data: NodeListOf<Element> = document.querySelectorAll('.fc-axis span');
-        let dataItem = '';
-        let result: string[] = [];
-        for (let i = 0; i < data.length; i++) {
-            dataItem = data[i].innerHTML;
-            result = dataItem.split(' ');
-            data[i].innerHTML = `${result[0]} <sub>${result[1]}</sub>`;
-        }
-
+      const data: NodeListOf<Element> = document.querySelectorAll('.fc-axis span');
+      let dataItem = '';
+      let result: string[] = [];
+      for (let i = 0; i < data.length; i++) {
+          dataItem = data[i].innerHTML;
+          result = dataItem.split(' ');
+          data[i].innerHTML = `${result[0]} <sub>${result[1]}</sub>`;
+      }
     }
 
     removeAppointment(currentAppointmentId) {

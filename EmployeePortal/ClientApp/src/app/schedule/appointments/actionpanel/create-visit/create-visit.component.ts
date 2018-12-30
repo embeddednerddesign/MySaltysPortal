@@ -464,7 +464,7 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   createOk(): boolean {
-    if (this.patientSelected && this.selectedService && this.startTime) {
+    if (this.patientSelected && this.startTime) {
       return true;
     } else {
       return false;
@@ -537,7 +537,7 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       service: null,
       serviceId: null,
       color: colorcode,
-      visitId: null
+      visitId: this.visit.visitId
     };
 
     // check if the selected Staff Member is available during this time based on their StaffSchedule
@@ -587,8 +587,10 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       this.appointments.push(appointment);
       this.sortAppointments();
       this._eventsService.appointmentAdded.next();
+      this.closePanel();
     });
   }
+
   public confirmAppointment(dataItem: Appointment) {
     const dialogRef = this.confirmApptDialog.open(ConfirmAppointmentDialogComponent, {
       width: '300px'

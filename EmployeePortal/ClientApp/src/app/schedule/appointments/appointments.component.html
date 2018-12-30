@@ -100,7 +100,7 @@
     <ul>
       <li><i class="fas fa-map-marker-alt"></i>&nbsp;{{hoveredEvent.visit.patient.address.city}}, {{hoveredEvent.visit.patient.address.province}}</li>
       <li><i class="fas fa-mobile-alt"></i>&nbsp;{{hoveredEvent.visit.patient.mobileNumber}}</li>
-      <li>Created By:&nbsp;{{hoveredEvent.visit.createdBy}}</li>
+      <!-- <li>Created By:&nbsp;{{hoveredEvent.visit.createdBy}}</li>
       <li>Visit Notes: {{hoveredEvent.visit.visitNotes}}</li>
       <li>Patient Name:&nbsp;{{hoveredEvent.visit.patient.lastName}},&nbsp;{{hoveredEvent.visit.patient.firstName}}</li>
       <li>Service Name:&nbsp;{{hoveredEvent.service.serviceName}}</li>
@@ -112,7 +112,7 @@
           <span *ngIf="!rendering && hoveredEvent.visit.confirmed && hoveredEvent.visit.checkedIn && !hoveredEvent.visit.noShow"><i [ngStyle]="{'color':'#BED82A'}" class="fas fa-calendar-check"></i></span>
           <span *ngIf="!rendering && hoveredEvent.visit.noShow"><i [ngStyle]="{'color':'#DA5140'}" class="fas fa-calendar-exclamation"></i></span>
         </div>
-      </li>
+      </li> -->
     </ul>
   </div>
 </div>

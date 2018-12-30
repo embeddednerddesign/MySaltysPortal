@@ -266,7 +266,7 @@ export class VisitsComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       if (!va.cancelled) {
         va.editing = false;
       }
-      va.color = va.service.serviceIDColour;
+      va.color = va.color;
     });
 
     if (this.visit.visitNotes) {
