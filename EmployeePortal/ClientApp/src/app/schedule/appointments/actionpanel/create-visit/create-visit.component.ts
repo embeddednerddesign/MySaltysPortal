@@ -76,9 +76,11 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   phoneNumber: FormControl;
   date = new Date(Date.now());
   startTime = new Date();
+  endTime = new Date();
   minTime = new Date();
   maxTime = new Date();
   startTimeIsReadonly = false;
+  endTimeIsReadonly = false;
   services: StaffService[] = [];
   selectedService: number;
   calculatedDuration = '00:10:00';
@@ -129,11 +131,13 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       const startTime = new Date(moment(time.start).toJSON());
       this.setStartTime(startTime);
 
-      if (time.start !== time.end) {
-        const durationTime = moment.utc(moment(time.end).diff(moment(time.start)));
-        this.calculatedDuration = durationTime.format('HH:mm:ss');
-        this.durationInMinutes = (durationTime.hours() * 60 + durationTime.minutes()).toString();
-      }
+      const endTime = new Date(moment(time.end).toJSON());
+      this.setEndTime(endTime);
+      // if (time.start !== time.end) {
+      //   const durationTime = moment.utc(moment(time.end).diff(moment(time.start)));
+      //   this.calculatedDuration = durationTime.format('HH:mm:ss');
+      //   this.durationInMinutes = (durationTime.hours() * 60 + durationTime.minutes()).toString();
+      // }
     });
 
     this._eventsService.updateCreateVisitResourceId$.subscribe(resource => {
@@ -149,6 +153,16 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     this.maxTime = businessWeek.closeTime(dayOfWeek);
     this.startTime = businessWeek.isOpen(dayOfWeek, time) ? time : this.date;
     this.startTimeIsReadonly = businessWeek.isClosed(dayOfWeek);
+  }
+
+  private setEndTime(time: Date) {
+    const dayOfWeek = time.getDay();
+    const businessWeek = this.businessWeek;
+
+    this.minTime = businessWeek.openTime(dayOfWeek);
+    this.maxTime = businessWeek.closeTime(dayOfWeek);
+    this.endTime = businessWeek.isOpen(dayOfWeek, time) ? time : this.date;
+    this.endTimeIsReadonly = businessWeek.isClosed(dayOfWeek);
   }
 
   ngOnInit() {
@@ -171,16 +185,18 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
             this.businessWeek = getBusinessWeek(res.hoursOfOperationDays);
             const startTime = new Date(moment(this.clickEvent.start).toJSON());
             this.setStartTime(startTime);
+            const endTime = new Date(moment(this.clickEvent.end).toJSON());
+            this.setEndTime(endTime);
           }
-          // if we got here from the Patient panel, load the selectedPatient
-          if (this.patientService.previousPage !== '') {
-            this.patientSelect(this.patientService.patientPanelPatient);
-            const todayAt9am = new Date();
-            todayAt9am.setHours(9);
-            todayAt9am.setMinutes(0);
-            todayAt9am.setSeconds(0);
-            this.startTime = todayAt9am;
-          }
+          // // if we got here from the Patient panel, load the selectedPatient
+          // if (this.patientService.previousPage !== '') {
+          //   this.patientSelect(this.patientService.patientPanelPatient);
+          //   const todayAt9am = new Date();
+          //   todayAt9am.setHours(9);
+          //   todayAt9am.setMinutes(0);
+          //   todayAt9am.setSeconds(0);
+          //   this.startTime = todayAt9am;
+          // }
         },
         err => {
           // TODO: decide what to do with err
@@ -499,18 +515,16 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       .seconds(0)
       .milliseconds(0);
 
-    const endTime = moment(time).add(moment.duration({ minutes: this.customDuration.value }));
-    let colorcode = 'red';
-    let svc: Service;
-    this.services.forEach(service => {
-      if (service.serviceId === this.selectedService) {
-        svc = service.service as Service;
-        colorcode = service.service.serviceIDColour;
-      }
-    });
+    // const endTime = moment(time).add(moment.duration({ minutes: this.customDuration.value }));
+    const endTime = moment(this.endTime)
+      .hours(this.endTime.getHours())
+      .minutes(this.endTime.getMinutes())
+      .seconds(0)
+      .milliseconds(0);
+    const colorcode = '#DF4931';
 
     const event: Appointment = {
-      title: this.selectedPatient.firstName + ' ' + svc.serviceName,
+      title: this.selectedPatient.firstName + ' ' + this.selectedPatient.firstName,
       start: time.toISOString(true),
       end: endTime.toISOString(true),
       resourceId: this.selectedStaff.toString(),
@@ -520,10 +534,10 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       cancellationDate: null,
       cancelled: false,
       editing: false,
-      service: svc,
-      serviceId: svc.serviceId,
+      service: null,
+      serviceId: null,
       color: colorcode,
-      visitId: this.visit.visitId
+      visitId: null
     };
 
     // check if the selected Staff Member is available during this time based on their StaffSchedule
@@ -567,7 +581,7 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       event.className = event.className.trim();
     }
     // update total cost of Visit
-    this.visit.totalVisitCost += appointment.service.defaultPrice;
+    // this.visit.totalVisitCost += appointment.service.defaultPrice;
     this._appointmentsService.addAppointment(event).pipe(takeUntil(this.unsub)).subscribe(appt => {
       appointment.appointmentId = appt.appointmentId;
       this.appointments.push(appointment);

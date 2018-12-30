@@ -1,7 +1,7 @@
 :host {
     min-width: 165px;
     max-width: 165px;
-    background-color: #DF4931;
+    background-color: transparent;
     display: flex;
     flex-flow: column;
     font-family: 'Lato', sans-serif;
@@ -46,7 +46,7 @@
     }
 }
 .sidenav .profile .info {
-    color: white;
+    color: gray;
     display: inline-block;
 }
 .sidenav .profile .info h4 {
@@ -68,6 +68,7 @@
 }
 .sidenav ul {
     width: 100%;
+    margin-left: 5px;
 }
 .sidenav .navbar ul > li > .nav-link > i {
     margin-right: 1em;
@@ -75,7 +76,7 @@
     float: left;
 }
 .sidenav .navbar ul > li > .nav-link {
-    color: white;
+    color: gray;
     text-transform: uppercase;
     display: block;
     cursor: pointer;
@@ -85,7 +86,7 @@
   font-size: 14px;
 }
 .sidenav .navbar ul > li:hover {
-    background-color: #1F262D;
+    background-color: lightgray;
 }
 .sidenav .expand-control {
     height: 30px;
@@ -125,18 +126,18 @@
     color: #2f3b47;
 }
 .sub-menu-item {
-    background-color: #2F3B47;
-    color: white;
+    background-color: transparent;
+    color: gray;
     padding: 7px 15px;
 }
 .sub-menu-item a {
-    color: white;
+    color: gray;
     &:hover {
         cursor: pointer;
     }
 }
 .sub-menu-item a:hover {
-    color: white;
+    color: darkgray;
     text-decoration: none;
 }
 
@@ -162,7 +163,7 @@
 }
 hr {
     border: none;
-    border-top: 1px solid #364048;
+    // border-top: 1px solid #364048;
     width: 90%;
     margin-bottom: 1.5em;
 }

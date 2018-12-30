@@ -132,7 +132,14 @@ const appRoutes: Routes = [
         path: 'schedule',
         component: AppointmentsComponent,
         canActivate: [AuthGuard],
-        children: []
+        children: [
+          {
+            path: 'create-visit',
+            component: CreateVisitComponent,
+            canActivate: [AuthGuard],
+            outlet: 'action-panel'
+          }
+        ]
       },
       {
         path: 'management',

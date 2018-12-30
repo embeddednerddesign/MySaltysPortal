@@ -5,14 +5,14 @@
 </div>
 <div class="content">
   <div class="header">
-    <div class="appointment_heading">Create Visit</div>
+    <div class="appointment_heading">Create Shift</div>
   </div>
 
   <div class="row no-gutter">
     <div class="col-12 patient-select">
-      <label for="patientsAutoComplete">Select a Patient</label>
+      <label for="patientsAutoComplete">Select a Staff Member</label>
       <kendo-autocomplete name="patientsAutoComplete" #patientsAutoComplete [data]="patients" [valueField]="'firstName'"
-        [placeholder]="'Enter a patient name..'" class="full" (valueChange)="patientValueChange($event)" [filterable]="true"
+        [placeholder]="'Enter a name..'" class="full" (valueChange)="patientValueChange($event)" [filterable]="true"
         (filterChange)="handleFilter($event)" (focus)="onPatientAutoCompleteFocus()">
         <ng-template kendoDropDownListItemTemplate let-dataItem>
           <div (click)="patientSelect(dataItem)" class="patients-list">
@@ -21,7 +21,7 @@
                 <div class="patient-matched-name" [innerHTML]="formatValue(dataItem.firstName, patientsAutoComplete)"></div>
                 &nbsp;<div class="patient-matched-name" [innerHTML]="formatValue(dataItem.lastName, patientsAutoComplete)"></div>
               </div>
-              <div class="col-6" *ngIf="dataItem.address">
+              <!-- <div class="col-6" *ngIf="dataItem.address">
                 <div class="template gender">{{getGender(dataItem)}}</div>
                 <span>&nbsp;{{dataItem.address.city}}, {{dataItem.address.province}}</span>
               </div>
@@ -33,7 +33,7 @@
                 <div class="icon" inlineSVG="../../../assets/svg/gift.svg"></div>
                 <div class="patient-matched-info">&nbsp;{{dataItem.birthDate | date}}&nbsp;(Age:
                   {{getAge(dataItem.birthDate)}})</div>
-              </div>
+              </div> -->
             </div>
           </div>
         </ng-template>
@@ -44,9 +44,9 @@
           </button>
         </ng-template> -->
       </kendo-autocomplete>
-      <div class="col-12 add-patient-div">
+      <!-- <div class="col-12 add-patient-div">
         <button class="add-btn" (click)="newPatientHandler()">Add Patient</button>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -96,9 +96,9 @@
       </mat-form-field>
     </div>
 
-    <div class="col-12">
+    <!-- <div class="col-12">
       <button class="add-btn" (click)="createPatient()">Create Patient</button>
-    </div>
+    </div> -->
   </div>
 
   <hr>
@@ -108,8 +108,7 @@
       <div class="patient-data-column">
         <div class="patient-data">
           <div class="">
-            <span class="patient-name">{{selectedPatient.firstName}}&nbsp;{{selectedPatient.lastName}} <i *ngIf="selectedPatient.isPreferred"
-                class="fa fa-star" aria-hidden="true"></i></span>
+            <span class="patient-name">{{selectedPatient.firstName}}&nbsp;{{selectedPatient.lastName}}</span>
           </div>
           <div>
             <span>{{selectedPatient.address.city}},&nbsp;{{selectedPatient.address.province}}</span>&nbsp;&nbsp;&nbsp;
@@ -120,10 +119,10 @@
             <span *ngIf="selectedPatient.gender==='female'" class="dot"><Strong class="gender">F</Strong></span>
             <span *ngIf="selectedPatient.gender==='male'" class="dot"><Strong class="gender">M</Strong></span>
           </div>
-          <div class="alerts">
+          <!-- <div class="alerts">
             <h3>Notes/Alerts</h3>
             <p>{{selectedPatient.notesAndAlerts}}</p>
-          </div>
+          </div> -->
         </div>
       </div>
       <!-- <div class="patient-avt col-md-4">
@@ -132,7 +131,7 @@
     </div>
   </div>
   <div class="visit-form row no-gutter">
-      <div class="appointments col-12">
+      <!-- <div class="appointments col-12">
           <div *ngFor="let appointment of appointments; let i = index">
             <div class="appointment-panel" *ngIf="!appointment.cancelled">
               <div class="cancel-appointment" (click)="cancelAppointment(i)">
@@ -153,25 +152,7 @@
               </div>
             </div>
           </div>
-        </div>
-    <div class="col-6">
-      <mat-form-field class="full service" [floatLabel]="'always'">
-        <mat-select placeholder="Select Service" [(value)]="selectedService" name="services" (selectionChange)="serviceSelectionChange()">
-          <mat-option *ngFor="let service of services" [value]="service.serviceId">
-            {{ service.service.serviceName }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-6">
-      <mat-form-field class="full" [floatLabel]="'always'">
-        <mat-select placeholder="Service Provider" [(value)]="selectedStaff" name="staff" (selectionChange)="staffSelectionChanged()">
-          <mat-option *ngFor="let staff of currentDataService.staff" [value]="staff.staffId">
-            {{ staff.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+        </div> -->
     <div class="col-6">
       <div class="full">
         <label for="startTime">Start Time</label>
@@ -180,20 +161,18 @@
       </div>
     </div>
     <div class="col-6">
-      <mat-form-field class="full" [floatLabel]="'always'">
-        <mat-select placeholder="Duration (minutes)" [value]="durationInMinutes" aria-label="Duration" [formControl]="customDuration">
-          <mat-option *ngFor="let durOpt of durationOptions" [value]="durOpt">
-            {{ durOpt }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div class="full">
+        <label for="endTime">End Time</label>
+        <kendo-timepicker name="endTime" [steps]="{ minute: minimumDuration }" [min]="minTime" [max]="maxTime"
+          [(value)]="endTime" [readonly]="endTimeIsReadonly"></kendo-timepicker>
+      </div>
     </div>
     <div class="col-12">
       <button class="add-btn"
       (click)="addAppointment()"
       [disabled]="!createOk()">
         <span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>
-        Add{{appointments.length ? ' Another' : ''}}&nbsp;Appointment
+        Add Shift
       </button>
         <br><br>
       <button class="add-btn"
