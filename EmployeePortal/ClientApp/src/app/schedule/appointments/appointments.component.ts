@@ -287,11 +287,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
                 this.visitSchedule.changeView('agendaDay');
             },
             resources: (callback) => {
-                const _resources = [];
-                this.currentDataService.staff.forEach(staff => {
-                    _resources.push({ id: staff.staffId, title: moment(this.currentDate).format("dddd, MMMM Do, YYYY") });
-                });
-                callback(_resources);
+              const _resources = [];
+              this.currentDataService.staff.forEach(staff => {
+                  _resources.push({ id: staff.staffId, title: moment(this.currentDate).format("dddd, MMMM Do, YYYY") });
+              });
+              callback(_resources);
             },
             select: (start, end, ev, view, resourceObj) => {
                 if (this.getDuration(start, end) === this.currentDataService.company.minimumDuration) {
@@ -302,11 +302,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
                 this.eventsService.setTempEvent(this.clickEvent);
                 this.toggleCreateVisitPanel(start, end, resourceObj.id);
                 if (this.actionPanelOpened) {
-                    if (this.eventsService.planningMode) {
-                        this.router.navigate(['schedule', { outlets: { 'action-panel': ['preferred-appointments'] } }]);
-                    } else {
-                        this.router.navigate(['schedule', { outlets: { 'action-panel': ['create-visit'] } }]);
-                    }
+                  this.router.navigate(['schedule', { outlets: { 'action-panel': ['create-visit'] } }]);
                 }
             },
             dayClick: (date, jsEvent, view, resourceObj) => {

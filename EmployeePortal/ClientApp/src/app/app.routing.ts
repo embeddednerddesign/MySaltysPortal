@@ -27,6 +27,7 @@ import { OrganizationComponent } from './management/organization/organization.co
 import { OrgResourcesComponent } from './management/organization/org-resources/org-resources.component';
 import { OrgUsersComponent } from './management/organization/org-users/org-users.component';
 import { TasksComponent } from './schedule/tasks/tasks.component';
+import { ResourcesComponent } from './schedule/resources/resources.component';
 import { AppointmentsComponent } from './schedule/appointments/appointments.component';
 import { RoomsComponent } from './schedule/rooms/rooms.component';
 
@@ -129,6 +130,15 @@ const appRoutes: Routes = [
         ]
       },
       {
+        path: 'resources',
+        component: ResourcesComponent,
+        canActivate: [AuthGuard],
+        children: [
+          addEditPatient,
+          patientPanel
+        ]
+      },
+      {
         path: 'schedule',
         component: AppointmentsComponent,
         canActivate: [AuthGuard],
@@ -136,6 +146,12 @@ const appRoutes: Routes = [
           {
             path: 'create-visit',
             component: CreateVisitComponent,
+            canActivate: [AuthGuard],
+            outlet: 'action-panel'
+          },
+          {
+            path: 'visit-details/:id',
+            component: VisitsComponent,
             canActivate: [AuthGuard],
             outlet: 'action-panel'
           }

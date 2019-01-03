@@ -1,13 +1,13 @@
 <div class="re-links-container">
   <div class="re-links">
     <a (click)="closePanel()" class="close-panel"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-    <a>&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-    <a (click)="editVisit()" class="edit-panel"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    <!-- <a>&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+    <a (click)="editVisit()" class="edit-panel"><i class="fa fa-pencil" aria-hidden="true"></i></a> -->
   </div>
 </div>
 <div class="content" (keyup.enter)="onEnter()">
-  <div class="paitent-edit" *ngIf="patientEdit">
-    <div class="row">
+  <div class="patient-edit" *ngIf="patientEdit">
+    <!-- <div class="row">
         <div class="col-md-12 patient-select">
             <label for="patientsAutoComplete">Select a New Patient</label>
             <kendo-autocomplete
@@ -56,29 +56,29 @@
               </ng-template>
             </kendo-autocomplete>
           </div>
-        </div>
+        </div> -->
 
 
-       <div class="patient-info" *ngIf="selectedPatient">
+        <div class="patient-info" *ngIf="selectedPatient">
           <div class="row no-gutter">
-            <div class="col-md-8">
+            <div class="patient-data-column">
               <div class="patient-data">
                 <div class="">
-                  <span class="patient-name">{{selectedPatient.firstName}}&nbsp;{{selectedPatient.lastName}} <i *ngIf="selectedPatient.isPreferred" class="fa fa-star" aria-hidden="true"></i></span>
+                  <span class="patient-name">{{selectedPatient.firstName}}&nbsp;{{selectedPatient.lastName}}</span>
                 </div>
                 <div>
                   <span>{{selectedPatient.address.city}},&nbsp;{{selectedPatient.address.province}}</span>&nbsp;&nbsp;&nbsp;
-                  <span class="ref-num">{{selectedPatient.mobileNumber}}</span><br/>
+                  <span class="ref-num">{{selectedPatient.mobileNumber}}</span><br />
                   <span>{{getBirthday(selectedPatient.birthDate)}}</span>&nbsp;
                   <span>(Age: {{getAge(selectedPatient.birthDate)}})</span>&nbsp;
-                  <span><i class="fas fa-gift gift" ></i></span>
+                  <span><i class="fas fa-gift gift"></i></span>
                   <span *ngIf="selectedPatient.gender==='female'" class="dot"><Strong class="gender">F</Strong></span>
                   <span *ngIf="selectedPatient.gender==='male'" class="dot"><Strong class="gender">M</Strong></span>
                 </div>
-                <div class="alerts">
+                <!-- <div class="alerts">
                   <h3>Notes/Alerts</h3>
                   <p>{{selectedPatient.notesAndAlerts}}</p>
-                </div>
+                </div> -->
               </div>
             </div>
             <!-- <div class="patient-avt col-md-4">
@@ -88,68 +88,35 @@
         </div>
         <div class="visit-form row no-gutter">
 
-          <div class="col-12">
+          <!-- <div class="col-12">
               <button class="add-btn" (click)="updateVisit()" ><span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>Update Patient</button>
-          </div>
+          </div> -->
         <hr/>
         </div>
-
   </div>
+
   <div class="patient-info" *ngIf="!patientLoading && !patientEdit">
-    <div class="row">
-       <div class="patient-data-column">
+    <div class="row no-gutter">
+      <div class="patient-data-column">
         <div class="patient-data">
-          <div>
-            <span class="patient-name" (click)="goToPatientPanel()">{{patient.firstName}}&nbsp;{{patient.lastName}} <i *ngIf="patient.isPreferred" class="fa fa-star" aria-hidden="true"></i></span>
-            <span>{{patient.address.city}},&nbsp;{{patient.address.province}}</span>
+          <div class="">
+            <span class="patient-name">{{selectedPatient.firstName}}&nbsp;{{selectedPatient.lastName}}</span>
           </div>
           <div>
-            <span class="ref-num">{{patient.mobileNumber}}</span>&nbsp;&nbsp;
-            <span>{{getDate(patient.birthDate)}}</span>&nbsp;
-            <span>(Age: {{getAge(patient.birthDate)}})</span>&nbsp;
-            <span><i class="fas fa-gift gift" ></i></span>
-            <span *ngIf="patient.gender==='female'" class="dot"><Strong class="gender">F</Strong></span>
-            <span *ngIf="patient.gender==='male'" class="dot"><Strong class="gender">M</Strong></span>
-          </div>
-          <div>
-            <span><i class="fas fa-calendar"></i></span>
-            <span *ngIf="recentAppointments.length !== 0"><strong>{{getLastAppointment(recentAppointments).start | date}}</strong></span>
-            <span *ngIf="recentAppointments.length !== 0">{{getLastAppointment(recentAppointments).title}}</span> &nbsp;|&nbsp;
-            <span>{{getBalance() | currency:'USD':'symbol-narrow':'1.2-2'}}</span>
-          </div>
-          <div class="alerts">
-            <div class="panel-flex-row-edit-controls">
-              <h3>Notes/Alerts</h3>
-              <div *ngIf="editIsEnabled === false" class="panel-flex-row">
-                  <div class="editable-toggle" (click)="editPatientNotes()"><i class="fas fa-pencil"></i></div>
-              </div>
-              <div *ngIf="editIsEnabled === true">
-                <div class="edit-panel-flex-row edit-controls">
-                  <div class="editable-toggle" (click)="savePatientNotes()"><i class="fas fa-save"></i></div>
-                  <div class="editable-toggle" (click)="cancelPatientNotes()"><i class="fas fa-close"></i></div>
-                </div>
-              </div>
-            </div>
-            <div class="patient-notes-alerts-row">
-              <div *ngIf="editIsEnabled === false">
-                <p>{{patient.notesAndAlerts}}</p>
-              </div>
-              <div *ngIf="editIsEnabled === true" class="edit-panel-flex-row">
-                <mat-form-field class="edit-panel-flex-row">
-                  <textarea #patientNotesEntry matInput>{{patient.notesAndAlerts}}</textarea>
-                </mat-form-field>
-              </div>
-            </div>
+            <span>{{selectedPatient.address.city}},&nbsp;{{selectedPatient.address.province}}</span>&nbsp;&nbsp;&nbsp;
+            <span class="ref-num">{{selectedPatient.mobileNumber}}</span><br />
+            <span>{{getBirthday(selectedPatient.birthDate)}}</span>&nbsp;
+            <span>(Age: {{getAge(selectedPatient.birthDate)}})</span>&nbsp;
+            <span><i class="fas fa-gift gift"></i></span>
+            <span *ngIf="selectedPatient.gender==='female'" class="dot"><Strong class="gender">F</Strong></span>
+            <span *ngIf="selectedPatient.gender==='male'" class="dot"><Strong class="gender">M</Strong></span>
           </div>
         </div>
       </div>
-      <!-- <div class="col-4">
-        <img src="http://via.placeholder.com/150x150" class="patient-image">
-      </div> -->
     </div>
   </div>
 
-  <mat-accordion multi="true">
+  <!-- <mat-accordion multi="true">
     <mat-expansion-panel expanded id="services">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -183,11 +150,6 @@
             </mat-form-field>
           </div>
         </div>
-
-        <!-- <input type="text" [ngClass]="{
-            'notes-input': true,
-            'notes-inactive': visitNotesInactive
-          }" placeholder="Add a visit note" name="visitNotes" [formControl]="visitNotes"/> -->
       </div>
       <div class="sub-heading">
         Scheduled Appointments:
@@ -444,7 +406,7 @@
         <a>View More</a>
       </div>
     </mat-expansion-panel>
-  </mat-accordion>
+  </mat-accordion> -->
 </div>
 
 <mat-menu #statusMenu="matMenu" [overlapTrigger]="false">

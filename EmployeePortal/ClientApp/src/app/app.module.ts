@@ -108,6 +108,7 @@ import { OrganizationComponent } from './management/organization/organization.co
 import { OrgResourcesComponent } from './management/organization/org-resources/org-resources.component';
 import { OrgUsersComponent } from './management/organization/org-users/org-users.component';
 import { TasksComponent } from './schedule/tasks/tasks.component';
+import { ResourcesComponent } from './schedule/resources/resources.component';
 import { AppointmentsComponent } from './schedule/appointments/appointments.component';
 import { RoomsComponent } from './schedule/rooms/rooms.component';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -208,6 +209,7 @@ import { NgxImageEditorModule } from 'ngx-image-editor';
     BillingComponent,
     OrganizationComponent,
     TasksComponent,
+    ResourcesComponent,
     AppointmentsComponent,
     RoomsComponent,
     QuickLinksComponent,
