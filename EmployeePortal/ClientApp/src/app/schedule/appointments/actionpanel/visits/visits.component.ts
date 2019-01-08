@@ -32,6 +32,8 @@ import { MasterOverlayService } from '../../../../services/actionpanel.service';
 import { isNullOrUndefined } from 'util';
 import { CurrentDataService } from '../../../../services/currentData.service';
 import { ConfirmAppointmentDialogComponent } from '../../../../management/dialogs/confirm-appointment/confirm-appointment.component';
+import { HoursOfOperationService, getBusinessWeek } from '../../../../services/hoursofoperation.service';
+import { BusinessWeek } from '../../../../models/hoursofoperation';
 
 export const colorCodes = [
   {
@@ -107,7 +109,6 @@ export class VisitsComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   minimumDuration: number;
   clickEvent: AppointmentViewModel;
   customDuration: FormControl;
-  startTime = new Date();
   selectedStaff: number;
   showGift = false;
   cancelVisitComponentRef: MatDialogRef<CancelVisitDialogComponent>;
@@ -116,6 +117,15 @@ export class VisitsComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   durationOptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50,
     55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
    105, 110, 115, 120];
+
+  startTime = new Date();
+  endTime = new Date();
+  minTime = new Date();
+  maxTime = new Date();
+  defaultDate = new Date(Date.now());
+  startTimeIsReadonly = false;
+  endTimeIsReadonly = false;
+  private businessWeek = new BusinessWeek();
 
   constructor(
     private appointmentService: AppointmentService,
@@ -127,6 +137,7 @@ export class VisitsComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     private masterOverlayService: MasterOverlayService,
     private productService: ProductsService,
     private companyService: CompanyService,
+    private hoursOfOperationService: HoursOfOperationService,
     private servicesService: ServicesService,
     private eventService: EventsService,
     private staffsService: StaffsService,
@@ -151,17 +162,29 @@ export class VisitsComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     this.selectedProducts = [];
     this.patientLoading = true;
     this.appointmentsLoading = true;
-    this.getServicesByStaff(this.selectedStaff);
+    // this.getServicesByStaff(this.selectedStaff);
     this.route.params.takeUntil(this.unsub).subscribe(params => {
       this.visitIdString = params['id'];
       this.getVisitDetails();
       // this.productsListener();
     });
-    this.getAllAvailableProducts();
-    this.filteredProducts = this.selectedProduct.valueChanges.pipe(
-      startWith(''),
-      map(val => this.filter(val))
-    );
+
+    this.companyService.getCompanyById(1).subscribe(company => {
+      const companyId = company ? company.companyId : 0;
+
+      this.hoursOfOperationService.getHoursOfOperation(companyId).subscribe(
+        res => {
+          if (res) {
+            this.businessWeek = getBusinessWeek(res.hoursOfOperationDays);
+            const startTime = new Date(moment(this.clickEvent.start).toJSON());
+            this.setStartTime(startTime);
+            const endTime = new Date(moment(this.clickEvent.end).toJSON());
+            this.setEndTime(endTime);
+          }
+        }
+      );
+    });
+
     const snapshot = this.currentDataService.patients;
     snapshot.forEach(doc => {
       const patient = doc as Patient;
@@ -184,11 +207,32 @@ export class VisitsComponent implements OnInit, AfterViewInit, OnChanges, OnDest
         sendRetentionEmails: patient.sendRetentionEmails,
         isPreferred: patient.isPreferred,
         socialHistory: patient.socialHistory,
-        notesAndAlerts: patient.notesAndAlerts
+        notesAndAlerts: patient.notesAndAlerts,
+        services: patient.services
       };
       this.patientsSource.push(viewModel);
     });
     this.patients = this.patientsSource.slice();
+  }
+
+  private setStartTime(time: Date) {
+    const dayOfWeek = time.getDay();
+    const businessWeek = this.businessWeek;
+
+    this.minTime = businessWeek.openTime(dayOfWeek);
+    this.maxTime = businessWeek.closeTime(dayOfWeek);
+    this.startTime = businessWeek.isOpen(dayOfWeek, time) ? time : this.defaultDate;
+    this.startTimeIsReadonly = businessWeek.isClosed(dayOfWeek);
+  }
+
+  private setEndTime(time: Date) {
+    const dayOfWeek = time.getDay();
+    const businessWeek = this.businessWeek;
+
+    this.minTime = businessWeek.openTime(dayOfWeek);
+    this.maxTime = businessWeek.closeTime(dayOfWeek);
+    this.endTime = businessWeek.isOpen(dayOfWeek, time) ? time : this.defaultDate;
+    this.endTimeIsReadonly = businessWeek.isClosed(dayOfWeek);
   }
 
   filter(val: any): Product[] {
@@ -273,17 +317,17 @@ export class VisitsComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       this.visitNotes.setValue(this.visit.visitNotes);
     }
     this.patientId = this.visit.patientId;
-    this.productsListener();
+    // this.productsListener();
     this.sortAppointments();
     this.getPatientDetails();
-    const visitsSnapshot = this.currentDataService.visits.filter(v => v.patientId === this.patientId);
-    this.recentVisits = [];
-    visitsSnapshot.forEach(doc => {
-      const visit = doc as Visit;
-      this.recentVisits.push(visit);
-    });
-    this.compileAppointmentsFromRecentVisits();
-    this.compileProductsFromRecentVisits();
+    // const visitsSnapshot = this.currentDataService.visits.filter(v => v.patientId === this.patientId);
+    // this.recentVisits = [];
+    // visitsSnapshot.forEach(doc => {
+    //   const visit = doc as Visit;
+    //   this.recentVisits.push(visit);
+    // });
+    // this.compileAppointmentsFromRecentVisits();
+    // this.compileProductsFromRecentVisits();
 
     this.appointmentsLoading = false;
   }
@@ -625,6 +669,10 @@ export class VisitsComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     } else {
       return 'rgba(0,0,0,0)';
     }
+  }
+
+  addShift() {
+    this.showCreate = true;
   }
 
   newAppointment(event) {

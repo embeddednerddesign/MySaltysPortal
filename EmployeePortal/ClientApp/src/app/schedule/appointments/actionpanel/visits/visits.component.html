@@ -1,13 +1,13 @@
 <div class="re-links-container">
   <div class="re-links">
     <a (click)="closePanel()" class="close-panel"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-    <!-- <a>&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-    <a (click)="editVisit()" class="edit-panel"><i class="fa fa-pencil" aria-hidden="true"></i></a> -->
+    <a>&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+    <a (click)="editVisit()" class="edit-panel"><i class="fa fa-pencil" aria-hidden="true"></i></a>
   </div>
 </div>
 <div class="content" (keyup.enter)="onEnter()">
   <div class="patient-edit" *ngIf="patientEdit">
-    <!-- <div class="row">
+    <div class="row">
         <div class="col-md-12 patient-select">
             <label for="patientsAutoComplete">Select a New Patient</label>
             <kendo-autocomplete
@@ -56,7 +56,7 @@
               </ng-template>
             </kendo-autocomplete>
           </div>
-        </div> -->
+        </div>
 
 
         <div class="patient-info" *ngIf="selectedPatient">
@@ -88,9 +88,9 @@
         </div>
         <div class="visit-form row no-gutter">
 
-          <!-- <div class="col-12">
-              <button class="add-btn" (click)="updateVisit()" ><span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>Update Patient</button>
-          </div> -->
+        <div class="col-12">
+            <button class="add-btn" (click)="updateVisit()" ><span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>Update Patient</button>
+        </div>
         <hr/>
         </div>
   </div>
@@ -100,32 +100,32 @@
       <div class="patient-data-column">
         <div class="patient-data">
           <div class="">
-            <span class="patient-name">{{selectedPatient.firstName}}&nbsp;{{selectedPatient.lastName}}</span>
+            <span class="patient-name">{{patient.firstName}}&nbsp;{{patient.lastName}}</span>
           </div>
           <div>
-            <span>{{selectedPatient.address.city}},&nbsp;{{selectedPatient.address.province}}</span>&nbsp;&nbsp;&nbsp;
-            <span class="ref-num">{{selectedPatient.mobileNumber}}</span><br />
-            <span>{{getBirthday(selectedPatient.birthDate)}}</span>&nbsp;
-            <span>(Age: {{getAge(selectedPatient.birthDate)}})</span>&nbsp;
+            <span>{{patient.address.city}},&nbsp;{{patient.address.province}}</span>&nbsp;&nbsp;&nbsp;
+            <span class="ref-num">{{patient.mobileNumber}}</span><br />
+            <span>{{getBirthday(patient.birthDate)}}</span>&nbsp;
+            <span>(Age: {{getAge(patient.birthDate)}})</span>&nbsp;
             <span><i class="fas fa-gift gift"></i></span>
-            <span *ngIf="selectedPatient.gender==='female'" class="dot"><Strong class="gender">F</Strong></span>
-            <span *ngIf="selectedPatient.gender==='male'" class="dot"><Strong class="gender">M</Strong></span>
+            <span *ngIf="patient.gender==='female'" class="dot"><Strong class="gender">F</Strong></span>
+            <span *ngIf="patient.gender==='male'" class="dot"><Strong class="gender">M</Strong></span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- <mat-accordion multi="true">
+  <mat-accordion multi="true">
     <mat-expansion-panel expanded id="services">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Services
+          Shifts
         </mat-panel-title>
         <mat-panel-description>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div class="notes">
+      <!-- <div class="notes">
         <div class="sub-heading notes-sub-heading">
           <div>
             Visit Notes:
@@ -150,10 +150,10 @@
             </mat-form-field>
           </div>
         </div>
-      </div>
-      <div class="sub-heading">
+      </div> -->
+      <!-- <div class="sub-heading">
         Scheduled Appointments:
-      </div>
+      </div> -->
       <div class="appointments">
         <div class="row" *ngFor="let appointment of visitAppointments">
           <div class="appointment-panel col-12">
@@ -216,31 +216,21 @@
         </div>
       </div>
       <div id="addServiceRow" class="row">
-        <div class="selecter col-12">
-          <div class="form-field-container">
-            <mat-form-field [floatLabel]="'always'">
-              <mat-label>Add Service</mat-label>
-              <input type="text" matInput [formControl]="selectedProduct" placeholder="Search for a service" [matAutocomplete]="allServicesAuto"/>
-              <mat-autocomplete #allServicesAuto="matAutocomplete" (optionSelected)="newAppointment($event)">
-                  <mat-option *ngFor="let service of services">
-                    {{service.serviceName}}
-                  </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-          </div>
-          <div class="search-icon-container">
-            <div class="bullet" [inlineSVG]="'../../../assets/svg/search.svg'"></div>
-          </div>
+        <div class="selecter col-12" [ngClass]="{'hidden': showCreate}">
+          <button class="add-btn" (click)="addShift()">
+            <span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>
+            Add Shift
+          </button>
         </div>
       </div>
       <div class="add-appointment sub-heading" [ngClass]="{'hidden': !showCreate}">
-        Add an Appointment:
+        Add a Shift:
       </div>
       <div class="visit-form row no-gutter" [ngClass]="{'hidden': !showCreate}">
         <div class="col-6">
           <mat-form-field class="full service" [floatLabel]="'always'">
             <mat-select placeholder="Select Service" [(value)]="selectedService" name="services" (selectionChange)="serviceSelectionChange()">
-              <mat-option *ngFor="let service of services" [value]="service.serviceName">
+              <mat-option *ngFor="let service of currentDataService.services" [value]="service.serviceName">
                 {{ service.serviceName }}
               </mat-option>
             </mat-select>
@@ -262,13 +252,18 @@
           </div>
         </div>
         <div class="col-6">
-          <mat-form-field class="full" [floatLabel]="'always'">
+          <div class="full">
+            <label for="endTime">End Time</label>
+            <kendo-timepicker name="endTime" [steps]="{ minute: minimumDuration }" [min]="minTime" [max]="maxTime"
+              [(value)]="endTime"></kendo-timepicker>
+          </div>
+          <!-- <mat-form-field class="full" [floatLabel]="'always'">
             <mat-select placeholder="Duration (minutes)" [(ngModel)]="calculatedDuration" aria-label="Duration" [formControl]="customDuration">
               <mat-option *ngFor="let durOpt of durationOptions" [value]="durOpt">
                 {{ durOpt }}
               </mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
         <div class="col-12">
           <button class="add-btn" (click)="createAppointment()" [disabled]="!createOk()">
@@ -282,7 +277,7 @@
         (closeCancellationMessage)="onCloseAppointmentCancellation($event)" source="Appointment"></app-cancel-visit>
     </mat-expansion-panel>
 
-    <mat-expansion-panel expanded id="productsPanel">
+    <!-- <mat-expansion-panel expanded id="productsPanel">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Products
@@ -405,8 +400,8 @@
         </ul>
         <a>View More</a>
       </div>
-    </mat-expansion-panel>
-  </mat-accordion> -->
+    </mat-expansion-panel> -->
+  </mat-accordion>
 </div>
 
 <mat-menu #statusMenu="matMenu" [overlapTrigger]="false">

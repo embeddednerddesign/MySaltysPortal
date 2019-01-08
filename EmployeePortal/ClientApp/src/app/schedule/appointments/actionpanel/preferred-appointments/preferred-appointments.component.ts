@@ -211,7 +211,8 @@ export class PreferredAppointmentsComponent implements OnInit {
           sendRetentionEmails: patient.sendRetentionEmails,
           isPreferred: patient.isPreferred,
           socialHistory: patient.socialHistory,
-          notesAndAlerts: patient.notesAndAlerts
+          notesAndAlerts: patient.notesAndAlerts,
+          services: patient.services
         };
         this.patientsSource.push(viewModel);
       });
@@ -338,7 +339,8 @@ export class PreferredAppointmentsComponent implements OnInit {
       sendRetentionEmails: false,
       isPreferred: false,
       socialHistory: [],
-      notesAndAlerts: ''
+      notesAndAlerts: '',
+      services: []
     };
     this.patientService.addPatient(this.selectedPatient).subscribe(success => {
       this.selectedPatient.birthDate = moment(this.selectedPatient.birthDate).format('MM/DD/YYYY');

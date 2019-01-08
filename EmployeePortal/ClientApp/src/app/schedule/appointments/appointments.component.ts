@@ -288,9 +288,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
             },
             resources: (callback) => {
               const _resources = [];
-              this.currentDataService.staff.forEach(staff => {
-                  _resources.push({ id: staff.staffId, title: moment(this.currentDate).format("dddd, MMMM Do, YYYY") });
-              });
+              _resources.push({ id: 1, title: moment(this.currentDate).format("dddd, MMMM Do, YYYY") });
+              // this.currentDataService.staff.forEach(staff => {
+              //     _resources.push({ id: staff.staffId, title: moment(this.currentDate).format("dddd, MMMM Do, YYYY") });
+              // });
               callback(_resources);
             },
             select: (start, end, ev, view, resourceObj) => {
@@ -561,8 +562,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
         component.instance.start = moment(event.start).format('h:mm a');
         component.instance.end = moment(event.end).format('h:mm a');
         component.instance.className = event.className;
-        component.instance.color = event.color;
-        component.instance.serviceName = '';
+        component.instance.color = event.service.serviceIDColour;
+        component.instance.serviceName = event.service.serviceName;
         component.instance.id = event.appointmentId;
         component.instance.resourceId = event.resourceId;
         component.instance.source = event.source;

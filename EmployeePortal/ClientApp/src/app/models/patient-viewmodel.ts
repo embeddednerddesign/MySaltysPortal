@@ -1,7 +1,7 @@
 import { Address } from './address';
 import { Doctor } from './doctor';
 import { Pharmacy } from './pharmacy';
-import { PatientSocialHistoryEntry } from './patient';
+import { PatientSocialHistoryEntry, PatientService } from './patient';
 
 export class PatientViewModel {
     patientId: number;
@@ -26,4 +26,5 @@ export class PatientViewModel {
     isPreferred?: boolean;
     socialHistory?: PatientSocialHistoryEntry[];
     notesAndAlerts: string;
+    services: PatientService[];
   }

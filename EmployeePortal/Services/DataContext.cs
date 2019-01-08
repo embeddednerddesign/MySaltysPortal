@@ -22,6 +22,7 @@ namespace EmployeePortal
             builder.Entity<PackageService>().HasKey(p => new { p.ServiceId, p.PackageId });
             builder.Entity<SpecialProduct>().HasKey(p => new { p.ProductId, p.SpecialId });
             builder.Entity<StaffService>().HasKey(p => new { p.ServiceId, p.StaffId });
+            builder.Entity<PatientService>().HasKey(p => new { p.ServiceId, p.PatientId });
             builder.Entity<UserCategoryService>().HasKey(p => new { p.ServiceId, p.UserCategoryId });
             builder.Entity<PackageTax>().HasKey(p => new { p.PackageId, p.TaxId });
             builder.Entity<ProductTax>().HasKey(p => new { p.ProductId, p.TaxId });
@@ -72,6 +73,7 @@ namespace EmployeePortal
         public DbSet<Tax> Taxes { get; set; }
         public DbSet<Visit> Visits { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<PatientService> PatientService { get; set; }
         public DbSet<StaffService> StaffService { get; set; }
         public DbSet<StaffSchedule> StaffSchedules { get; set; }
         public DbSet<UserCategory> UserCategories { get; set; }

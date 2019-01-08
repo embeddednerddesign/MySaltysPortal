@@ -1,6 +1,7 @@
 import { Address } from './address';
 import { Doctor } from './doctor';
 import { Pharmacy } from './pharmacy';
+import { Service } from './service';
 
 export class Patient {
     patientId: number;
@@ -25,6 +26,13 @@ export class Patient {
     isPreferred?: boolean;
     socialHistory?: PatientSocialHistoryEntry[];
     notesAndAlerts: string;
+    services: PatientService[];
+}
+export interface PatientService {
+  serviceId: number;
+  service: Service;
+  patientId: number;
+  patient: Patient;
 }
 
 export class PatientSocialHistoryEntry {

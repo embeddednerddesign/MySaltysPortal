@@ -83,6 +83,7 @@ export class PatientService {
     isPreferred: false,
     socialHistory: [],
     notesAndAlerts: '',
+    services: [],
     email: '',
     homeNumber: '',
     mobileNumber: ''

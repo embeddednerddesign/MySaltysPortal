@@ -64,6 +64,8 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   view: Observable<Patient>;
   createPatientPanelVisible = false;
   patientSelected = false;
+  serviceSelected = false;
+  allServices: Service[];
   clickEvent: AppointmentViewModel;
 
   customDuration: FormControl;
@@ -82,7 +84,8 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   startTimeIsReadonly = false;
   endTimeIsReadonly = false;
   services: StaffService[] = [];
-  selectedService: number;
+  selectedServiceId: number;
+  selectedService: Service;
   calculatedDuration = '00:10:00';
   minimumDuration: number;
   selectedStaff: number;
@@ -140,9 +143,9 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       // }
     });
 
-    this._eventsService.updateCreateVisitResourceId$.subscribe(resource => {
-      this.selectedStaff = +resource;
-    });
+    // this._eventsService.updateCreateVisitResourceId$.subscribe(resource => {
+    //   this.selectedStaff = +resource;
+    // });
   }
 
   private setStartTime(time: Date) {
@@ -169,103 +172,15 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     this.customDuration.setValue(0);
     this.clickEvent = this.eventService.getTempEvent();
 
-    this.companyService.getCompanyById(1).subscribe(company => {
-      const thiscompany = company;
-      this.minimumDuration = thiscompany.minimumDuration;
-      if (this.customDuration.value === 0) {
-        this.customDuration.setValue(this.durationInMinutes);
-        this.durationInMinutes = this.minimumDuration.toString();
-      }
-
-      const companyId = company ? company.companyId : 0;
-
-      this.hoursOfOperationService.getHoursOfOperation(companyId).subscribe(
-        res => {
-          if (res) {
-            this.businessWeek = getBusinessWeek(res.hoursOfOperationDays);
-            const startTime = new Date(moment(this.clickEvent.start).toJSON());
-            this.setStartTime(startTime);
-            const endTime = new Date(moment(this.clickEvent.end).toJSON());
-            this.setEndTime(endTime);
-          }
-          // // if we got here from the Patient panel, load the selectedPatient
-          // if (this.patientService.previousPage !== '') {
-          //   this.patientSelect(this.patientService.patientPanelPatient);
-          //   const todayAt9am = new Date();
-          //   todayAt9am.setHours(9);
-          //   todayAt9am.setMinutes(0);
-          //   todayAt9am.setSeconds(0);
-          //   this.startTime = todayAt9am;
-          // }
-        },
-        err => {
-          // TODO: decide what to do with err
-        }
-      );
-    });
-
-    this.selectedStaff = Number(this.clickEvent.resourceId);
-    const endTime = moment(this.clickEvent.end);
-    const duration = moment.duration(endTime.diff(moment(this.clickEvent.start))).asMinutes();
-    this.customDuration.setValue(duration);
-    this.durationInMinutes = duration.toString();
-
-    this.getServicesByStaff(this.selectedStaff);
-    const snapshot = this.currentDataService.patients;
-    snapshot.forEach(doc => {
-      const patient = doc as Patient;
-      const viewModel: PatientViewModel = {
-        patientId: patient.patientId,
-        firstName: patient.firstName,
-        lastName: patient.lastName,
-        birthDate: patient.birthDate,
-        homeNumber: patient.homeNumber,
-        mobileNumber: patient.mobileNumber,
-        clientId: patient.clientId,
-        email: patient.email,
-        nickName: patient.nickName,
-        gender: patient.gender,
-        address: patient.address,
-        addressId: patient.addressId,
-        familyPhysician: patient.familyPhysician,
-        doctorId: patient.doctorId,
-        preferredPharmacy: patient.preferredPharmacy,
-        pharmacyId: patient.pharmacyId,
-        communicationPreference: patient.communicationPreference,
-        sendAppointmentNotifications: patient.sendAppointmentNotifications,
-        sendRetentionEmails: patient.sendRetentionEmails,
-        isPreferred: patient.isPreferred,
-        socialHistory: patient.socialHistory,
-        notesAndAlerts: patient.notesAndAlerts
-      };
-      this.patientsSource.push(viewModel);
-      this.patients = this.patientsSource.slice();
-    });
-    this._eventsService.currentDate.takeUntil(this.unsub).subscribe(date => {
-      this.date = date;
-    });
-    this._eventsService.closeCreateVisitPanelListener.takeUntil(this.unsub).subscribe(() => {
-      this.closePanel();
-    });
-  }
-
-  ngAfterViewInit() {}
-
-  ngOnDestroy() {
-    this.unsub.next();
-    this.unsub.complete();
-  }
-
-  createPatient() {
     this.selectedPatient = {
       patientId: 0,
-      clientId: this.mspNumber.value,
-      firstName: this.firstName.value,
-      lastName: this.lastName.value,
-      birthDate: this.bdate.value.toJSON(),
+      clientId: 0,
+      firstName: '',
+      lastName: '',
+      birthDate: '',
       homeNumber: '',
-      mobileNumber: this.phoneNumber.value,
-      email: this.emailAddress.value,
+      mobileNumber: '',
+      email: '',
       address: {
         address1: '',
         address2: '',
@@ -318,31 +233,193 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       sendRetentionEmails: false,
       isPreferred: false,
       socialHistory: [],
-      notesAndAlerts: ''
+      notesAndAlerts: '',
+      services: []
     };
-    this.patientService.addPatient(this.selectedPatient).subscribe(success => {
-      this.selectedPatient.birthDate = moment(this.selectedPatient.birthDate).format('MMMM Do YYYY');
-      this.createPatientPanelVisible = false;
-      this.patientSelected = true;
+
+    this.allServices = [];
+    this.servicesService.getServices().subscribe(s => {
+      s.forEach(serv => {
+        this.allServices.push(serv);
+      });
+    });
+
+    this.companyService.getCompanyById(1).subscribe(company => {
+      const thiscompany = company;
+      this.minimumDuration = thiscompany.minimumDuration;
+      if (this.customDuration.value === 0) {
+        this.customDuration.setValue(this.durationInMinutes);
+        this.durationInMinutes = this.minimumDuration.toString();
+      }
+
+      const companyId = company ? company.companyId : 0;
+
+      this.hoursOfOperationService.getHoursOfOperation(companyId).subscribe(
+        res => {
+          if (res) {
+            this.businessWeek = getBusinessWeek(res.hoursOfOperationDays);
+            const startTime = new Date(moment(this.clickEvent.start).toJSON());
+            this.setStartTime(startTime);
+            const endTime = new Date(moment(this.clickEvent.end).toJSON());
+            this.setEndTime(endTime);
+          }
+          // // if we got here from the Patient panel, load the selectedPatient
+          // if (this.patientService.previousPage !== '') {
+          //   this.patientSelect(this.patientService.patientPanelPatient);
+          //   const todayAt9am = new Date();
+          //   todayAt9am.setHours(9);
+          //   todayAt9am.setMinutes(0);
+          //   todayAt9am.setSeconds(0);
+          //   this.startTime = todayAt9am;
+          // }
+        },
+        err => {
+          // TODO: decide what to do with err
+        }
+      );
+    });
+
+    // this.selectedStaff = Number(this.clickEvent.resourceId);
+    const endTime = moment(this.clickEvent.end);
+    const duration = moment.duration(endTime.diff(moment(this.clickEvent.start))).asMinutes();
+    this.customDuration.setValue(duration);
+    this.durationInMinutes = duration.toString();
+
+    // this.getServicesByStaff(this.selectedStaff);
+    const snapshot = this.currentDataService.patients;
+    snapshot.forEach(doc => {
+      const patient = doc as Patient;
+      const viewModel: PatientViewModel = {
+        patientId: patient.patientId,
+        firstName: patient.firstName,
+        lastName: patient.lastName,
+        birthDate: patient.birthDate,
+        homeNumber: patient.homeNumber,
+        mobileNumber: patient.mobileNumber,
+        clientId: patient.clientId,
+        email: patient.email,
+        nickName: patient.nickName,
+        gender: patient.gender,
+        address: patient.address,
+        addressId: patient.addressId,
+        familyPhysician: patient.familyPhysician,
+        doctorId: patient.doctorId,
+        preferredPharmacy: patient.preferredPharmacy,
+        pharmacyId: patient.pharmacyId,
+        communicationPreference: patient.communicationPreference,
+        sendAppointmentNotifications: patient.sendAppointmentNotifications,
+        sendRetentionEmails: patient.sendRetentionEmails,
+        isPreferred: patient.isPreferred,
+        socialHistory: patient.socialHistory,
+        notesAndAlerts: patient.notesAndAlerts,
+        services: patient.services
+      };
+      this.patientsSource.push(viewModel);
+      this.patients = this.patientsSource.slice();
+    });
+    this._eventsService.currentDate.takeUntil(this.unsub).subscribe(date => {
+      this.date = date;
+    });
+    this._eventsService.closeCreateVisitPanelListener.takeUntil(this.unsub).subscribe(() => {
+      this.closePanel();
     });
   }
+
+  ngAfterViewInit() {}
+
+  ngOnDestroy() {
+    this.unsub.next();
+    this.unsub.complete();
+  }
+
+  // createPatient() {
+  //   this.selectedPatient = {
+  //     patientId: 0,
+  //     clientId: this.mspNumber.value,
+  //     firstName: this.firstName.value,
+  //     lastName: this.lastName.value,
+  //     birthDate: this.bdate.value.toJSON(),
+  //     homeNumber: '',
+  //     mobileNumber: this.phoneNumber.value,
+  //     email: this.emailAddress.value,
+  //     address: {
+  //       address1: '',
+  //       address2: '',
+  //       city: '',
+  //       country: 'Canada',
+  //       postalCode: '',
+  //       province: 'British Columbia'
+  //     },
+  //     familyPhysician: {
+  //       doctorId: 0,
+  //       proTitle: '',
+  //       firstName: '',
+  //       lastName: '',
+  //       address: {
+  //         address1: '',
+  //         address2: '',
+  //         city: '',
+  //         country: 'Canada',
+  //         postalCode: '',
+  //         province: 'British Columbia'
+  //       },
+  //       phoneNumber: '',
+  //       faxNumber: '',
+  //       email: '',
+  //       website: '',
+  //       hoursOfOperation: null,
+  //       specialty: '',
+  //     },
+  //     preferredPharmacy: {
+  //       pharmacyId: 0,
+  //       name: '',
+  //       address: {
+  //         address1: '',
+  //         address2: '',
+  //         city: '',
+  //         country: 'Canada',
+  //         postalCode: '',
+  //         province: 'British Columbia'
+  //       },
+  //       phoneNumber1: '',
+  //       phoneNumber2: '',
+  //       phoneNumber3: '',
+  //       faxNumber: '',
+  //       email: '',
+  //       website: '',
+  //       hoursOfOperation: null
+  //     },
+  //     communicationPreference: '',
+  //     sendAppointmentNotifications: false,
+  //     sendRetentionEmails: false,
+  //     isPreferred: false,
+  //     socialHistory: [],
+  //     notesAndAlerts: '',
+  //     services: []
+  //   };
+  //   this.patientService.addPatient(this.selectedPatient).subscribe(success => {
+  //     this.selectedPatient.birthDate = moment(this.selectedPatient.birthDate).format('MMMM Do YYYY');
+  //     this.createPatientPanelVisible = false;
+  //     this.patientSelected = true;
+  //   });
+  // }
 
   public color(code: string): any {
     const color = colorCodes.find(x => x.code === code);
     return color;
   }
 
-  newPatientHandler() {
-    const autoCompleteText = this.patientsAutoComplete.text.split(' ');
-    this.firstName.setValue(autoCompleteText[0]);
-    if (autoCompleteText.length > 1) {
-      this.lastName.setValue(autoCompleteText[1]);
-    }
-    this.patientsAutoComplete.toggle(false);
-    this.patientSelected = false;
-    this.selectedPatient = null;
-    this.createPatientPanelVisible = true;
-  }
+  // newPatientHandler() {
+  //   const autoCompleteText = this.patientsAutoComplete.text.split(' ');
+  //   this.firstName.setValue(autoCompleteText[0]);
+  //   if (autoCompleteText.length > 1) {
+  //     this.lastName.setValue(autoCompleteText[1]);
+  //   }
+  //   this.patientsAutoComplete.toggle(false);
+  //   this.patientSelected = false;
+  //   this.selectedPatient = null;
+  //   this.createPatientPanelVisible = true;
+  // }
 
   patientSelect(patient: any): void {
     this.selectedPatient = patient as Patient;
@@ -386,29 +463,22 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['/schedule', { outlets: { 'action-panel': ['visit-details', this.visit.visitId] } }]);
   }
 
-  staffSelectionChanged() {
-    this.selectedService = 0;
-    this.getServicesByStaff(this.selectedStaff);
-  }
+  // staffSelectionChanged() {
+  //   this.selectedServiceId = 0;
+  //   this.getServicesByStaff(this.selectedStaff);
+  // }
 
   serviceSelectionChange() {
-    if (!this.clickEvent.isSelection) {
-      this.servicesService
-        .getServiceById(this.selectedService)
-        .pipe(take(1))
-        .subscribe(service => {
-          this.customDuration.setValue(service.defaultDurationMinutes);
-        });
-    }
+    this.serviceSelected = true;
   }
 
-  getServicesByStaff(selectedStaff) {
-    this.services = [];
-    this.staffsService.getStaffById(this.selectedStaff).subscribe(snapshot => {
-      const staffMember = snapshot as Staff;
-      this.services = staffMember.services;
-    });
-  }
+  // getServicesByStaff(selectedStaff) {
+  //   this.services = [];
+  //   this.staffsService.getStaffById(this.selectedStaff).subscribe(snapshot => {
+  //     const staffMember = snapshot as Staff;
+  //     this.services = staffMember.services;
+  //   });
+  // }
 
   getGender(patient) {
     if (patient.gender === 'Female') {
@@ -420,20 +490,20 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  getLastAppointment(appointments) {
-    const lastAppointmentDate = new Date(
-      Math.max.apply(
-        null,
-        appointments.map(function(appointment) {
-          return new Date(appointment.start);
-        })
-      )
-    );
-    const xx = appointments.find(appointment => {
-      return new Date(appointment.start).getUTCDate() === lastAppointmentDate.getUTCDate();
-    });
-    return xx;
-  }
+  // getLastAppointment(appointments) {
+  //   const lastAppointmentDate = new Date(
+  //     Math.max.apply(
+  //       null,
+  //       appointments.map(function(appointment) {
+  //         return new Date(appointment.start);
+  //       })
+  //     )
+  //   );
+  //   const xx = appointments.find(appointment => {
+  //     return new Date(appointment.start).getUTCDate() === lastAppointmentDate.getUTCDate();
+  //   });
+  //   return xx;
+  // }
 
   patientValueChange(event) {}
 
@@ -464,7 +534,7 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   createOk(): boolean {
-    if (this.patientSelected && this.startTime) {
+    if (this.patientSelected && this.serviceSelected && this.startTime) {
       return true;
     } else {
       return false;
@@ -527,29 +597,29 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       title: this.selectedPatient.firstName + ' ' + this.selectedPatient.firstName,
       start: time.toISOString(true),
       end: endTime.toISOString(true),
-      resourceId: this.selectedStaff.toString(),
+      resourceId: '1',
       visitIdString: this.selectedPatient.clientId.toString() + this.date.toDateString(),
       cancellationReason: '',
       isCancellationAlert: false,
       cancellationDate: null,
       cancelled: false,
       editing: false,
-      service: null,
-      serviceId: null,
+      service: this.selectedService,
+      serviceId: this.selectedService.serviceId,
       color: colorcode,
       visitId: this.visit.visitId
     };
 
     // check if the selected Staff Member is available during this time based on their StaffSchedule
-    let available: Boolean = false;
-    const staffSched = this.currentDataService.staff.find(s => s.staffId === this.selectedStaff).staffSchedules;
-    staffSched.forEach(ss => {
-      const schedStartTime = moment(ss.start);
-      const schedEndTime = moment(ss.end);
-      if (schedStartTime.isSameOrBefore(time) && schedEndTime.isSameOrAfter(endTime)) {
-        available = true;
-      }
-    });
+    const available: Boolean = false;
+    // const staffSched = this.currentDataService.staff.find(s => s.staffId === this.selectedStaff).staffSchedules;
+    // staffSched.forEach(ss => {
+    //   const schedStartTime = moment(ss.start);
+    //   const schedEndTime = moment(ss.end);
+    //   if (schedStartTime.isSameOrBefore(time) && schedEndTime.isSameOrAfter(endTime)) {
+    //     available = true;
+    //   }
+    // });
 
     if (!available) {
       this.confirmAppointment(event);

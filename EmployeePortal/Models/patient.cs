@@ -1,4 +1,5 @@
 using EmployeePortal.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +22,7 @@ namespace EmployeePortal.Models
         public bool isPreferred { get; set; }
         public string notesAndAlerts { get; set; }
 
+        public virtual ICollection<PatientService> services { get; set; }
         public virtual ICollection<PatientSocialHistoryEntry> socialHistory { get; set; }
         public int? addressId { get; set; }
         public virtual Address address { get; set; }
@@ -28,6 +30,15 @@ namespace EmployeePortal.Models
         public virtual Doctor familyPhysician { get; set; }
         public int? pharmacyId { get; set; }
         public virtual Pharmacy preferredPharmacy { get; set; }
+    }
+
+    public class PatientService
+    {
+        public int ServiceId { get; set; }
+        public Service Service { get; set; }
+        public int PatientId { get; set; }
+        [JsonIgnore]
+        public Patient Patient { get; set; }
     }
 
     public class PatientSocialHistoryEntry {

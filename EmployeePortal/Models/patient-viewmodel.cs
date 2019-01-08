@@ -20,6 +20,7 @@ namespace EmployeePortal.Models
         public bool sendRetentionEmails { get; set; }
         public bool isPreferred { get; set; }
         public string notesAndAlerts { get; set; }
+        public virtual ICollection<PatientService> services { get; set; }
         public virtual ICollection<PatientSocialHistoryEntry> socialHistory { get; set; }
         public int? addressId { get; set; }
         public virtual Address address { get; set; }

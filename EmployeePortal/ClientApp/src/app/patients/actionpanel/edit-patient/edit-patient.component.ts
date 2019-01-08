@@ -397,7 +397,8 @@ constructor(private patientService: PatientService,
       sendRetentionEmails: false,
       isPreferred: false,
       socialHistory: [],
-      notesAndAlerts: ''
+      notesAndAlerts: '',
+      services: []
       };
     return patient;
   }
