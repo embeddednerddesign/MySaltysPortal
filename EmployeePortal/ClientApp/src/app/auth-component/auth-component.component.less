@@ -16,24 +16,30 @@ input, textarea, [contenteditable] {
     width: 100%;
   }
 
-  .example-full-width {
+  .full-width {
     width: 100%;
   }
 
-  .example-container {
-    min-height: 33.5em;
-    min-width: 35em;
+  .login-container {
+    min-height: 20em;
+    min-width: 50em;
     display: block;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -17em 0 0 -17.5em;
+    margin: -12em 0 0 -25em;
     background-color: #d64412;
     color: #faf8f2;
     padding: 2.5em;
+    border-radius: 1em;
   }
+
   mat-card-content {
     margin-top: 5em;
+  }
+
+  mat-card-actions {
+    padding: 0 !important;
   }
 
   .mat-card-subtitle, .mat-hint{
@@ -107,6 +113,7 @@ input:-webkit-autofill {
     font-weight: 600;
     letter-spacing: 2px;
     font-family: 'Montserrat', sans-serif;
+    border-radius: 2em;
   }
 
   .errorBox {

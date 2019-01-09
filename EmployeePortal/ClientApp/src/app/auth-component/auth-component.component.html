@@ -1,14 +1,10 @@
 <ngx-loading [show]="loading"></ngx-loading>
 
 <div class="component-wrapper">
-  <mat-card class="example-container">
-    <!-- <div class="header-section"> -->
-      <mat-card-subtitle>Sign in to continue.</mat-card-subtitle>
-    <!-- </div> -->
-
+  <mat-card class="login-container">
     <mat-card-content>
     <form class="example-form">
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="full-width">
         <input matInput placeholder="Email" [formControl]="emailFormControl"
           [errorStateMatcher]="matcher">
         <mat-hint>Enter the email address associated with your account.</mat-hint>
@@ -19,7 +15,7 @@
           Email is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="example-full-width password">
+      <mat-form-field class="full-width password">
         <input matInput type="password" placeholder="Password" [formControl]="passwordFormControl"
           [errorStateMatcher]="matcher">
         <mat-hint>Enter your password.</mat-hint>
