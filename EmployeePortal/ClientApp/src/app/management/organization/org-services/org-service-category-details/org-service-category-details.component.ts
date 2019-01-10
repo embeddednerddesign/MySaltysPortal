@@ -19,11 +19,11 @@ import { ManageCategoriesDialogComponent } from '../../../dialogs/manage-categor
 import { CategoryType } from '../../../../models/category-type';
 
 @Component({
-  selector: 'app-service-category-details',
-  templateUrl: './service-category-details.component.html',
-  styleUrls: ['./service-category-details.component.less']
+  selector: 'app-org-service-category-details',
+  templateUrl: './org-service-category-details.component.html',
+  styleUrls: ['./org-service-category-details.component.less']
 })
-export class ServiceCategoryDetailsComponent implements OnInit, OnDestroy {
+export class OrgServiceCategoryDetailsComponent implements OnInit, OnDestroy {
   @Input()
   public category: ServiceCategory;
   searchValue = '';
@@ -159,47 +159,48 @@ export class ServiceCategoryDetailsComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.categories = [];
     this.services = [];
-    this.servicesService.getServiceCategories().subscribe(res => {
-      if (res.length > 0) {
-        res.forEach(doc => {
-          const docData = doc;
-          const pushItem: ServiceCategory = {
-            serviceCategoryId: docData.serviceCategoryId,
-            name: docData.name
-          };
-          this.categories.push(pushItem);
-        });
-        this.servicesService.getServices().subscribe(result => {
-          result.forEach(scdoc => {
-            const scdocData = scdoc;
-            const scpushItem: Service = {
-              serviceId: scdocData.serviceId,
-              quantity: scdocData.quantity,
-              serviceIDColour: scdocData.serviceIDColour,
-              templateIcon: scdocData.templateIcon,
-              serviceName: scdocData.serviceName,
-              serviceAltName: scdocData.serviceAltName,
-              diagnosticCode: scdocData.diagnosticCode,
-              subType: scdocData.subType,
-              status: scdocData.status,
-              serviceCategoryId: scdocData.serviceCategoryId,
-              category: scdocData.category,
-              defaultDurationMinutes: scdocData.defaultDurationMinutes,
-              defaultPrice: scdocData.defaultPrice,
-              billingCode: scdocData.billingCode,
-              governmentBilling: scdocData.governmentBilling,
-              serviceReqProductsString: scdocData.serviceReqProductsString,
-              serviceRecProductsString: scdocData.serviceRecProductsString
-                };
-            this.services.push(scpushItem);
-          });
-          this.loadItems();
-          this.loading = false;
-        });
-      } else {
-        this.loading = false;
-      }
+    this.servicesService.getServices().subscribe(result => {
+      result.forEach(scdoc => {
+        const scdocData = scdoc;
+        const scpushItem: Service = {
+          serviceId: scdocData.serviceId,
+          quantity: scdocData.quantity,
+          serviceIDColour: scdocData.serviceIDColour,
+          templateIcon: scdocData.templateIcon,
+          serviceName: scdocData.serviceName,
+          serviceAltName: scdocData.serviceAltName,
+          diagnosticCode: scdocData.diagnosticCode,
+          subType: scdocData.subType,
+          status: scdocData.status,
+          serviceCategoryId: scdocData.serviceCategoryId,
+          category: scdocData.category,
+          defaultDurationMinutes: scdocData.defaultDurationMinutes,
+          defaultPrice: scdocData.defaultPrice,
+          billingCode: scdocData.billingCode,
+          governmentBilling: scdocData.governmentBilling,
+          serviceReqProductsString: scdocData.serviceReqProductsString,
+          serviceRecProductsString: scdocData.serviceRecProductsString
+            };
+        this.services.push(scpushItem);
+      });
+      this.loadItems();
+      this.loading = false;
     });
+
+    // this.servicesService.getServiceCategories().subscribe(res => {
+    //   if (res.length > 0) {
+    //     res.forEach(doc => {
+    //       const docData = doc;
+    //       const pushItem: ServiceCategory = {
+    //         serviceCategoryId: docData.serviceCategoryId,
+    //         name: docData.name
+    //       };
+    //       this.categories.push(pushItem);
+    //     });
+    //   } else {
+    //     this.loading = false;
+    //   }
+    // });
   }
 
   addService(service: Service) {

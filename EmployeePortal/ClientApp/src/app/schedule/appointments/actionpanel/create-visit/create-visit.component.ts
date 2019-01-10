@@ -97,6 +97,8 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   private businessWeek = new BusinessWeek();
   visit: Visit;
 
+  staffFullName: string = '';
+
   durationOptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50,
                          55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
                         105, 110, 115, 120];
@@ -425,6 +427,8 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedPatient = patient as Patient;
     this.patientSelected = true;
     this.createPatientPanelVisible = false;
+    console.log('patientSelect');
+    this.staffFullName = patient.firstName + ' ' + patient.lastName;
 
     const visitIdString = this.selectedPatient.patientId.toString() + this.date.toDateString();
     this._visitService.getVisitByEvent(visitIdString).pipe(takeUntil(this.unsub)).subscribe(visit => {
@@ -505,7 +509,9 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   //   return xx;
   // }
 
-  patientValueChange(event) {}
+  patientValueChange(event) {
+    console.log('event -> ', event);
+  }
 
   formatValue(itemText: string, autocomplete) {
     // tslint:disable-next-line:quotemark
@@ -621,11 +627,12 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     //   }
     // });
 
-    if (!available) {
-      this.confirmAppointment(event);
-    } else {
-      this.addAppointmentToDbAndUI(event);
-    }
+    this.addAppointmentToDbAndUI(event);
+    // if (!available) {
+    //   this.confirmAppointment(event);
+    // } else {
+    //   this.addAppointmentToDbAndUI(event);
+    // }
   }
   addAppointmentToDbAndUI(appointment: Appointment) {
     const event: DbAppointment = {

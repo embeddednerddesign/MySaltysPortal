@@ -11,7 +11,7 @@
   <div class="row no-gutter">
     <div class="col-12 patient-select">
       <label for="patientsAutoComplete">Select a Staff Member</label>
-      <kendo-autocomplete name="patientsAutoComplete" #patientsAutoComplete [data]="patients" [valueField]="'firstName'"
+      <kendo-autocomplete name="patientsAutoComplete" #patientsAutoComplete [data]="patients" [value]="staffFullName"
         [placeholder]="'Enter a name..'" class="full" (valueChange)="patientValueChange($event)" [filterable]="true"
         (filterChange)="handleFilter($event)" (focus)="onPatientAutoCompleteFocus()">
         <ng-template kendoDropDownListItemTemplate let-dataItem>
@@ -103,7 +103,7 @@
 
   <hr>
 
-  <div class="patient-info" *ngIf="patientSelected">
+  <!-- <div class="patient-info" *ngIf="patientSelected">
     <div class="row no-gutter">
       <div class="patient-data-column">
         <div class="patient-data">
@@ -119,17 +119,10 @@
             <span *ngIf="selectedPatient.gender==='female'" class="dot"><Strong class="gender">F</Strong></span>
             <span *ngIf="selectedPatient.gender==='male'" class="dot"><Strong class="gender">M</Strong></span>
           </div>
-          <!-- <div class="alerts">
-            <h3>Notes/Alerts</h3>
-            <p>{{selectedPatient.notesAndAlerts}}</p>
-          </div> -->
         </div>
       </div>
-      <!-- <div class="patient-avt col-md-4">
-        <img src="http://via.placeholder.com/150x150" class="patient-image">
-      </div> -->
     </div>
-  </div>
+  </div> -->
   <div class="visit-form row no-gutter">
       <!-- <div class="appointments col-12">
           <div *ngFor="let appointment of appointments; let i = index">

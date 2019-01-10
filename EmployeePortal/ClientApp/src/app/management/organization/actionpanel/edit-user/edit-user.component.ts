@@ -63,6 +63,7 @@ export class EditUserComponent implements OnInit, AfterViewInit, OnDestroy {
   countriesOfTheWorld: string[] = [];
   provincesAndStates: string[] = [];
   userCategories: UserCategory[] = [{ userCategoryId: 0, categoryName: '' }];
+  allUserRoles: string[] = ['Admin', 'Manager', 'Staff'];
 
   submitButtonDisabledState = false;
 

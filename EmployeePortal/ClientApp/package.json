@@ -59,6 +59,7 @@
     "npm": "^5.8.0",
     "primeng": "^5.2.4",
     "rxjs": "^5.5.8",
+    "simple-pdf-viewer": "^2.0.3",
     "tui-image-editor": "^3.2.2",
     "zone.js": "^0.8.19"
   },

@@ -4,7 +4,7 @@
 <mat-expansion-panel [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Users
+      Services
     </mat-panel-title>
     <mat-panel-description>
     </mat-panel-description>
@@ -19,20 +19,23 @@
     [filter]="gridState.filter"
     filterable="menu"
     (add)="onAddClick($event)"
-    (cancel)="cancelHandler($event)"
-    (save)="saveHandler($event)"
     (edit)="editHandler($event)"
     (remove)="removeHandler($event)"
+    [class]="'color-picker-test'"
   >
   <ng-template kendoGridToolbarTemplate>
-    <button kendoGridAddCommand class="k-button">Add User</button>
+    <button kendoGridAddCommand class="k-button">Add Service</button>
   </ng-template>
-
-  <kendo-grid-column field="firstName" title="First Name" width="150px"></kendo-grid-column>
-  <kendo-grid-column field="lastName" title="Last Name" width="150px"></kendo-grid-column>
-  <kendo-grid-column field="avatar" title="Avatar" width="125px"></kendo-grid-column>
-  <kendo-grid-column field="phoneNumber" title="Phone #" width="125px"></kendo-grid-column>
-  <kendo-grid-column field="email" title="Email" width="125px"></kendo-grid-column>
+  <kendo-grid-column field="templateIcon" title="" min-width="25px" max-width="25px" width="25px" [class]="'icon-column'">
+    <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+      <span [class]=dataItem.templateIcon [style.font-size.px]="32" [style.color]="'whitesmoke'"
+            [style.backgroundColor]="dataItem.serviceIDColour ? dataItem.serviceIDColour : 'transparent'"
+            [style.min-width.px]=52 [style.paddingTop.px]=0 [style.paddingRight.px]=45 [style.border-radius.px]=10>
+      </span>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="serviceName" title="Service Name" width="150px"></kendo-grid-column>
+  <kendo-grid-column field="defaultDurationMinutes" title="Default Shift Duration" width="85px"></kendo-grid-column>
   <kendo-grid-command-column title="Actions" min-width="25px" max-width="25px" width="25px">
     <ng-template kendoGridCellTemplate let-isNew="isNew">
       <button kendoGridEditCommand iconClass="fal fa-edit" style="background: none; border: none; height: 100%; font-size: 20px"></button>
@@ -44,7 +47,4 @@
   </kendo-grid>
 </mat-expansion-panel>
 
-<p-overlayPanel #hoverPanel id="hoverPanel" [dismissable]="'false'">
-  Content
-</p-overlayPanel>
 <app-actionpanel></app-actionpanel>

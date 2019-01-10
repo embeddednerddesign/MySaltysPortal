@@ -378,9 +378,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
                   // }
                   // this.eventsService.setSelectedDate(date);
                 // } else {
-                  this.calendarDate = value;
-                  this.currentDate = value;
-                  this.currentDataService.currentDate = value;
+                  this.calendarDate = new Date(value);
+                  this.currentDate = new Date(value);
+                  this.currentDataService.currentDate = new Date(value);
+
+
+                  // this.visitSchedule.resources = [{ id: 1, title: moment(this.currentDate).format("dddd, MMMM Do, YYYY") }];
+                  this.optionsConfig.resources(resources => {
+                    resources.forEach(resource => {
+                      console.log('update the resource title -> ', resource);
+                      resource.title = moment(this.currentDate).format("dddd, MMMM Do, YYYY");
+                    });
+                  });
+                  this.visitSchedule.refetchResources();
+
                   this.loading = this.currentDataService.checkIfDataRefreshRequired();
                   const maxTime = moment(this.currentDataService.company.hoursOfOperation.hoursOfOperationDays[this.currentDate.getDay()]
                       .closeTime).hours().toString() + ':00:00';
@@ -390,7 +401,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
                   const view = this.visitSchedule.getView();
                   view.options.minTime = minTime;
                   view.options.maxTime = maxTime;
-                  this.visitSchedule.gotoDate(value);
+                  this.visitSchedule.gotoDate(this.currentDataService.currentDate);
                 // }
               }
             }
@@ -715,42 +726,42 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
     }
 
     eventHover(event, hoverPanel) {
-      if (event.jsEvent.type === 'mouseenter' && !this.overlayhovered && !this.contextMenuOpen) {
-        this.hoverDebounce = true;
-        this.hoverDebounceTimer = setTimeout(() => {
-          if (this.hoverDebounce) {
-            this.overlayhovered = true;
-            this.hoveredEvent = event.calEvent;
-            hoverPanel.style.opacity = 1;
-            const tempEvent: Event = this.currentDataService.appointments[this.currentDataService.appointments.findIndex(appt => appt.appointmentId === event.calEvent.appointmentId)];
-            if (!tempEvent.className.includes('event-hover')) {
-              tempEvent.className.push('event-hover');
-            }
-            this.updateEventInUI(tempEvent, false);
-          }
-        }, 250);
-      }
+      // if (event.jsEvent.type === 'mouseenter' && !this.overlayhovered && !this.contextMenuOpen) {
+      //   this.hoverDebounce = true;
+      //   this.hoverDebounceTimer = setTimeout(() => {
+      //     if (this.hoverDebounce) {
+      //       this.overlayhovered = true;
+      //       this.hoveredEvent = event.calEvent;
+      //       hoverPanel.style.opacity = 1;
+      //       const tempEvent: Event = this.currentDataService.appointments[this.currentDataService.appointments.findIndex(appt => appt.appointmentId === event.calEvent.appointmentId)];
+      //       if (!tempEvent.className.includes('event-hover')) {
+      //         tempEvent.className.push('event-hover');
+      //       }
+      //       this.updateEventInUI(tempEvent, false);
+      //     }
+      //   }, 250);
+      // }
     }
 
     eventMouseout(event) {
-      if (event.jsEvent.type === 'mouseleave' && !this.mouseIsDown) {
-        this.hoverDebounce = false;
-        clearTimeout(this.timer);
-        const tempEvent: Event = this.currentDataService.appointments[this.currentDataService.appointments.findIndex(appt => appt.appointmentId === event.calEvent.appointmentId)];
-        this.currentDataService.appointments.splice(this.currentDataService.appointments.findIndex(appt => appt.appointmentId === event.calEvent.appointmentId), 1);
-        const index = tempEvent.className.indexOf('event-hover');
-        tempEvent.className.splice(index, 1);
-        this.currentDataService.appointments.push(tempEvent);
+      // if (event.jsEvent.type === 'mouseleave' && !this.mouseIsDown) {
+      //   this.hoverDebounce = false;
+      //   clearTimeout(this.timer);
+      //   const tempEvent: Event = this.currentDataService.appointments[this.currentDataService.appointments.findIndex(appt => appt.appointmentId === event.calEvent.appointmentId)];
+      //   this.currentDataService.appointments.splice(this.currentDataService.appointments.findIndex(appt => appt.appointmentId === event.calEvent.appointmentId), 1);
+      //   const index = tempEvent.className.indexOf('event-hover');
+      //   tempEvent.className.splice(index, 1);
+      //   this.currentDataService.appointments.push(tempEvent);
 
-        this.timer = setTimeout(() => {
-          this.currentDataService.appointments.splice(this.currentDataService.appointments.findIndex(appt => appt.appointmentId === tempEvent.appointmentId), 1);
-          this.currentDataService.appointments.splice(this.currentDataService.appointments.findIndex(appt => appt.appointmentId === tempEvent.appointmentId), 0, tempEvent);
-        }, 25);
+      //   this.timer = setTimeout(() => {
+      //     this.currentDataService.appointments.splice(this.currentDataService.appointments.findIndex(appt => appt.appointmentId === tempEvent.appointmentId), 1);
+      //     this.currentDataService.appointments.splice(this.currentDataService.appointments.findIndex(appt => appt.appointmentId === tempEvent.appointmentId), 0, tempEvent);
+      //   }, 25);
 
-        this.overlayhovered = false;
-        this.hoveredEvent = null;
-        document.getElementById('hoverPanel').style.opacity = '0';
-      }
+      //   this.overlayhovered = false;
+      //   this.hoveredEvent = null;
+      //   document.getElementById('hoverPanel').style.opacity = '0';
+      // }
     }
 
     appointmentsListener() {

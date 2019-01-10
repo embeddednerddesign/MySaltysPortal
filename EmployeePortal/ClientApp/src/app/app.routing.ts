@@ -55,6 +55,7 @@ import { EmployeeScheduleComponent } from './schedule/employee-schedule/employee
 import { CreateShiftComponent } from './schedule/employee-schedule/actionpanel/create-shift/create-shift.component';
 import { OrgClinicsComponent } from './management/organization/org-clinics/org-clinics.component';
 import { EditClinicComponent } from './management/organization/actionpanel/edit-clinic/edit-clinic.component';
+import { OrgServicesComponent } from './management/organization/org-services/org-services.component';
 
 const addEditPatient: Route = {
   path: 'edit-patient/:patid',
@@ -169,21 +170,6 @@ const appRoutes: Routes = [
             canActivate: [AuthGuard],
             children: [
               { path: '', redirectTo: 'services', pathMatch: 'full' },
-              {
-                path: 'services',
-                component: CatalogueServicesComponent,
-                canActivate: [AuthGuard],
-                children: [
-                  addEditPatient,
-                  patientPanel,
-                  {
-                    path: 'edit-service/:catname/:servid',
-                    component: EditServiceComponent,
-                    canActivate: [AuthGuard],
-                    outlet: 'action-panel'
-                  }
-                ]
-              },
               {
                 path: 'products',
                 component: CatalogueProductsComponent,
@@ -317,21 +303,6 @@ const appRoutes: Routes = [
                 ]
               },
               {
-                path: 'clinics',
-                component: OrgClinicsComponent,
-                canActivate: [AuthGuard],
-                children: [
-                  addEditPatient,
-                  patientPanel,
-                  {
-                    path: 'edit-clinic/:clinicid',
-                    component: EditClinicComponent,
-                    canActivate: [AuthGuard],
-                    outlet: 'action-panel'
-                  }
-                ]
-              },
-              {
                 path: 'users',
                 component: OrgUsersComponent,
                 canActivate: [AuthGuard],
@@ -347,20 +318,20 @@ const appRoutes: Routes = [
                 ]
               },
               {
-                path: 'resources',
-                component: OrgResourcesComponent,
+                path: 'services',
+                component: OrgServicesComponent,
                 canActivate: [AuthGuard],
                 children: [
                   addEditPatient,
                   patientPanel,
                   {
-                    path: 'edit-resource/:rsrcid',
-                    component: EditResourceComponent,
+                    path: 'edit-service/:catname/:servid',
+                    component: EditServiceComponent,
                     canActivate: [AuthGuard],
                     outlet: 'action-panel'
                   }
                 ]
-              }
+              },
             ]
           }
         ]

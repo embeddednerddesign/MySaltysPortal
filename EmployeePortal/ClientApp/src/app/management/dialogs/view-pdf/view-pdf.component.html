@@ -1,0 +1,13 @@
+<div class="main-container">
+  <div class="pdf-controls">
+    <div class="control-container" (click)="pdfViewer.zoomOut()"><span class="icon"><i class="fa fa-minus"></i></span>Zoom Out</div>
+    <div class="control-container" (click)="pdfViewer.zoomIn()"><span class="icon"><i class="fa fa-plus"></i></span>Zoom In</div>
+    <div class="control-container" (click)="pdfViewer.prevPage()"><span class="icon"><i class="fa fa-arrow-left"></i></span>Prev</div>
+    <div class="control-container" (click)="pdfViewer.nextPage()"><span class="icon"><i class="fa fa-arrow-right"></i></span>Next</div>
+  </div>
+  <div class="pdf-container">
+    <section id="viewer">
+      <simple-pdf-viewer #pdfViewer [src]="pdfPath"></simple-pdf-viewer>
+    </section>
+  </div>
+</div>

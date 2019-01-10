@@ -167,6 +167,11 @@ import { OrgClinicsComponent } from './management/organization/org-clinics/org-c
 import { NgxGalleryModule } from 'ngx-gallery';
 import { NgxImageEditorModule } from 'ngx-image-editor';
 
+import { SimplePdfViewerModule } from 'simple-pdf-viewer';
+import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.component';
+import { OrgServicesComponent } from './management/organization/org-services/org-services.component';
+import { OrgServiceCategoryDetailsComponent } from './management/organization/org-services/org-service-category-details/org-service-category-details.component';
+
 @NgModule({
   entryComponents: [
     AppointmentComponent,
@@ -178,7 +183,8 @@ import { NgxImageEditorModule } from 'ngx-image-editor';
     HoursOfOperationDialogComponent,
     CancelVisitDialogComponent,
     ManageCategoriesDialogComponent,
-    VisitStatusDialogComponent
+    VisitStatusDialogComponent,
+    ViewPdfDialogComponent
   ],
   declarations: [
     AppComponent,
@@ -218,11 +224,13 @@ import { NgxImageEditorModule } from 'ngx-image-editor';
     CatalogueSpecialsComponent,
     OrgResourcesComponent,
     OrgUsersComponent,
+    OrgServicesComponent,
     OrgClinicsComponent,
     EditUserComponent,
     EditResourceComponent,
     EditProductComponent,
     ServiceCategoryDetailsComponent,
+    OrgServiceCategoryDetailsComponent,
     EditServiceComponent,
     EditSpecialComponent,
     EditPackageComponent,
@@ -250,6 +258,7 @@ import { NgxImageEditorModule } from 'ngx-image-editor';
     HoursOfOperationDialogComponent,
     CurrentDateComponent,
     ManageCategoriesDialogComponent,
+    ViewPdfDialogComponent,
     PatientComponent,
     EmployeeScheduleComponent,
     CreateShiftComponent,
@@ -303,7 +312,8 @@ import { NgxImageEditorModule } from 'ngx-image-editor';
     FileUploadModule,
     MatMenuModule,
     NgxGalleryModule,
-    NgxImageEditorModule
+    NgxImageEditorModule,
+    SimplePdfViewerModule
   ],
   providers: [
     CurrentDataService,

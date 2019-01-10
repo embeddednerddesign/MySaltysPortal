@@ -49,59 +49,13 @@
   <ng-template kendoGridCellTemplate let-dataItem="dataItem">
     <span [class]=dataItem.templateIcon [style.font-size.px]="32" [style.color]="'whitesmoke'"
           [style.backgroundColor]="dataItem.serviceIDColour ? dataItem.serviceIDColour : 'transparent'"
-          [style.min-width.px]=52 [style.padding.px]=10 [style.border-radius.px]=10>
+          [style.min-width.px]=52 [style.paddingTop.px]=0 [style.paddingRight.px]=45 [style.border-radius.px]=10>
     </span>
   </ng-template>
-  <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-      <kendo-dropdownlist
-      [data]="templateIconsDropDown"
-      [textField]="'icon'"
-      [valueField]="'icon'"
-      [valuePrimitive]="true"
-      [formControl]="formGroup.get('templateIcon')">
-      <ng-template kendoDropDownListValueTemplate let-dataItem>
-        <span [style.font-size.px]="22" [class]=dataItem?.icon></span>
-      </ng-template>
-      <ng-template kendoDropDownListItemTemplate let-dataItem>
-        <span [style.font-size.px]="22" [class]=dataItem?.icon [style.width.px]="75" [style.text-align]="'center'"></span>
-      </ng-template>
-      </kendo-dropdownlist>
-  </ng-template>
 </kendo-grid-column>
-<kendo-grid-column field="serviceName" title="Name" width="150px"></kendo-grid-column>
-<kendo-grid-column field="serviceAltName" title="Alternate Name" width="150px"></kendo-grid-column>
-<kendo-grid-column field="subType" title="Service Type" width="125px"></kendo-grid-column>
-<kendo-grid-column field="category.name" title="Category" width="125px">
-  <ng-template kendoGridCellTemplate let-dataItem>
-    {{dataItem.category ? dataItem.category.name : 'No Category Selected'}}
-  </ng-template>
-  <ng-template kendoGridEditTemplate
-  let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-    <kendo-dropdownlist
-    [data]="categoriesDropDown"
-    textField="name"
-    valueField="name"
-    [formControl]="formGroup.get('category')">
-    </kendo-dropdownlist>
-  </ng-template>
-</kendo-grid-column><kendo-grid-column field="status" title="Status" width="85px">
-  <ng-template kendoGridCellTemplate let-dataItem>
-    <div style="text-align: center">{{dataItem.status ? 'Active' : 'Inactive'}}</div>
-    <div style="text-align: center"><kendo-switch [(ngModel)]="dataItem.status" [checked]="dataItem.status" (valueChange)="onStatusValueChange($event, dataItem)" [onLabel]="' '" [offLabel]="' '"></kendo-switch></div>
-  </ng-template>
-</kendo-grid-column>
-<!-- <kendo-grid-column field="governmentBilling" title="Gov Billing" width="85px">
-  <ng-template kendoGridCellTemplate let-dataItem>
-    {{dataItem.governmentBilling ? 'Yes' : 'No'}}
-  </ng-template>
-</kendo-grid-column>
-<kendo-grid-column field="billingCode" title="Billing Code" width="85px"></kendo-grid-column> -->
-<kendo-grid-column field="serviceReqProductsString" title="Req Product(s)" width="165px"></kendo-grid-column>
-<kendo-grid-column field="serviceRecProductsString" title="Rec Product(s)" width="165px"></kendo-grid-column>
-<kendo-grid-column field="diagnosticCode" title="Dx Code" width="85px"></kendo-grid-column>
-<kendo-grid-column field="defaultDurationMinutes" title="Duration" width="85px"></kendo-grid-column>
-<kendo-grid-column field="defaultPrice" title="Price" width="85px"></kendo-grid-column>
-<kendo-grid-command-column title="Actions" min-width="125px" width="125px">
+<kendo-grid-column field="serviceName" title="Service Name" width="150px"></kendo-grid-column>
+<kendo-grid-column field="defaultDurationMinutes" title="Default Shift Duration" width="85px"></kendo-grid-column>
+<kendo-grid-command-column title="Actions" min-width="50px" max-width="50px" width="50px">
   <ng-template kendoGridCellTemplate let-isNew="isNew">
     <button kendoGridEditCommand iconClass="fal fa-edit" style="background: none; border: none; height: 100%; font-size: 20px"></button>
     <button kendoGridRemoveCommand iconClass="fal fa-minus-circle" style="background: none; border: none; height: 100%; font-size: 20px"></button>

@@ -271,8 +271,8 @@ export class VisitsComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   ngOnDestroy() {
-    // this.productsunsub();
     this.unsub.next();
+    this.unsub.complete();
   }
 
   onEnter() {}
@@ -917,11 +917,12 @@ export class VisitsComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       }
     });
 
-    if (!available) {
-      this.confirmAppointment(event);
-    } else {
-      this.addAppointmentToDbAndUI(event);
-    }
+    this.addAppointmentToDbAndUI(event);
+    // if (!available) {
+    //   this.confirmAppointment(event);
+    // } else {
+    //   this.addAppointmentToDbAndUI(event);
+    // }
   }
   addAppointmentToDbAndUI(appointment: Appointment) {
     // update total cost of Visit

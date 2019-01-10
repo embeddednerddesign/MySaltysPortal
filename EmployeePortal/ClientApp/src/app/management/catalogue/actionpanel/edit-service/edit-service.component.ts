@@ -432,44 +432,49 @@ export class EditServiceComponent implements OnInit, AfterViewInit, OnDestroy {
     const selectedTaxes = this.selectedTaxes;
     const serviceTaxes: ServiceTax[] = [];
 
-    selectedTaxes.forEach(t => {
-      serviceTaxes.push({
-        serviceId: id,
-        service: null,
-        taxId: t.taxId,
-        tax: null
-      });
-    });
+    // selectedTaxes.forEach(t => {
+    //   serviceTaxes.push({
+    //     serviceId: id,
+    //     service: null,
+    //     taxId: t.taxId,
+    //     tax: null
+    //   });
+    // });
 
-    this.service.serviceTaxes = serviceTaxes;
+    // this.service.serviceTaxes = serviceTaxes;
 
-    this.service.serviceReqProductsString = '';
-    this.service.serviceRecProductsString = '';
-    this.selectedRequiredProducts.forEach(rp => {
-      this.service.serviceReqProductsString = this.service.serviceReqProductsString +
-                                          rp.product.name + '(' + rp.productQuantity + ')-$' + rp.product.retailPrice;
-      this.service.serviceReqProductsString = this.service.serviceReqProductsString + ',';
-    });
-    this.selectedRecommendedProducts.forEach(rp => {
-      this.service.serviceRecProductsString = this.service.serviceRecProductsString +
-                                          rp.product.name + '(' + rp.productQuantity + ')-$' + rp.product.retailPrice;
-      this.service.serviceRecProductsString = this.service.serviceRecProductsString + ',';
-    });
-    // remove the trailing comma
-    this.service.serviceReqProductsString = this.service.serviceReqProductsString.slice(0, -1);
-    this.service.serviceRecProductsString = this.service.serviceRecProductsString.slice(0, -1);
+    // this.service.serviceReqProductsString = '';
+    // this.service.serviceRecProductsString = '';
+    // this.selectedRequiredProducts.forEach(rp => {
+    //   this.service.serviceReqProductsString = this.service.serviceReqProductsString +
+    //                                       rp.product.name + '(' + rp.productQuantity + ')-$' + rp.product.retailPrice;
+    //   this.service.serviceReqProductsString = this.service.serviceReqProductsString + ',';
+    // });
+    // this.selectedRecommendedProducts.forEach(rp => {
+    //   this.service.serviceRecProductsString = this.service.serviceRecProductsString +
+    //                                       rp.product.name + '(' + rp.productQuantity + ')-$' + rp.product.retailPrice;
+    //   this.service.serviceRecProductsString = this.service.serviceRecProductsString + ',';
+    // });
+    // // remove the trailing comma
+    // this.service.serviceReqProductsString = this.service.serviceReqProductsString.slice(0, -1);
+    // this.service.serviceRecProductsString = this.service.serviceRecProductsString.slice(0, -1);
 
+    this.service.billingCode = 0;
+    this.service.defaultPrice = 0;
+    this.service.diagnosticCode = 0;
+    this.service.serviceCategoryId = 1;
+    this.service.templateIcon = '';
     if (this.isNew) {
       this.servicesService.addService(this.service).subscribe(() => {
         this.catalogueUpdatesService.refreshRequired = true;
         this.catalogueUpdatesService.catalogueUpdateComplete();
-        this.router.navigate(['/management/catalogue/services', { outlets: { 'action-panel': null } }]);
+        this.router.navigate(['/management/organization/services', { outlets: { 'action-panel': null } }]);
       });
     } else {
       this.servicesService.updateService(this.service).subscribe(() => {
         this.catalogueUpdatesService.refreshRequired = true;
         this.catalogueUpdatesService.catalogueUpdateComplete();
-        this.router.navigate(['/management/catalogue/services', { outlets: { 'action-panel': null } }]);
+        this.router.navigate(['/management/organization/services', { outlets: { 'action-panel': null } }]);
       });
     }
   }
@@ -477,6 +482,6 @@ export class EditServiceComponent implements OnInit, AfterViewInit, OnDestroy {
   cancelUpdate() {
     this.catalogueUpdatesService.refreshRequired = false;
     this.catalogueUpdatesService.catalogueUpdateComplete();
-    this.router.navigate(['/management/catalogue/services', { outlets: { 'action-panel': null } }]);
+    this.router.navigate(['/management/organization/services', { outlets: { 'action-panel': null } }]);
   }
 }
