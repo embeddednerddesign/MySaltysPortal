@@ -5,7 +5,7 @@
 </div>
 <div class="content">
   <div class="header">
-    <div class="appointment_heading">Create Shift</div>
+    <div class="appointment_heading">{{ isAnUpdate ? 'Edit' : 'Create' }} Shift</div>
   </div>
 
   <div class="row no-gutter">
@@ -149,7 +149,7 @@
 
     <div class="col-12">
       <mat-form-field class="full service" [floatLabel]="'always'">
-        <mat-select placeholder="Select Service" [(ngModel)]="selectedService" name="services" (selectionChange)="serviceSelectionChange()">
+        <mat-select #servicesDropdown placeholder="Select Service" [(ngModel)]="selectedService" name="services" (selectionChange)="serviceSelectionChange()">
           <mat-option *ngFor="let service of allServices" [value]="service">
             {{ service.serviceName }}
           </mat-option>
@@ -175,7 +175,7 @@
       (click)="addAppointment()"
       [ngClass]="{'add-disabled' : !createOk()}">
         <span class="icon" inlineSVG="../../../assets/svg/plus.svg"></span>
-        Add Shift
+        {{ isAnUpdate ? 'Update' : 'Add' }} Shift
       </button>
         <br><br>
       <button class="add-btn"

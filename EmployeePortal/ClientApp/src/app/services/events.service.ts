@@ -19,6 +19,7 @@ export class EventsService {
       // Observable string sources
     private componentMethodCallSource = new Subject<any>();
     private closePanelCallSource = new Subject<any>();
+    private updateCreateVisitApptSource = new Subject<any>();
     private updateCreateVisitTimeSource = new Subject<any>();
     private updateCreateVisitResourceIdSource = new Subject<any>();
     private removeAppointmentCallSource = new Subject<any>();
@@ -38,6 +39,7 @@ export class EventsService {
     // Observable string streams
     appointmentsListenerCalled$ = this.componentMethodCallSource.asObservable();
     closeSidePanel$ = this.closePanelCallSource.asObservable();
+    updateCreateVisitAppt$ = this.updateCreateVisitApptSource.asObservable();
     updateCreateVisitTime$ = this.updateCreateVisitTimeSource.asObservable();
     removeAppointment$ = this.removeAppointmentCallSource.asObservable();
     updateCreateVisitResourceId$ = this.updateCreateVisitResourceIdSource.asObservable();
@@ -53,6 +55,7 @@ export class EventsService {
         resourceId: '1',
         isSelection: false
     };
+    activeAppointment: Appointment;
 
     constructor(private visitService: VisitService,
         private appointmentService: AppointmentService,
@@ -231,6 +234,9 @@ export class EventsService {
     updateCreateVisitStartTime(start, end, resourceId) {
         this.updateCreateVisitTimeSource.next({start, end});
         this.updateCreateVisitResourceIdSource.next(resourceId);
+    }
+    updateCreateVisitAppt() {
+      this.updateCreateVisitApptSource.next(this.activeAppointment);
     }
 
     callRemoveAppointmentMethod(currentAppointmentId) {

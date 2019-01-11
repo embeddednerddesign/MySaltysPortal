@@ -301,6 +301,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
                     this.clickEvent = { isSelection: true, start: start, end: end, resourceId: resourceObj.id };
                 }
                 this.eventsService.setTempEvent(this.clickEvent);
+                this.eventsService.activeAppointment = null;
                 this.toggleCreateVisitPanel(start, end, resourceObj.id);
                 if (this.actionPanelOpened) {
                   this.router.navigate(['schedule', { outlets: { 'action-panel': ['create-visit'] } }]);
@@ -532,23 +533,23 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
     }
 
     openVisitPanel(e) {
-        this.eventsService.actionPanelOpened.next(e.calEvent);
-        this.openAppointmentId = e.calEvent.appointmentId;
-        this.clickEvent = { isSelection: false, start: e.calEvent.start, end: e.calEvent.end, resourceId: e.calEvent.resourceId };
-        this.eventsService.setTempEvent(this.clickEvent);
-        this.actionpanelVisible = false;
-        this.router.navigate(['/schedule', { outlets: { 'action-panel': null } }]);
+      this.eventsService.actionPanelOpened.next(e.calEvent);
+      this.openAppointmentId = e.calEvent.appointmentId;
+      this.clickEvent = { isSelection: false, start: e.calEvent.start, end: e.calEvent.end, resourceId: e.calEvent.resourceId };
+      this.eventsService.setTempEvent(this.clickEvent);
+      this.actionpanelVisible = false;
+      this.router.navigate(['/schedule', { outlets: { 'action-panel': null } }]);
 
-        const clicked = e.jsEvent.target.parentElement.id;
-        const jsEvent = e.jsEvent;
-        if (clicked === 'history') {
-            this.patientHistoryClicked();
-        } else if (clicked === 'checkin') {
-            this.patientCheckInClick();
-        } else {
-            const event = e.calEvent;
-            this.toggleVisitPanel(event.visitId);
-        }
+      const clicked = e.jsEvent.target.parentElement.id;
+      const jsEvent = e.jsEvent;
+      if (clicked === 'history') {
+        this.patientHistoryClicked();
+      } else if (clicked === 'checkin') {
+        this.patientCheckInClick();
+      } else {
+        const event = e.calEvent;
+        this.toggleVisitPanel(event.visitId);
+      }
     }
 
     eventRender = (event, element, view) => {
@@ -560,10 +561,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
 
                   this.eventsService.closePanel(this.latestClickEvent.calEvent);
               } else {
-                this.openVisitPanel(this.latestClickEvent);
+                this.eventsService.activeAppointment = this.latestClickEvent.calEvent;
+                this.eventsService.updateCreateVisitAppt();
+                this.toggleCreateVisitPanel(this.latestClickEvent.calEvent.start, this.latestClickEvent.calEvent.end, this.latestClickEvent.calEvent.resourceId);
+                if (this.actionPanelOpened) {
+                  this.router.navigate(['schedule', { outlets: { 'action-panel': ['create-visit'] } }]);
+                }
+                // this.openVisitPanel(this.latestClickEvent);
               }
           } else {
-            this.openVisitPanel(this.latestClickEvent);
+            this.eventsService.activeAppointment = this.latestClickEvent.calEvent;
+            this.eventsService.updateCreateVisitAppt();
+            this.toggleCreateVisitPanel(this.latestClickEvent.calEvent.start, this.latestClickEvent.calEvent.end, this.latestClickEvent.calEvent.resourceId);
+            if (this.actionPanelOpened) {
+              this.router.navigate(['schedule', { outlets: { 'action-panel': ['create-visit'] } }]);
+            }
+        // this.openVisitPanel(this.latestClickEvent);
           }
         }.bind(this));
         this.loadingListener();

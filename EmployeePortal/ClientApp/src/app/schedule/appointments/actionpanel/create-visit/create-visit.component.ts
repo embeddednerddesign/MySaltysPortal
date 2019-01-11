@@ -33,6 +33,7 @@ import { MasterOverlayService } from '../../../../services/actionpanel.service';
 import { UsersService } from '../../../../services/users.service';
 import { isNullOrUndefined } from 'util';
 import { CurrentDataService } from '../../../../services/currentData.service';
+import { MatSelect } from '@angular/material';
 
 export const colorCodes = [
   {
@@ -57,6 +58,8 @@ export const colorCodes = [
 export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('patientsAutoComplete')
   patientsAutoComplete;
+
+  @ViewChild('servicesDropdown') servicesDropdown: MatSelect;
 
   submitButtonDisabledState = false;
 
@@ -98,6 +101,7 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   visit: Visit;
 
   staffFullName: string = '';
+  isAnUpdate = false;
 
   durationOptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50,
                          55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
@@ -144,10 +148,6 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       //   this.durationInMinutes = (durationTime.hours() * 60 + durationTime.minutes()).toString();
       // }
     });
-
-    // this._eventsService.updateCreateVisitResourceId$.subscribe(resource => {
-    //   this.selectedStaff = +resource;
-    // });
   }
 
   private setStartTime(time: Date) {
@@ -171,6 +171,13 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.eventService.appointmentUpdated.pipe(takeUntil(this.unsub)).subscribe(appointment => {
+      console.log('appointment.start -> ', appointment.start);
+      console.log('appointment.end -> ', appointment.end);
+      this.startTime = this.getLocalTimeFromTimeString(appointment.start);
+      this.endTime = this.getLocalTimeFromTimeString(appointment.end);
+    });
+
     this.customDuration.setValue(0);
     this.clickEvent = this.eventService.getTempEvent();
 
@@ -258,7 +265,7 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.hoursOfOperationService.getHoursOfOperation(companyId).subscribe(
         res => {
-          if (res) {
+          if (res && !this.isAnUpdate) {
             this.businessWeek = getBusinessWeek(res.hoursOfOperationDays);
             const startTime = new Date(moment(this.clickEvent.start).toJSON());
             this.setStartTime(startTime);
@@ -325,6 +332,28 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     this._eventsService.closeCreateVisitPanelListener.takeUntil(this.unsub).subscribe(() => {
       this.closePanel();
     });
+
+    if (!isNullOrUndefined(this._eventsService.activeAppointment)) {
+      console.log('YAY!');
+      this.patientSelected = true;
+      this.serviceSelected = true;
+      this.isAnUpdate = true;
+      this.visit = this.currentDataService.visits.find(v => v.visitId === this._eventsService.activeAppointment.visitId);
+      this.selectedPatient = this.currentDataService.patients.find(p => p.patientId === this.visit.patientId);
+
+      this.staffFullName = this.selectedPatient.firstName + ' ' + this.selectedPatient.lastName;
+
+      this.selectedService = this.currentDataService.services.find(s => s.serviceId === this._eventsService.activeAppointment.serviceId);
+      this.servicesDropdown.value = this.selectedService;
+      let datetime = this._eventsService.activeAppointment.start as any;
+      const datetimeStart = datetime._i;
+      datetime = this._eventsService.activeAppointment.end as any;
+      const datetimeEnd = datetime._i;
+      this.startTime = this.getLocalTimeFromTimeString(datetimeStart);
+      this.setStartTime(this.startTime);
+      this.endTime = this.getLocalTimeFromTimeString(datetimeEnd);
+      this.setEndTime(this.endTime);
+    }
   }
 
   ngAfterViewInit() {}
@@ -332,6 +361,19 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.unsub.next();
     this.unsub.complete();
+  }
+
+  getLocalTimeFromTimeString(timeString: string): Date {
+    let tempTime: string = timeString.replace('T', '-').replace(':', '-').replace(':', '-');
+    tempTime = tempTime.split('.')[0];
+    const tempTimeArray = tempTime.split('-');
+    const theStartTimeForcedToStayLocalTime = new Date(Number(tempTimeArray[0]),
+                                                        Number(tempTimeArray[1]) - 1,
+                                                          Number(tempTimeArray[2]),
+                                                            Number(tempTimeArray[3]),
+                                                              Number(tempTimeArray[4]),
+                                                                Number(tempTimeArray[5]));
+    return theStartTimeForcedToStayLocalTime;
   }
 
   // createPatient() {
@@ -556,23 +598,24 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   closePanel() {
-    if (this.appointments.length < 1) {
-      if (this.visit) {
-        this._visitService.removeVisit(this.visit).pipe(takeUntil(this.unsub)).subscribe(() => {
-          this.closePanelComplete();
-          this.eventService.closePanel();
-        });
-      } else {
-        this.closePanelComplete();
-        this.eventService.closePanel();
-      }
-    } else {
+    // if (this.appointments.length < 1) {
+    //   if (this.visit) {
+    //     this._visitService.removeVisit(this.visit).pipe(takeUntil(this.unsub)).subscribe(() => {
+    //       this.closePanelComplete();
+    //       this.eventService.closePanel();
+    //     });
+    //   } else {
+    //     this.closePanelComplete();
+    //     this.eventService.closePanel();
+    //   }
+    // } else {
       this.closePanelComplete();
       this.eventService.closePanel();
-    }
+    // }
   }
 
   closePanelComplete() {
+    this.isAnUpdate = false;
     if (this.patientService.previousPage === '') {
       this.router.navigate(['/schedule', { outlets: { 'action-panel': null } }]);
       this.eventService.closePanel();
@@ -597,7 +640,6 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       .minutes(this.endTime.getMinutes())
       .seconds(0)
       .milliseconds(0);
-    const colorcode = '#DF4931';
 
     const event: Appointment = {
       title: this.selectedPatient.firstName + ' ' + this.selectedPatient.firstName,
@@ -612,7 +654,7 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
       editing: false,
       service: this.selectedService,
       serviceId: this.selectedService.serviceId,
-      color: colorcode,
+      color: this.selectedService.serviceIDColour,
       visitId: this.visit.visitId
     };
 
@@ -659,13 +701,25 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     // update total cost of Visit
     // this.visit.totalVisitCost += appointment.service.defaultPrice;
-    this._appointmentsService.addAppointment(event).pipe(takeUntil(this.unsub)).subscribe(appt => {
-      appointment.appointmentId = appt.appointmentId;
-      this.appointments.push(appointment);
-      this.sortAppointments();
-      this._eventsService.appointmentAdded.next();
-      this.closePanel();
-    });
+    if (!this.isAnUpdate) {
+      this._appointmentsService.addAppointment(event).pipe(takeUntil(this.unsub)).subscribe(appt => {
+        appointment.appointmentId = appt.appointmentId;
+        this.appointments.push(appointment);
+        this.sortAppointments();
+        this._eventsService.appointmentAdded.next();
+        this.closePanel();
+      });
+    }
+    else {
+      event.appointmentId = this._eventsService.activeAppointment.appointmentId;
+      this._appointmentsService.updateAppointment(event).pipe(takeUntil(this.unsub)).subscribe(appt => {
+        // appointment.appointmentId = appt.appointmentId;
+        // this.appointments.push(appointment);
+        // this.sortAppointments();
+        this._eventsService.appointmentAdded.next();
+        this.closePanel();
+      });
+    }
   }
 
   public confirmAppointment(dataItem: Appointment) {

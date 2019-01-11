@@ -18,7 +18,7 @@ import { StaffsService } from '../../../../services/staffs.service';
 import { Service } from '../../../../models/service';
 import { Observable } from 'rxjs/Observable';
 import { startWith, map, takeUntil, take } from 'rxjs/operators';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog, MatSelect } from '@angular/material';
 import { PatientViewModel } from '../../../../models/patient-viewmodel';
 import { CancelVisitDialogComponent } from '../cancel-visit-dialog/cancel-visit-dialog.component';
 import { Staff } from '../../../../models/staff';
