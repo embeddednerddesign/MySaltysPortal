@@ -59,8 +59,6 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('patientsAutoComplete')
   patientsAutoComplete;
 
-  @ViewChild('servicesDropdown') servicesDropdown: MatSelect;
-
   submitButtonDisabledState = false;
 
   unsub = new Subject<void>();
@@ -172,8 +170,6 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.eventService.appointmentUpdated.pipe(takeUntil(this.unsub)).subscribe(appointment => {
-      console.log('appointment.start -> ', appointment.start);
-      console.log('appointment.end -> ', appointment.end);
       this.startTime = this.getLocalTimeFromTimeString(appointment.start);
       this.endTime = this.getLocalTimeFromTimeString(appointment.end);
     });
@@ -334,17 +330,13 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     if (!isNullOrUndefined(this._eventsService.activeAppointment)) {
-      console.log('YAY!');
       this.patientSelected = true;
       this.serviceSelected = true;
       this.isAnUpdate = true;
       this.visit = this.currentDataService.visits.find(v => v.visitId === this._eventsService.activeAppointment.visitId);
       this.selectedPatient = this.currentDataService.patients.find(p => p.patientId === this.visit.patientId);
-
       this.staffFullName = this.selectedPatient.firstName + ' ' + this.selectedPatient.lastName;
-
       this.selectedService = this.currentDataService.services.find(s => s.serviceId === this._eventsService.activeAppointment.serviceId);
-      this.servicesDropdown.value = this.selectedService;
       let datetime = this._eventsService.activeAppointment.start as any;
       const datetimeStart = datetime._i;
       datetime = this._eventsService.activeAppointment.end as any;
@@ -356,7 +348,9 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.selectedService = this.currentDataService.services.find(s => s.serviceId === this._eventsService.activeAppointment.serviceId);
+  }
 
   ngOnDestroy() {
     this.unsub.next();
@@ -469,7 +463,6 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedPatient = patient as Patient;
     this.patientSelected = true;
     this.createPatientPanelVisible = false;
-    console.log('patientSelect');
     this.staffFullName = patient.firstName + ' ' + patient.lastName;
 
     const visitIdString = this.selectedPatient.patientId.toString() + this.date.toDateString();
@@ -516,6 +509,7 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
 
   serviceSelectionChange() {
     this.serviceSelected = true;
+    console.log('this.selectedService -> ', this.selectedService);
   }
 
   // getServicesByStaff(selectedStaff) {
@@ -551,9 +545,7 @@ export class CreateVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   //   return xx;
   // }
 
-  patientValueChange(event) {
-    console.log('event -> ', event);
-  }
+  patientValueChange(event) { }
 
   formatValue(itemText: string, autocomplete) {
     // tslint:disable-next-line:quotemark
