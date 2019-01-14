@@ -178,12 +178,12 @@ namespace EmployeePortal
             {
                 context.Addresses.Add(new Models.Address
                 {
-                    address1 = "1234 Test Lane",
-                    address2 = "5678 Test St",
+                    address1 = "1000 Lakeshore Dr",
+                    address2 = "",
                     city = "Penticton",
                     province = "British Columbia",
                     country = "Canada",
-                    postalCode = "V2A 1Z5"
+                    postalCode = "V2A 1C1"
                 });
             }
 
@@ -197,15 +197,6 @@ namespace EmployeePortal
                     addressId = context.Addresses.FirstOrDefault().AddressId
                 });
             }
-            context.SaveChanges();
-            try
-            {
-                if (context.Clinics.Where(c => c.name == "DermMedica Clinic").First().addressId == null)
-                {
-                    context.Companies.Where(c => c.name == "DermMedica Clinic").First().addressId = context.Addresses.First().AddressId;
-                }
-            }
-            catch { }
 
             context.SaveChanges();
 
@@ -261,12 +252,12 @@ namespace EmployeePortal
                 tempClinics.Add(context.Clinics.FirstOrDefault());
                 context.Companies.Add(new Models.Company
                 {
-                    name = "DermMedica Company",
-                    contactName = "Dr. Craig Crippen",
-                    contactPhone = "555-555-5555",
+                    name = "Salty's Beachhouse",
+                    contactName = "Alexandra Bonnett",
+                    contactPhone = "250-493-5001",
                     primaryBrandingColour = "British Columbia",
                     accentBrandingColour = "Canada",
-                    minimumDuration = 10,
+                    minimumDuration = 15,
                     hoursOfOperation = seedHOO,
                     addressId = context.Addresses.FirstOrDefault().AddressId,
                     clinics = tempClinics,
@@ -297,81 +288,44 @@ namespace EmployeePortal
                 context.Companies.First().addressId = context.Addresses.First().AddressId;
             }
 
-            if (context.Clinics.Count() == 0)
-            {
-                context.Clinics.Add(new Models.Clinic
-                {
-                    name = "DermMedica Clinic",
-                    addressId = context.Addresses.FirstOrDefault().AddressId
-                });
-            }
-
             if (context.ServiceCategories.Count() == 0)
             {
                 context.ServiceCategories.Add(new Models.ServiceCategory { name = "Service Cat 1" });
                 context.ServiceCategories.Add(new Models.ServiceCategory { name = "Service Cat 2" });
             }
-            if (context.ProductCategories.Count() == 0)
-            {
-                context.ProductCategories.Add(new Models.ProductCategory { name = "Product Cat 1" });
-                context.ProductCategories.Add(new Models.ProductCategory { name = "Product Cat 2" });
-            }
 
             context.SaveChanges();
 
-            if (context.Products.Count() == 0)
-            {
-                context.Products.Add(new Models.Product
-                {
-                    name = "Product 1",
-                    productCode = "1",
-                    quantityInStock = 1,
-                    quantity = 1,
-                    retailPrice = 9.99F,
-                    wholesalePrice = 6.99F,
-                    productCategoryId = context.ProductCategories.FirstOrDefault().ProductCategoryId
-                });
-                context.Products.Add(new Models.Product
-                {
-                    name = "Product 2",
-                    productCode = "2",
-                    quantityInStock = 1,
-                    quantity = 1,
-                    retailPrice = 19.99F,
-                    wholesalePrice = 16.99F,
-                    productCategoryId = context.ProductCategories.FirstOrDefault().ProductCategoryId
-                });
-            }
             if (context.Services.Count() == 0)
             {
                 context.Services.Add(new Models.Service
                 {
-                    serviceName = "Service 1",
+                    serviceName = "Hostess",
                     quantity = 1,
                     billingCode = 1,
-                    serviceAltName = "Alt Service 1",
+                    serviceAltName = "",
                     defaultDurationMinutes = 60,
-                    subType = "Botox",
+                    subType = "",
                     diagnosticCode = 100,
                     serviceIDColour = "#555555",
                     templateIcon = "",
-                    defaultPrice = 6.99F,
+                    defaultPrice = 0.00F,
                     status = true,
                     governmentBilling = false,
                     serviceCategoryId = context.ServiceCategories.FirstOrDefault().ServiceCategoryId
                 });
                 context.Services.Add(new Models.Service
                 {
-                    serviceName = "Service 2",
+                    serviceName = "Bartender",
                     quantity = 1,
                     billingCode = 1,
-                    serviceAltName = "Alt Service 2",
+                    serviceAltName = "",
                     defaultDurationMinutes = 45,
-                    subType = "CoolSculpt",
+                    subType = "",
                     diagnosticCode = 200,
                     serviceIDColour = "#888888",
                     templateIcon = "",
-                    defaultPrice = 89.99F,
+                    defaultPrice = 0.00F,
                     status = true,
                     governmentBilling = true,
                     serviceCategoryId = context.ServiceCategories.FirstOrDefault().ServiceCategoryId
@@ -390,34 +344,6 @@ namespace EmployeePortal
 
             context.SaveChanges();
 
-            if (context.UserCategories.Count() == 0)
-            {
-                context.UserCategories.Add(new UserCategory
-                {
-                    categoryName = "Doctor"
-                });
-                context.UserCategories.Add(new UserCategory
-                {
-                    categoryName = "Nurse"
-                });
-                context.UserCategories.Add(new UserCategory
-                {
-                    categoryName = "Technician"
-                });
-                context.UserCategories.Add(new UserCategory
-                {
-                    categoryName = "Admin"
-                });
-                context.UserCategories.Add(new UserCategory
-                {
-                    categoryName = "Accounting"
-                });
-                context.UserCategories.Add(new UserCategory
-                {
-                    categoryName = "Full Admin"
-                });
-            }
-
             if (context.Users.Count() == 0)
             {
                 var user = new User
@@ -433,45 +359,6 @@ namespace EmployeePortal
                 };
                 var result = await userManagerService.CreateAsync(user, "password123");
             }
-
-            if (context.Staff.Count() == 0)
-            {
-                context.Staff.Add(new Models.Staff
-                {
-                    name = "Staff Member 1",
-                });
-                context.Staff.Add(new Models.Staff
-                {
-                    name = "Staff Member 2",
-                });
-                context.Staff.Add(new Models.Staff
-                {
-                    name = "Staff Member 3",
-                });
-                context.Staff.Add(new Models.Staff
-                {
-                    name = "Staff Member 4",
-                });
-            }
-            else if (context.Staff.Count() < 4)
-            {
-                context.Staff.Add(new Models.Staff
-                {
-                    name = "Staff Member 4",
-                });
-            }
-            context.SaveChanges();
-            if (context.StaffService.Count() == 0)
-            {
-                foreach (Staff staff in context.Staff)
-                {
-                    foreach (Service service in context.Services)
-                    {
-                        context.StaffService.Add(new StaffService { Service = service, Staff = staff });
-                    }
-                }
-            }
-            context.SaveChanges();
 
             if (context.Doctors.Count() == 0)
             {
@@ -506,27 +393,19 @@ namespace EmployeePortal
                 });
             }
 
-            if (context.Rooms.Count() == 0)
-            {
-                context.Rooms.Add(new Models.Room
-                {
-                    roomName = "Room 1",
-                });
-            }
-
             context.SaveChanges();
 
             if (context.Patients.Count() <= 1)
             {
                 context.Patients.Add(new Models.Patient
                 {
-                    firstName = "Patient",
+                    firstName = "Staff Member",
                     lastName = "Number 1",
-                    nickName = "Patient 1",
+                    nickName = "",
                     clientId = 9999999999,
                     birthDate = "01/01/2000",
                     gender = "M",
-                    email = "patient1@patient.com",
+                    email = "staff@mysaltys.com",
                     homeNumber = "555-555-5555",
                     mobileNumber = "555-555-5555",
                     isPreferred = true,
@@ -537,13 +416,13 @@ namespace EmployeePortal
                 });
                 context.Patients.Add(new Models.Patient
                 {
-                    firstName = "Patient",
+                    firstName = "Staff Member",
                     lastName = "Number 2",
-                    nickName = "Patient 2",
+                    nickName = "",
                     clientId = 9999999999,
                     birthDate = "01/01/2000",
                     gender = "F",
-                    email = "patient1@patient.com",
+                    email = "staff@mysaltys.com",
                     homeNumber = "555-555-5555",
                     mobileNumber = "555-555-5555",
                     isPreferred = true,
@@ -554,13 +433,13 @@ namespace EmployeePortal
                 });
                 context.Patients.Add(new Models.Patient
                 {
-                    firstName = "Patient",
+                    firstName = "Staff Member",
                     lastName = "Number 3",
-                    nickName = "Patient 3",
+                    nickName = "",
                     clientId = 9999999999,
                     birthDate = "01/01/2000",
                     gender = "F",
-                    email = "patient1@patient.com",
+                    email = "staff@mysaltys.com",
                     homeNumber = "555-555-5555",
                     mobileNumber = "555-555-5555",
                     isPreferred = false,

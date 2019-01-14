@@ -21,6 +21,7 @@ import { ConfirmDeleteDialogComponent } from '../../dialogs/confirm-delete/confi
 import { FormatterService } from '../../../services/formatter.service';
 import { WeekDay } from '../../../models/week-day';
 import { isNull } from 'util';
+import { AddressService } from '../../../services/address.service';
 
 @Component({
   selector: 'app-org-company',
@@ -92,6 +93,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
   constructor(
     private eventService: EventsService,
     private companyService: CompanyService,
+    private addressService: AddressService,
     private clinicsService: ClinicsService,
     private geographyService: GeographyService,
     public validationService: ValidationService,
@@ -326,7 +328,9 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
       });
     } else {
       this.companyService.updateCompany(this.editedCompany).subscribe(() => {
-        this.refreshData();
+        this.addressService.updateAddress(this.editedCompany.address).subscribe(() => {
+          this.refreshData();
+        });
       });
     }
   }

@@ -13,7 +13,8 @@ export class AddressService {
     }
 
     updateAddress(address: Address) {
-        return this.http.put(environment.baseUrl + 'api/Addresses', address);
+      const aId = (address as any).addressId;
+      return this.http.put(environment.baseUrl + 'api/Addresses/' + aId, address);
     }
 
     removeAddress(address: Address) {
