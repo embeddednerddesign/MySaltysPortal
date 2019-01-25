@@ -1,0 +1,22 @@
+<div class="main-content-column">
+  <div class="main-title">
+    This is My Salty's
+  </div>
+  <div class="content-wrapper">
+    <div class="content-wrapper" *ngFor="let contentItem of homeContent">
+      <div class="content-item">
+        <div class="content-item-title">
+            {{contentItem.title}}
+        </div>
+        <div class="content-item-body">
+            {{contentItem.content}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-overlayPanel #hoverPanel id="hoverPanel" [dismissable]="'false'">
+  Content
+</p-overlayPanel>
+<app-actionpanel></app-actionpanel>

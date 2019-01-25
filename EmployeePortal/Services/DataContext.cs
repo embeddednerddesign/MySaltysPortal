@@ -19,12 +19,13 @@ namespace EmployeePortal
         }
 
         public async Task<TimeZoneInfo> GetLocalTimezoneInfo() {
-            var localtimezone = (await this.Companies.FirstOrDefaultAsync()).timezone;
+            var localtimezone = (await Companies.FirstOrDefaultAsync()).timezone;
             return TimeZoneInfo.FindSystemTimeZoneById(localtimezone);
         }
 
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<HomeContent> HomeContent { get; set; }
 
     }
 }

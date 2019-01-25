@@ -183,7 +183,7 @@ namespace EmployeePortal
                     FirstName = "Donovan",
                     LastName = "Rogall",
                     Avatar = "avatar",
-                    Role = "admin",
+                    Role = "leader",
                     PhoneNumber = "555-555-5555",
                     Email = "donovan@mysaltys.com",
                     UserName = "donovan@mysaltys.com",
@@ -195,13 +195,72 @@ namespace EmployeePortal
                     FirstName = "Alexandra",
                     LastName = "Bonnett",
                     Avatar = "avatar",
-                    Role = "admin",
+                    Role = "leader",
                     PhoneNumber = "555-555-5555",
                     Email = "alexandra@mysaltys.com",
                     UserName = "alexandra@mysaltys.com",
                     AddressId = context.Addresses.FirstOrDefault().AddressId,
                 };
                 result = await userManagerService.CreateAsync(user, "mysaltys2019");
+            }
+
+            context.SaveChanges();
+
+            if (context.HomeContent.Count() == 0)
+            {
+                var content = new HomeContent
+                {
+                    title = "My Salty's Content 1",
+                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    backgroundImage = "",
+                    createdBy = "",
+                    createdOn = DateTime.Now
+                };
+                context.HomeContent.Add(content);
+                content = new HomeContent
+                {
+                    title = "My Salty's Content 1",
+                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    backgroundImage = "",
+                    createdBy = "",
+                    createdOn = DateTime.Now
+                };
+                context.HomeContent.Add(content);
+                content = new HomeContent
+                {
+                    title = "My Salty's Content 2",
+                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    backgroundImage = "",
+                    createdBy = "",
+                    createdOn = DateTime.Now
+                };
+                context.HomeContent.Add(content);
+                content = new HomeContent
+                {
+                    title = "My Salty's Content 3",
+                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    backgroundImage = "",
+                    createdBy = "",
+                    createdOn = DateTime.Now
+                };
+                context.HomeContent.Add(content);
+                content = new HomeContent
+                {
+                    title = "My Salty's Content 4",
+                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    backgroundImage = "",
+                    createdBy = "",
+                    createdOn = DateTime.Now
+                };
+                context.HomeContent.Add(content);
+                content = new HomeContent
+                {
+                    title = "My Salty's Content 5",
+                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    backgroundImage = "",
+                    createdBy = "",
+                    createdOn = DateTime.Now
+                };
             }
 
             context.SaveChanges();

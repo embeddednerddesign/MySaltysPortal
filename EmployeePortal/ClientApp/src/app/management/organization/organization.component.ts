@@ -20,7 +20,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loggedInUserRole = this.userService.loggedInUser.role;
 
-    this.userService.loggedInUserUpdated$.takeUntil(this.unsub).subscribe(u => {
+    this.userService.loggedInUserUpdated$.subscribe(u => {
       this.loggedInUserRole = this.userService.loggedInUser.role;
     });
   }

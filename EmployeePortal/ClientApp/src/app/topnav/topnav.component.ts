@@ -31,7 +31,7 @@ export class TopnavComponent implements OnInit {
     this.loggedInUserAvatar = 'assets/Avatars/' + this.userService.loggedInUser.avatar;
     this.loggedInUserRole = this.userService.loggedInUser.role;
 
-    this.userService.loggedInUserUpdated$.takeUntil(this.unsub).subscribe(u => {
+    this.userService.loggedInUserUpdated$.subscribe(u => {
       this.loggedInUserName = this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName;
       this.loggedInUserAvatar = 'assets/Avatars/' + this.userService.loggedInUser.avatar;
       this.loggedInUserRole = this.userService.loggedInUser.role;

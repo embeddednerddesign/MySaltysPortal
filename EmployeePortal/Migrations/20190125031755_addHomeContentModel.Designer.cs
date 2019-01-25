@@ -4,14 +4,16 @@ using EmployeePortal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EmployeePortal.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190125031755_addHomeContentModel")]
+    partial class addHomeContentModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,27 +65,6 @@ namespace EmployeePortal.Migrations
                     b.HasIndex("addressId");
 
                     b.ToTable("Companies");
-                });
-
-            modelBuilder.Entity("EmployeePortal.Models.HomeContent", b =>
-                {
-                    b.Property<int>("HomeContentId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("backgroundImage");
-
-                    b.Property<string>("content");
-
-                    b.Property<string>("createdBy");
-
-                    b.Property<DateTime>("createdOn");
-
-                    b.Property<string>("title");
-
-                    b.HasKey("HomeContentId");
-
-                    b.ToTable("HomeContent");
                 });
 
             modelBuilder.Entity("EmployeePortal.Models.User", b =>

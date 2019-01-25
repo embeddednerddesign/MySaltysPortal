@@ -12,14 +12,25 @@ import { ViewPdfDialogComponent } from '../../management/dialogs/view-pdf/view-p
   styleUrls: ['./resources.component.less']
 })
 export class ResourcesComponent implements OnInit, OnDestroy {
-  loggedInUserName = '';
   @ViewChild(SimplePdfViewerComponent) private pdfViewer: SimplePdfViewerComponent;
+
+  loggedInUserName = '';
+  frontOfHouseActive = true;
   bookmarks: SimplePDFBookmark[] = [];
   unsub: Subject<void> = new Subject<void>();
 
   constructor(private userService: UsersService,
               private confirmApptDialog: MatDialog
             ) { }
+
+
+  onFrontOfHouseClick() {
+    this.frontOfHouseActive = true;
+  }
+
+  onBackOfHouseClick() {
+    this.frontOfHouseActive = false;
+  }
 
   onResourceClick() {
     this.viewPDF('../../../../assets/resources/test.pdf');
@@ -33,10 +44,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
       data: pdfPath
     });
 
-    dialogRef
-      .afterClosed()
-      .takeUntil(this.unsub)
-      .subscribe(result => { });
+    dialogRef.afterClosed().subscribe(result => { });
 
     return dialogRef;
   }

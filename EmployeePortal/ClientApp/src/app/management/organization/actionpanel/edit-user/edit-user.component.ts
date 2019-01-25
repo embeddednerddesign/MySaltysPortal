@@ -104,7 +104,7 @@ constructor(private usersService: UsersService,
     this.addOrEdit = 'Add';
     // TODO: Need to fill with actual Clinic country info
     const clinicCountry = 'Canada';
-    this.route.params.takeUntil(this.unsub).subscribe(params => {
+    this.route.params.subscribe(params => {
       this.userIdParam = params['userid'];
       if (this.userIdParam !== '_' && this.userIdParam != null) {
         this.usersService.getUserById(this.userIdParam).subscribe(snapshot => {

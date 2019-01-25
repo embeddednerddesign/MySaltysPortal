@@ -50,6 +50,7 @@ import { ClickOutsideModule } from 'ng-click-outside';
 
 import { CurrentDataService } from './services/currentData.service';
 import { CompanyService } from './services/company.service';
+import { HomeContentService } from './services/home-content.service';
 import { CatalogueUpdatesService } from './services/catalogueupdates.service';
 import { ActionPanelService } from './services/actionpanel.service';
 import { AuthService } from './services/auth.service';
@@ -61,7 +62,7 @@ import { ImageService } from './services/image.service';
 
 import { OrganizationComponent } from './management/organization/organization.component';
 import { OrgUsersComponent } from './management/organization/org-users/org-users.component';
-import { TasksComponent } from './schedule/tasks/tasks.component';
+import { HomeComponent } from './schedule/home/home.component';
 import { ResourcesComponent } from './schedule/resources/resources.component';
 import { AppointmentsComponent } from './schedule/appointments/appointments.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -96,7 +97,7 @@ import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.c
     ManagementComponent,
     OrganizationComponent,
     OrgUsersComponent,
-    TasksComponent,
+    HomeComponent,
     ResourcesComponent,
     AppointmentsComponent,
     EditUserComponent,
@@ -167,6 +168,7 @@ import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.c
     AuthService,
     AuthGuard,
     CompanyService,
+    HomeContentService,
     GeographyService,
     ValidationService,
     FormatterService,
