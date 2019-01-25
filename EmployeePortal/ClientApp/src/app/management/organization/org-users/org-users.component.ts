@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Resource } from '../../../models/resource';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State } from '@progress/kendo-data-query';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CatalogueUpdatesService } from '../../../services/catalogueupdates.service';
 import { ConfirmDeleteDialogComponent } from '../../dialogs/confirm-delete/confirm-delete.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs/Subject';
@@ -14,7 +12,7 @@ import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { User } from '../../../models/user';
 import { UsersService } from '../../../services/users.service';
-import { UserCategory } from '../../../models/user-category';
+import { CatalogueUpdatesService } from '../../../services/catalogueupdates.service';
 
 @Component({
   selector: 'app-org-users',
@@ -59,7 +57,7 @@ export class OrgUsersComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.catalogueUpdatesService.catalogueUpdated.takeUntil(this.unsub).subscribe(() => {
+    this.catalogueUpdatesService.catalogueUpdated.subscribe(() => {
       this.disableGrid = false;
       if (this.catalogueUpdatesService.refreshRequired) {
         this.catalogueUpdatesService.refreshRequired = false;
@@ -108,11 +106,8 @@ export class OrgUsersComponent implements OnInit {
           lastName: docData.lastName,
           avatar: docData.avatar,
           role: docData.role,
-          // password: docData.password,
           phoneNumber: docData.phoneNumber,
           email: docData.email,
-
-          // addressId: docData.addressId,
           address: docData.address,
         };
         this.users.push(pushItem);
@@ -121,10 +116,6 @@ export class OrgUsersComponent implements OnInit {
       this.loading = false;
     });
   }
-
-  // addResource(user: User) {
-  //   this.usersService.addUser(user);
-  // }
 
   onAddClick({sender}) {
     this.disableGrid = true;
@@ -142,15 +133,9 @@ export class OrgUsersComponent implements OnInit {
 
   public saveHandler({sender, rowIndex, formGroup, isNew}) {
     const user: User = formGroup.value;
-    // if (isNew) {
-    //   this.usersService.addUser(user).subscribe(() => {
-    //     this.refreshData();
-    //   });
-    // } else {
       this.usersService.updateUser(user).subscribe(() => {
         this.refreshData();
       });
-    // }
     sender.closeRow(rowIndex);
   }
 
@@ -170,7 +155,6 @@ export class OrgUsersComponent implements OnInit {
           password: dataItem.password,
           phoneNumber: dataItem.phoneNumber,
           email: dataItem.email,
-          // addressId: dataItem.addressId,
           address: dataItem.address,
         };
         this.usersService.removeUser(dataItemToRemove).subscribe(() => {

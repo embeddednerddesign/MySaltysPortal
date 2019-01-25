@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 
@@ -19,7 +19,7 @@ export class ActionPanelService {
 }
 
 @Injectable()
-export class MasterOverlayService {
+export class MasterOverlayService implements OnDestroy {
 
     public masterOverlayEnabled = new Subject<boolean>();
 

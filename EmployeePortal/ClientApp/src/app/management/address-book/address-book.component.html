@@ -1,8 +1,0 @@
-<nav mat-tab-nav-bar>
-    <a mat-tab-link routerLink="doctors" routerLinkActive #doct="routerLinkActive" [active]="doct.isActive">Doctors</a>
-    <a mat-tab-link routerLink="pharmacies" routerLinkActive #pharm="routerLinkActive" [active]="pharm.isActive">Pharmacies</a>
-    <a mat-tab-link routerLink="labs" routerLinkActive #lab="routerLinkActive" [active]="lab.isActive">Labs</a>
-</nav>
-<div class="content">
-    <router-outlet></router-outlet>
-</div>

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { SimplePdfViewerComponent, SimplePDFBookmark } from 'simple-pdf-viewer';
-import { ConfirmAppointmentDialogComponent } from '../../management/dialogs/confirm-appointment/confirm-appointment.component';
 import { MatDialog } from '@angular/material';
 import { Subject } from 'rxjs';
 import { pdf } from '@progress/kendo-drawing';

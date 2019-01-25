@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { NavStateService } from '../services/navstate.service';
 import { MasterOverlayService } from '../services/actionpanel.service';
 
 @Component({
@@ -16,7 +15,7 @@ export class EmployeePortalComponent implements OnInit, OnDestroy {
   constructor(private masterOverlayService: MasterOverlayService ) { }
 
   ngOnInit() {
-    this.masterOverlayService.masterOverlayEnabled.takeUntil(this.unsub).subscribe(ovr => {
+    this.masterOverlayService.masterOverlayEnabled.subscribe(ovr => {
       this.masterOverlayEnabled = ovr;
     });
   }

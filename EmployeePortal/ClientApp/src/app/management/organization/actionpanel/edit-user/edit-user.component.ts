@@ -1,20 +1,18 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../../../../models/user';
-import { CatalogueUpdatesService } from '../../../../services/catalogueupdates.service';
 import { UsersService } from '../../../../services/users.service';
 import { ValidationService } from '../../../../services/validation.service';
 import { Address } from '../../../../models/address';
 import { GeographyService } from '../../../../services/geography.service';
 import { Subject } from 'rxjs/Subject';
-import { TitleCasePipe } from '@angular/common';
 import { FormatterService } from '../../../../services/formatter.service';
-import { UserCategory } from '../../../../models/user-category';
 import { AddressService } from '../../../../services/address.service';
-import { takeUntil } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
 import { ImageService } from '../../../../services/image.service';
+import { CurrentDataService } from '../../../../services/currentData.service';
+import { CatalogueUpdatesService } from '../../../../services/catalogueupdates.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -62,16 +60,15 @@ export class EditUserComponent implements OnInit, AfterViewInit, OnDestroy {
 
   countriesOfTheWorld: string[] = [];
   provincesAndStates: string[] = [];
-  userCategories: UserCategory[] = [{ userCategoryId: 0, categoryName: '' }];
-  allUserRoles: string[] = ['Admin', 'Manager', 'Staff'];
+  allUserRoles: string[] = [ 'Leader', 'Partner'];
 
   submitButtonDisabledState = false;
 
   unsub: Subject<void> = new Subject<void>();
 
 constructor(private usersService: UsersService,
-    private imageService: ImageService,
     private catalogueUpdatesService: CatalogueUpdatesService,
+    private imageService: ImageService,
     private geographyService: GeographyService,
     public validationService: ValidationService,
     public formatterService: FormatterService,
@@ -100,13 +97,6 @@ constructor(private usersService: UsersService,
         this.countriesOfTheWorld.push(key);
       }
     }
-    this.usersService.getUserCategories().subscribe(resp => {
-      const userCats = resp as UserCategory[];
-      this.userCategories = [];
-      userCats.forEach(userCat => {
-        this.userCategories.push(userCat);
-      });
-    });
     this.selectedUser = this.initUser(this.selectedUser, this.selectedAddress);
     this.editedUser = this.initUser(this.editedUser, this.editedAddress);
 
@@ -209,22 +199,11 @@ constructor(private usersService: UsersService,
 
   updateUser() {
     if (this.isNew) {
-      // add address, use the returned address id when adding user
-      // const addressToAdd = {
-      //   address1: this.addressAddress1.value,
-      //   address2: this.addressAddress2.value,
-      //   city: this.addressCity.value,
-      //   country: this.addressCountry.value,
-      //   postalCode: this.addressPostalCode.value,
-      //   province: this.addressProvince.value
-      // };
-      // this.addressService.addAddress(addressToAdd).pipe(takeUntil(this.unsub)).subscribe(address => {
-        this.usersService.addUser(this.editedUser, this.password.value).subscribe(() => {
-          this.catalogueUpdatesService.refreshRequired = true;
-          this.catalogueUpdatesService.catalogueUpdateComplete();
-          this.router.navigate(['/management/organization/users', { outlets: { 'action-panel': null } }]);
-        });
-      // });
+      this.usersService.addUser(this.editedUser, this.password.value).subscribe(() => {
+        this.catalogueUpdatesService.refreshRequired = true;
+        this.catalogueUpdatesService.catalogueUpdateComplete();
+        this.router.navigate(['/management/organization/users', { outlets: { 'action-panel': null } }]);
+      });
     } else {
       if (this.editedUser.id === this.usersService.loggedInUser.id) {
         this.usersService.loggedInUser = this.editedUser;

@@ -1,48 +1,5 @@
 <ngx-loading [show]="loading"></ngx-loading>
 
-<!-- <mat-expansion-panel id="companyDetails" [expanded]="true">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      Company - Clinics
-    </mat-panel-title>
-    <mat-panel-description>
-    </mat-panel-description>
-  </mat-expansion-panel-header>
-  <div id="clinicSelections">
-    <table class="detail-table" id="clinicList">
-      <tr *ngFor="let clinic of selectedClinics">
-        <td>
-          <div class="bullet" (click)="removeClinicFromCompany(clinic)" [inlineSVG]="'../../../assets/svg/negative-sign-inside-circle.svg'"></div>
-        </td>
-        <td>{{clinic.name}}</td>
-        <td><span>{{clinic.address.address1}}, {{clinic.address.city}}, {{clinic.address.province}},
-            {{clinic.address.country}}</span></td>
-      </tr>
-    </table>
-  </div>
-  <div class="row">
-    <div>
-      <button id="addClinicsButton" mat-button (click)="addClinicToCompany()">+ Add Clinic</button>
-    </div>
-    <div class="selecter col-4">
-      <div class="search-icon-container">
-        <div class="bullet" [inlineSVG]="'../../../assets/svg/search.svg'"></div>
-      </div>
-      <div class="form-field-container">
-        <mat-form-field>
-          <input id="clinicsInput" type="text" matInput [formControl]="selectedClinic" placeholder="Search for a clinic"
-            [matAutocomplete]="clinics" />
-        </mat-form-field>
-      </div>
-
-      <mat-autocomplete #clinics="matAutocomplete" [displayWith]="clinicDisplayFn">
-        <mat-option *ngFor="let clinic of filteredClinics | async" [value]="clinic">
-          {{ clinic.name }}
-        </mat-option>
-      </mat-autocomplete>
-    </div>
-  </div>
-</mat-expansion-panel> -->
 <mat-expansion-panel [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -107,23 +64,6 @@
       <input matInput placeholder="Contact Phone" aria-label="Contact Phone" [(ngModel)]="editedCompany.contactPhone"
         (change)="formatterService.formatPhoneNumber(contactPhone);updateSubmitButtonState()" [formControl]="contactPhone">
       <mat-error *ngIf="contactPhone.invalid">Not a Valid Phone #</mat-error>
-    </mat-form-field>
-    <mat-form-field id="hoursOfOperationInput" class="panel-flex-row-item">
-      <input matInput placeholder="Hours of Operation" (click)="openHoursOfOperationDialog()" aria-label="Hours of Operation"
-        [readonly]="true" [value]="hoursOfOperation">
-    </mat-form-field>
-  </div>
-  <div class="panel-flex-row" id="minDurationFlexRow">
-    <mat-form-field class="panel-flex-row-item" id="minDurationFlexRowItem">
-      <input matInput placeholder="Minimum Duration" aria-label="Minimum Duration" [(ngModel)]="editedCompany.minimumDuration"
-        [formControl]="minimumDuration">
-    </mat-form-field>
-    <mat-form-field class="panel-flex-row-item">
-      <mat-select placeholder="Timezone" [(ngModel)]="editedCompany.timezone" name="timezones">
-        <mat-option *ngFor="let timezone of timezonesOfTheWorld" [value]="timezone">
-          {{ timezone }}
-        </mat-option>
-      </mat-select>
     </mat-form-field>
   </div>
 </mat-expansion-panel>

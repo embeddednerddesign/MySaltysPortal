@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpEvent, HttpHandler } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
-import * as moment from 'moment';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 

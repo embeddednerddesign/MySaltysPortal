@@ -1,11 +1,11 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { take } from 'rxjs/operator/take';
 import { from } from 'rxjs/observable/from';
 import { isNullOrUndefined } from 'util';
 import { Subject } from 'rxjs/Subject';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import * as moment from 'moment';
 import { User } from '../models/user';

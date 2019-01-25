@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EmployeePortal;
 using EmployeePortal.Models;
-using static EmployeePortal.Lib.Fun;
 using Microsoft.AspNetCore.Authorization;
 
 namespace EmployeePortal.Controllers
@@ -32,22 +29,9 @@ namespace EmployeePortal.Controllers
         {
             var result = await _context.Companies
                 .Include(c => c.address)
-                .Include(c => c.hoursOfOperation).ThenInclude(e => e.hoursOfOperationDays)
-                .Include(c => c.clinics).ThenInclude(ca => ca.address)
-                .Include(c => c.clinics).ThenInclude(cb => cb.clinicRooms)
-                .Include(c => c.clinics).ThenInclude(cc => cc.clinicTaxes)
                 .ToListAsync();
 
             tzi = await _context.GetLocalTimezoneInfo();
-
-            foreach (Company c in result)
-            {
-                foreach (HoursOfOperationDay hood in c.hoursOfOperation.hoursOfOperationDays)
-                {
-                    hood.closeTime = fromUtc(hood.closeTime, tzi);
-                    hood.openTime = fromUtc(hood.openTime, tzi);
-                }
-            }
 
             return result;
         }
@@ -58,19 +42,9 @@ namespace EmployeePortal.Controllers
         {
             var company = await _context.Companies
                 .Include(c => c.address)
-                .Include(c => c.hoursOfOperation).ThenInclude(e => e.hoursOfOperationDays)
-                .Include(c => c.clinics).ThenInclude(ca => ca.address)
-                .Include(c => c.clinics).ThenInclude(cb => cb.clinicRooms)
-                .Include(c => c.clinics).ThenInclude(cc => cc.clinicTaxes)
                 .FirstOrDefaultAsync(c => c.CompanyId == id);
 
             tzi = await _context.GetLocalTimezoneInfo();
-
-            foreach (HoursOfOperationDay hood in company.hoursOfOperation.hoursOfOperationDays)
-            {
-                hood.closeTime = fromUtc(hood.closeTime, tzi);
-                hood.openTime = fromUtc(hood.openTime, tzi);
-            }
 
             return Ok(company);
         }
@@ -85,30 +59,15 @@ namespace EmployeePortal.Controllers
             }
 
             var dbCompany = await _context.Companies
-                .Include(c => c.clinics).ThenInclude(ca => ca.address)
-                .Include(c => c.clinics).ThenInclude(cb => cb.clinicRooms)
-                .Include(c => c.clinics).ThenInclude(cc => cc.clinicTaxes)
                 .Include(c => c.address)
-                .Include(c => c.hoursOfOperation)
                 .FirstAsync(c => c.CompanyId == company.CompanyId);
 
             this.tzi = await _context.GetLocalTimezoneInfo();
-
-            foreach (HoursOfOperationDay hood in dbCompany.hoursOfOperation.hoursOfOperationDays)
-            {
-                // set the times to UTC before we store it
-                hood.openTime = toUtc(hood.openTime);
-                hood.closeTime = toUtc(hood.closeTime);
-            }
 
             // if this doesn't work, try automapper Package properties -> dbPackage properties
             dbCompany.name = company.name;
             dbCompany.contactName = company.contactName;
             dbCompany.contactPhone = company.contactPhone;
-
-            dbCompany.primaryBrandingColour = company.primaryBrandingColour;
-            dbCompany.accentBrandingColour = company.accentBrandingColour;
-            dbCompany.minimumDuration = company.minimumDuration;
             dbCompany.timezone = company.timezone;
 
             _context.Companies.Update(dbCompany);
@@ -137,13 +96,6 @@ namespace EmployeePortal.Controllers
         public async Task<ActionResult> PostCompany([FromBody] Company company)
         {
             this.tzi = await _context.GetLocalTimezoneInfo();
-
-            foreach (HoursOfOperationDay hood in company.hoursOfOperation.hoursOfOperationDays)
-            {
-                // set the times to UTC before we store it
-                hood.openTime = toUtc(hood.openTime);
-                hood.closeTime = toUtc(hood.closeTime);
-            }
 
             _context.Companies.Add(company);
 

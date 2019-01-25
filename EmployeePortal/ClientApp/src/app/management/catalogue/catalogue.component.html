@@ -1,9 +1,0 @@
-<nav mat-tab-nav-bar>
-    <a mat-tab-link routerLink="services" routerLinkActive #serv="routerLinkActive" [active]="serv.isActive">Services</a>
-    <a mat-tab-link routerLink="products" routerLinkActive #pro="routerLinkActive" [active]="pro.isActive">Products</a>
-    <a mat-tab-link routerLink="packages" routerLinkActive #pack="routerLinkActive" [active]="pack.isActive">Packages</a>
-    <a mat-tab-link routerLink="specials" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">Specials</a>
-</nav>
-<div class="content">
-    <router-outlet></router-outlet>
-</div>

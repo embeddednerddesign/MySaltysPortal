@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { UserCategory } from '../models/user-category';
 import { Subject } from 'rxjs';
 
 @Injectable()
@@ -61,10 +60,6 @@ export class UsersService {
 
   getUsers() {
     return this.http.get<User[]>(environment.baseUrl + 'api/Users');
-  }
-
-  getUserCategories() {
-    return this.http.get<UserCategory[]>(environment.baseUrl + 'api/UserCategories');
   }
 
 }

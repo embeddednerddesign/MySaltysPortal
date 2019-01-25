@@ -9,18 +9,13 @@ using EmployeePortal.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace EmployeePortal
 {
@@ -66,19 +61,13 @@ namespace EmployeePortal
                     ClockSkew = TimeSpan.Zero // remove token expiration delay
                 };
             });
-            // services.AddDefaultIdentity<IdentityUser>()
-            //     .AddEntityFrameworkStores<DataContext>();
+
             services.AddAutoMapper();
             services.AddMvc().AddJsonOptions(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<JwtSettings>(Configuration.GetSection("JWT"));
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new Info { Title = "EmployeePortalAPI", Version = "v1" });
-            //});
-
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -127,17 +116,6 @@ namespace EmployeePortal
                     spa.Options.SourcePath = "ClientApp";
                 });
             }
-
-            //// Enable middleware to serve generated Swagger as a JSON endpoint.
-            //app.UseSwagger();
-
-            //// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
-            //// specifying the Swagger JSON endpoint.
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "EmployeePortalAPI V1");
-            //});
-            
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 using (var context = serviceScope.ServiceProvider.GetService<DataContext>())
@@ -145,9 +123,6 @@ namespace EmployeePortal
                     context.Database.Migrate();
                     using (var userManagerService = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>())
                     {
-                        //if (context.Database.GetPendingMigrations().Any()) {
-                        
-                        //}
                         await SeedData(context, userManagerService);
                     }
                 }
@@ -156,24 +131,6 @@ namespace EmployeePortal
 
         private async Task SeedData(DataContext context, UserManager<User> userManagerService)
         {
-            if (context.Taxes.Count() == 0)
-            {
-                context.Taxes.AddRange(
-                    new Tax
-                    {
-                        name = "GST",
-                        value = 0.05m
-                    },
-                    new Tax
-                    {
-                        name = "PST",
-                        value = 0.07m
-                    }
-                );
-            }
-
-            context.SaveChanges();
-
             if (context.Addresses.Count() == 0)
             {
                 context.Addresses.Add(new Models.Address
@@ -189,95 +146,24 @@ namespace EmployeePortal
 
             context.SaveChanges();
 
-            if (context.Clinics.Count() == 0)
-            {
-                context.Clinics.Add(new Models.Clinic
-                {
-                    name = "DermMedica Clinic",
-                    addressId = context.Addresses.FirstOrDefault().AddressId
-                });
-            }
-
-            context.SaveChanges();
-
-            HoursOfOperation seedHOO = new HoursOfOperation();
-            seedHOO.hoursOfOperationId = 0;
-            seedHOO.hoursOfOperationDays = new List<HoursOfOperationDay>();
-            HoursOfOperationDay seedHOOD = new HoursOfOperationDay();
-            seedHOOD.closed = true;
-            seedHOOD.dayofweek = "Sunday";
-            seedHOOD.openTime = new DateTime(2018, 01, 01, 16, 00, 00);
-            seedHOOD.closeTime = new DateTime(2018, 01, 01, 00, 00, 00);
-            seedHOO.hoursOfOperationDays.Add(seedHOOD);
-            seedHOOD = new HoursOfOperationDay();
-            seedHOOD.closed = false;
-            seedHOOD.dayofweek = "Monday";
-            seedHOOD.openTime = new DateTime(2018, 01, 01, 16, 00, 00);
-            seedHOOD.closeTime = new DateTime(2018, 01, 01, 00, 00, 00);
-            seedHOO.hoursOfOperationDays.Add(seedHOOD);
-            seedHOOD = new HoursOfOperationDay();
-            seedHOOD.closed = false;
-            seedHOOD.dayofweek = "Tuesday";
-            seedHOOD.openTime = new DateTime(2018, 01, 01, 16, 00, 00);
-            seedHOOD.closeTime = new DateTime(2018, 01, 01, 00, 00, 00);
-            seedHOO.hoursOfOperationDays.Add(seedHOOD);
-            seedHOOD = new HoursOfOperationDay();
-            seedHOOD.closed = false;
-            seedHOOD.dayofweek = "Wednesday";
-            seedHOOD.openTime = new DateTime(2018, 01, 01, 16, 00, 00);
-            seedHOOD.closeTime = new DateTime(2018, 01, 01, 00, 00, 00);
-            seedHOO.hoursOfOperationDays.Add(seedHOOD);
-            seedHOOD = new HoursOfOperationDay();
-            seedHOOD.closed = false;
-            seedHOOD.dayofweek = "Thursday";
-            seedHOOD.openTime = new DateTime(2018, 01, 01, 16, 00, 00);
-            seedHOOD.closeTime = new DateTime(2018, 01, 01, 00, 00, 00);
-            seedHOO.hoursOfOperationDays.Add(seedHOOD);
-            seedHOOD = new HoursOfOperationDay();
-            seedHOOD.closed = false;
-            seedHOOD.dayofweek = "Friday";
-            seedHOOD.openTime = new DateTime(2018, 01, 01, 16, 00, 00);
-            seedHOOD.closeTime = new DateTime(2018, 01, 01, 00, 00, 00);
-            seedHOO.hoursOfOperationDays.Add(seedHOOD);
-            seedHOOD = new HoursOfOperationDay();
-            seedHOOD.closed = true;
-            seedHOOD.dayofweek = "Saturday";
-            seedHOOD.openTime = new DateTime(2018, 01, 01, 16, 00, 00);
-            seedHOOD.closeTime = new DateTime(2018, 01, 01, 00, 00, 00);
-            seedHOO.hoursOfOperationDays.Add(seedHOOD);
-
             if (context.Companies.Count() == 0)
             {
-                List<Clinic> tempClinics = new List<Clinic>();
-                tempClinics.Add(context.Clinics.FirstOrDefault());
-                context.Companies.Add(new Models.Company
+                context.Companies.Add(new Company
                 {
                     name = "Salty's Beachhouse",
                     contactName = "Alexandra Bonnett",
                     contactPhone = "250-493-5001",
-                    primaryBrandingColour = "British Columbia",
-                    accentBrandingColour = "Canada",
-                    minimumDuration = 15,
-                    hoursOfOperation = seedHOO,
                     addressId = context.Addresses.FirstOrDefault().AddressId,
-                    clinics = tempClinics,
                     timezone = "Pacific Standard Time"
                 });
             }
             else
             {
-                var company = context.Companies
-                    .Include(e => e.hoursOfOperation).ThenInclude(e => e.hoursOfOperationDays)
-                    .First();
+                var company = context.Companies.First();
 
                 if (company.timezone == null || company.timezone == "")
                 {
                     company.timezone = "Pacific Standard Time";
-                }
-
-                if (company.hoursOfOperation == null || company.hoursOfOperation.hoursOfOperationDays == null || company.hoursOfOperation.hoursOfOperationDays.Count == 0)
-                {
-                    company.hoursOfOperation = seedHOO;
                 }
             }
 
@@ -286,60 +172,6 @@ namespace EmployeePortal
             if (context.Companies.First().addressId == null)
             {
                 context.Companies.First().addressId = context.Addresses.First().AddressId;
-            }
-
-            if (context.ServiceCategories.Count() == 0)
-            {
-                context.ServiceCategories.Add(new Models.ServiceCategory { name = "Service Cat 1" });
-                context.ServiceCategories.Add(new Models.ServiceCategory { name = "Service Cat 2" });
-            }
-
-            context.SaveChanges();
-
-            if (context.Services.Count() == 0)
-            {
-                context.Services.Add(new Models.Service
-                {
-                    serviceName = "Hostess",
-                    quantity = 1,
-                    billingCode = 1,
-                    serviceAltName = "",
-                    defaultDurationMinutes = 60,
-                    subType = "",
-                    diagnosticCode = 100,
-                    serviceIDColour = "#555555",
-                    templateIcon = "",
-                    defaultPrice = 0.00F,
-                    status = true,
-                    governmentBilling = false,
-                    serviceCategoryId = context.ServiceCategories.FirstOrDefault().ServiceCategoryId
-                });
-                context.Services.Add(new Models.Service
-                {
-                    serviceName = "Bartender",
-                    quantity = 1,
-                    billingCode = 1,
-                    serviceAltName = "",
-                    defaultDurationMinutes = 45,
-                    subType = "",
-                    diagnosticCode = 200,
-                    serviceIDColour = "#888888",
-                    templateIcon = "",
-                    defaultPrice = 0.00F,
-                    status = true,
-                    governmentBilling = true,
-                    serviceCategoryId = context.ServiceCategories.FirstOrDefault().ServiceCategoryId
-                });
-            }
-            else
-            {
-                foreach (Service serv in context.Services)
-                {
-                    if (serv.userCategories == null)
-                    {
-                        serv.userCategories = new List<UserCategoryService>();
-                    }
-                }
             }
 
             context.SaveChanges();
@@ -353,140 +185,24 @@ namespace EmployeePortal
                     Avatar = "avatar",
                     Role = "admin",
                     PhoneNumber = "555-555-5555",
-                    Email = "email@email.com",
-                    UserName = "email@email.com",
+                    Email = "donovan@mysaltys.com",
+                    UserName = "donovan@mysaltys.com",
                     AddressId = context.Addresses.FirstOrDefault().AddressId,
                 };
-                var result = await userManagerService.CreateAsync(user, "password123");
+                var result = await userManagerService.CreateAsync(user, "end422");
+                user = new User
+                {
+                    FirstName = "Alexandra",
+                    LastName = "Bonnett",
+                    Avatar = "avatar",
+                    Role = "admin",
+                    PhoneNumber = "555-555-5555",
+                    Email = "alexandra@mysaltys.com",
+                    UserName = "alexandra@mysaltys.com",
+                    AddressId = context.Addresses.FirstOrDefault().AddressId,
+                };
+                result = await userManagerService.CreateAsync(user, "mysaltys2019");
             }
-
-            if (context.Doctors.Count() == 0)
-            {
-                context.Doctors.Add(new Models.Doctor
-                {
-                    proTitle = "Dr.",
-                    firstName = "Craig",
-                    lastName = "Crippen",
-                    phoneNumber = "555-555-5555",
-                    faxNumber = "555-555-6666",
-                    email = "craig@dermedica.com",
-                    website = "www.dermmedica.com",
-                    hoursOfOperation = seedHOO,
-                    specialty = "Plastic Surgery",
-                    addressId = context.Addresses.FirstOrDefault().AddressId
-                });
-            }
-
-            if (context.Pharmacies.Count() == 0)
-            {
-                context.Pharmacies.Add(new Models.Pharmacy
-                {
-                    name = "Test Pharmacy 1",
-                    phoneNumber1 = "555-555-5555",
-                    phoneNumber2 = "555-555-5555",
-                    phoneNumber3 = "555-555-5555",
-                    faxNumber = "555-555-5555",
-                    email = "pharmacy@email.com",
-                    website = "www.pharmacy.com",
-                    hoursOfOperation = seedHOO,
-                    addressId = context.Addresses.FirstOrDefault().AddressId
-                });
-            }
-
-            context.SaveChanges();
-
-            if (context.Patients.Count() <= 1)
-            {
-                context.Patients.Add(new Models.Patient
-                {
-                    firstName = "Staff Member",
-                    lastName = "Number 1",
-                    nickName = "",
-                    clientId = 9999999999,
-                    birthDate = "01/01/2000",
-                    gender = "M",
-                    email = "staff@mysaltys.com",
-                    homeNumber = "555-555-5555",
-                    mobileNumber = "555-555-5555",
-                    isPreferred = true,
-                    communicationPreference = "Email",
-                    addressId = context.Addresses.FirstOrDefault().AddressId,
-                    doctorId = context.Doctors.FirstOrDefault().DoctorId,
-                    pharmacyId = context.Pharmacies.FirstOrDefault().PharmacyId
-                });
-                context.Patients.Add(new Models.Patient
-                {
-                    firstName = "Staff Member",
-                    lastName = "Number 2",
-                    nickName = "",
-                    clientId = 9999999999,
-                    birthDate = "01/01/2000",
-                    gender = "F",
-                    email = "staff@mysaltys.com",
-                    homeNumber = "555-555-5555",
-                    mobileNumber = "555-555-5555",
-                    isPreferred = true,
-                    communicationPreference = "Email",
-                    addressId = context.Addresses.FirstOrDefault().AddressId,
-                    doctorId = context.Doctors.FirstOrDefault().DoctorId,
-                    pharmacyId = context.Pharmacies.FirstOrDefault().PharmacyId
-                });
-                context.Patients.Add(new Models.Patient
-                {
-                    firstName = "Staff Member",
-                    lastName = "Number 3",
-                    nickName = "",
-                    clientId = 9999999999,
-                    birthDate = "01/01/2000",
-                    gender = "F",
-                    email = "staff@mysaltys.com",
-                    homeNumber = "555-555-5555",
-                    mobileNumber = "555-555-5555",
-                    isPreferred = false,
-                    communicationPreference = "Email",
-                    addressId = context.Addresses.FirstOrDefault().AddressId,
-                    doctorId = context.Doctors.FirstOrDefault().DoctorId,
-                    pharmacyId = context.Pharmacies.FirstOrDefault().PharmacyId
-                });
-            }
-
-            context.SaveChanges();
-
-            if (context.Visits.Count() == 0)
-            {
-                context.Visits.Add(new Models.Visit
-                {
-                    visitIdString = "",
-                    visitNotes = "",
-                    patientNotes = "",
-                    cancellationReason = "",
-                    isCancellationAlert = false,
-                    cancellationDate = new DateTime(2018, 09, 18, 10, 00, 00, DateTimeKind.Utc),
-                    cancelled = false,
-                    patientId = context.Patients.FirstOrDefault().PatientId
-                });
-            }
-            else
-            {
-                foreach (Models.Visit vis in context.Visits)
-                {
-                    vis.cancellationDate = DateTime.SpecifyKind(vis.cancellationDate ?? DateTime.Now, DateTimeKind.Utc);
-                }
-            }
-
-            if (context.Appointments.Count() > 0)
-            {
-                foreach (Appointment appt in context.Appointments)
-                {
-                    appt.cancellationDate = DateTime.SpecifyKind(appt.cancellationDate ?? DateTime.Now, DateTimeKind.Utc);
-                    appt.start = DateTime.SpecifyKind(appt.start, DateTimeKind.Utc);
-                    appt.end = DateTime.SpecifyKind(appt.end.Value, DateTimeKind.Utc);
-                }
-            }
-
-            context.SaveChanges();
-
-            context.Database.ExecuteSqlCommand("DELETE FROM Appointments where ServiceId is null");
 
             context.SaveChanges();
 

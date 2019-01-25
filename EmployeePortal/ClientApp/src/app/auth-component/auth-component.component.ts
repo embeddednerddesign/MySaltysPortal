@@ -5,7 +5,6 @@ import { AuthService } from '../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import * as moment from 'moment';
 import { UsersService } from '../services/users.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -75,7 +74,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.validationError = false;
     const password = this.passwordFormControl.value;
     const email = this.emailFormControl.value;
-    this.authService.login(email, password).takeUntil(this.unsub).subscribe(result => {
+    this.authService.login(email, password).subscribe(result => {
       this.userService.loggedInUser = result.userModel;
       if (this.returnUrl) {
         this.authService.setLoginToken(result.idToken, result.expiresIn);
