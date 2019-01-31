@@ -5,6 +5,7 @@ import { AuthComponent } from './auth-component/auth-component.component';
 import { OrganizationComponent } from './management/organization/organization.component';
 import { OrgUsersComponent } from './management/organization/org-users/org-users.component';
 import { HomeComponent } from './schedule/home/home.component';
+import { HomeContentComponent } from './schedule/home-content/home-content.component';
 import { ResourcesComponent } from './schedule/resources/resources.component';
 import { AppointmentsComponent } from './schedule/appointments/appointments.component';
 import { EditUserComponent } from './management/organization/actionpanel/edit-user/edit-user.component';
@@ -21,6 +22,11 @@ const appRoutes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'home/home-content/:contentid',
+        component: HomeContentComponent,
         canActivate: [AuthGuard]
       },
       {

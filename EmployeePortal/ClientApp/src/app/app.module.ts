@@ -63,6 +63,7 @@ import { ImageService } from './services/image.service';
 import { OrganizationComponent } from './management/organization/organization.component';
 import { OrgUsersComponent } from './management/organization/org-users/org-users.component';
 import { HomeComponent } from './schedule/home/home.component';
+import { HomeContentComponent } from './schedule/home-content/home-content.component';
 import { ResourcesComponent } from './schedule/resources/resources.component';
 import { AppointmentsComponent } from './schedule/appointments/appointments.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -98,6 +99,7 @@ import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.c
     OrganizationComponent,
     OrgUsersComponent,
     HomeComponent,
+    HomeContentComponent,
     ResourcesComponent,
     AppointmentsComponent,
     EditUserComponent,
