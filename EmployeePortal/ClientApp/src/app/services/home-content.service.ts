@@ -6,6 +6,8 @@ import { HomeContent } from '../models/home-content';
 @Injectable()
 export class HomeContentService {
 
+  contentSelected = false;
+
   constructor(private http: HttpClient) { }
 
   addHomeContent(content: HomeContent) {

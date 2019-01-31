@@ -17,9 +17,10 @@ export class HomeComponent implements OnInit {
 
   constructor(private userService: UsersService,
               private router: Router,
-              private homeContentService: HomeContentService) { }
+              public homeContentService: HomeContentService) { }
 
   ngOnInit() {
+    this.homeContentService.contentSelected = false;
     this.loggedInUserName = this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName;
     this.homeContentService.getHomeContent().subscribe(content => {
       this.homeContent = content;
@@ -27,11 +28,12 @@ export class HomeComponent implements OnInit {
   }
 
   onBackClick() {
-    this.selectedContent = null;
+    this.homeContentService.contentSelected = false;
   }
 
   onContentClick(contentId) {
   this.homeContentService.getHomeContentById(contentId).subscribe(content => {
+    this.homeContentService.contentSelected = true;
     this.selectedContent = content;
   });
 }
