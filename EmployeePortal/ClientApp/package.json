@@ -37,6 +37,8 @@
     "@progress/kendo-data-query": "^1.2.2",
     "@progress/kendo-drawing": "^1.5.2",
     "@progress/kendo-theme-default": "^2.49.1",
+    "ag-grid-angular": "^20.0.0",
+    "ag-grid-community": "^20.0.0",
     "ajv": "^6.4.0",
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^4.0.0",
@@ -61,6 +63,7 @@
     "rxjs": "^5.5.8",
     "simple-pdf-viewer": "^2.0.3",
     "tui-image-editor": "^3.2.2",
+    "xlsx": "^0.14.1",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
