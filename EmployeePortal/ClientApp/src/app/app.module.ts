@@ -39,6 +39,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { AgGridModule } from 'ag-grid-angular';
 
 import { AppComponent } from './app.component';
 import { ManagementComponent } from './management/management.component';
@@ -158,7 +159,8 @@ import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.c
     MatMenuModule,
     NgxGalleryModule,
     NgxImageEditorModule,
-    SimplePdfViewerModule
+    SimplePdfViewerModule,
+    AgGridModule.withComponents([])
   ],
   providers: [
     CurrentDataService,
