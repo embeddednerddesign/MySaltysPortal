@@ -35,12 +35,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   constructor() {
-    this.columnDefs = [
-      { headerName: 'Task Name', field: 'Taskname' },
-      { headerName: 'Hourly Rate', field: 'Hourlyrate' },
-      { headerName: 'Billable', field: 'Billable' },
-      { headerName: 'Active?', field: 'Active' }
-    ];
+    this.columnDefs = [];
     this.rowData = [];
   }
 
@@ -55,22 +50,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
   ngOnDestroy() {
   }
 
-  scrambleAndRefreshAll() {
-    scramble();
-    console.log('this.excelHeaderNames -> ', this.excelHeaderNames);
-    console.log('this.excelData -> ', this.excelData);
-    this.gridApi.refreshCells();
-  }
-
   onGridReady(params) {
-    console.log('onGridReady');
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
-    data = createData(14);
-    params.api.setRowData(data);
+    params.api.setRowData([]);
   }
-
 
   incomingfile(event) {
     this.file = event.target.files[0];
@@ -90,89 +74,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
       this.excelHeaderNames = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {header: 1})[0];
-      // this.excelData = XLSX.utils.sheet_to_json(worksheet, {raw: true});
       this.excelData = XLSX.utils.sheet_to_json(worksheet);
-      // console.log(this.excelData);
+
+      this.columnDefs = [];
       this.excelHeaderNamesClean = [];
       this.excelHeaderNames.forEach(headerName => {
-        console.log('headerName -> ', headerName);
-        const headerNameClean = (headerName as string).replace(/[^a-zA-Z ]/g, '').replace(' ', '');
-        console.log('headerNameClean -> ', headerNameClean);
-        this.excelHeaderNamesClean.push(headerNameClean);
-        this.columnDefs.push({ headerName: headerName, field: headerNameClean });
+        this.columnDefs.push({ field: headerName });
       });
-
-      this.excelData.forEach(rowdata => {
-        console.log(rowdata);
-
-
-        this.excelHeaderNames.forEach(function(colId) {
-          if (!isNullOrUndefined(rowdata[colId])) {
-            console.log('colId -> ', colId);
-            console.log('rowdata[colId] -> ', rowdata[colId]);
-            const colIdClean = (colId as string).replace(/[^a-zA-Z ]/g, '').replace(' ', '');
-
-          }
-        });
-
-
-    this.columnDefs = [
-      { headerName: 'Task Name', field: 'Taskname' },
-      { headerName: 'Hourly Rate', field: 'Hourlyrate' },
-      { headerName: 'Billable', field: 'Billable' },
-      { headerName: 'Active?', field: 'Active' }
-    ];
-
-        // const rowdataclean = (rowdata as string).replace(/[^a-zA-Z ]/g, '');
-        this.rowData.push(rowdata);
-      });
-
-      console.log('columnDefs -> ', this.columnDefs);
-      console.log('rowData -> ', this.rowData);
+      this.gridApi.setRowData(this.excelData);
+      this.gridApi.refreshCells();
 
     };
     fileReader.readAsArrayBuffer(this.file);
-
-    // this.columnDefs = [
-    //   {headerName: 'Make', field: 'make' },
-    //   {headerName: 'Model', field: 'model' },
-    //   {headerName: 'Price', field: 'price'}
-    // ];
-
-    // this.rowData = [
-    //   { make: 'Toyota', model: 'Celica', price: 35000 },
-    //   { make: 'Ford', model: 'Mondeo', price: 32000 },
-    //   { make: 'Porsche', model: 'Boxter', price: 72000 }
-    // ];
   }
-}
-
-var data = [];
-function createData(count) {
-  var result = [];
-  for (var i = 1; i <= count; i++) {
-    result.push({
-      Taskname: (i * 863) % 100,
-      Hourlyrate: (i * 811) % 100,
-      Billable: (i * 743) % 100,
-      Active: (i * 677) % 100
-    });
-  }
-  return result;
-}
-function callRefreshAfterMillis(params, millis, gridApi) {
-  setTimeout(function() {
-    gridApi.refreshCells(params);
-  }, millis);
-}
-function scramble() {
-  data.forEach(scrambleItem);
-}
-function scrambleItem(item) {
-  this.excelHeaderNamesClean.forEach(function(colId) {
-    if (Math.random() > 0.5) {
-      return;
-    }
-    item[colId] = Math.floor(Math.random() * 100);
-  });
 }
