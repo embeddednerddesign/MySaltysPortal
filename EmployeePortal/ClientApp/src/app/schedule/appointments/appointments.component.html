@@ -6,18 +6,18 @@
     <div class="main-container">
       <div class="resource-nav-header">
         <div class="resource-nav-header-item">
-          <span (click)="onThisWeekFrontClick()" [ngClass]="{'item-selected': frontOfHouseActive}">Front of House</span>
+          <span (click)="onBackClick()" [ngClass]="{'item-selected': frontOfHouseActive}">Front of House</span>
         </div>
         <div class="resource-nav-header-item">
-          <span (click)="onThisWeekBackClick()" [ngClass]="{'item-selected': !frontOfHouseActive}">Back of House</span>
+          <span (click)="onFrontClick()" [ngClass]="{'item-selected': !frontOfHouseActive}">Back of House</span>
         </div>
       </div>
       <div class="resource-nav-sub-header">
         <div class="resource-nav-sub-header-item">
-          <span (click)="onThisWeekFrontClick()" [ngClass]="{'item-selected': !thisWeekActive}">Last Week</span>
+          <span (click)="onThisWeekClick()" [ngClass]="{'item-selected': !thisWeekActive}">Last Week</span>
         </div>
         <div class="resource-nav-sub-header-item">
-          <span (click)="onThisWeekBackClick()" [ngClass]="{'item-selected': thisWeekActive}">This Week</span>
+          <span (click)="onLastWeekClick()" [ngClass]="{'item-selected': thisWeekActive}">This Week</span>
         </div>
       </div>
       <div class="pdf-controls">

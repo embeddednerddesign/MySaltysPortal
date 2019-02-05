@@ -1,98 +1,39 @@
-.search-bar-container {
-    display: flex;
-    flex-direction: row;
-    padding-left: 24px;
+button.mat-raised-button {
+  background-color: #DF4931;
+  color: white;
 }
 
-:host /deep/ .search-bar {
-    width: 80%;
-    padding: 10px 0px 0px 10px;
-}
-:host /deep/ .capitalized {
-    text-transform: capitalize;
-}
-:host /deep/ .uppercased {
-    text-transform: uppercase;
+button.mat-button {
+  width: 140px;
+  border: 1px solid #DF4931;
+  margin-left: 5px;
 }
 
-:host /deep/ #gridDisableDiv {
-    .backdrop {
-        z-index: 2;
-    }
-    .spinner-three-bounce.ng-star-inserted {
-        display: none;
-    }
+.schedule-upload-column {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  justify-content: space-around;
 }
-
-.nav-item {
-    &.search-users {
-        width: 500px;
-        padding-left: 10px;
-        border: 1px solid;
-        border-radius: 4px;
-        span {
-            font-size: 22px;
-            padding-left: 10px;
-            padding-right: 2px;
-        }
-        mat-form-field {
-            font-size: 18px;
-        }
-    }
-    &.add-users {
-        margin-top: auto;
-        margin-bottom: auto;
-
-        span {
-            font-size: 28px;
-            padding-left: 40px;
-        }
-    }
-    &.manage-categories {
-        margin-top: auto;
-        margin-bottom: auto;
-
-        span {
-            font-size: 28px;
-            padding-left: 40px;
-            padding-top: 3px;
-        }
-    }
+.schedule-upload-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
 }
-
-mat-panel-title {
-  text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+.schedule-upload-item-column {
+  display: flex;
+  flex-direction: column;
 }
-
-:host /deep/ #history .mat-expansion-panel-body {
-  padding-bottom: 3em;
+.schedule-upload-item {
+  display: flex;
+  width: 300px;
 }
-:host /deep/ .mat-expansion-panel-header-title{
-  color:#fff;
-}
-:host /deep/ .mat-expansion-indicator::after{
-  color:#fff;
-}
-:host /deep/ .mat-expansion-panel{
-  background-color: #fff;
-}
-:host /deep/ .mat-expansion-panel-body{
-  background-color: #fff;
-  padding-top: 12px;
-}
-:host /deep/ #notes .mat-expansion-panel-body{
-  padding: 10px 0px;
-}
-:host /deep/ .mat-accordion .mat-expansion-panel-spacing{
-  margin-top: 0px !important;
-  margin-bottom: 0px;
-}
-:host /deep/ .mat-expansion-panel-header{
-  background-color: #33353e !important;
-  height: 67px !important;
-  min-height: 67px !important;
-  max-height: 67px !important;
+.schedule-upload-item-title {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: 'Montserrat, sans-serif';
+  font-size: 20px;
+  font-weight: 100;
+  text-align: center;
 }

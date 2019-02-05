@@ -9,6 +9,7 @@ import { SimplePdfViewerComponent } from 'simple-pdf-viewer';
 })
 export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild(SimplePdfViewerComponent) private pdfViewer: SimplePdfViewerComponent;
+
   pdfPath: string;
   frontOfHouseActive = true;
   thisWeekActive = true;
