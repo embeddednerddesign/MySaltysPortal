@@ -39,7 +39,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
-import { AgGridModule } from 'ag-grid-angular';
 
 import { AppComponent } from './app.component';
 import { ManagementComponent } from './management/management.component';
@@ -63,6 +62,7 @@ import { ImageService } from './services/image.service';
 
 import { OrganizationComponent } from './management/organization/organization.component';
 import { OrgUsersComponent } from './management/organization/org-users/org-users.component';
+import { OrgSchedulesComponent } from './management/organization/org-schedules/org-schedules.component';
 import { HomeComponent } from './schedule/home/home.component';
 import { ResourcesComponent } from './schedule/resources/resources.component';
 import { AppointmentsComponent } from './schedule/appointments/appointments.component';
@@ -98,6 +98,7 @@ import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.c
     ManagementComponent,
     OrganizationComponent,
     OrgUsersComponent,
+    OrgSchedulesComponent,
     HomeComponent,
     ResourcesComponent,
     AppointmentsComponent,
@@ -159,8 +160,7 @@ import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.c
     MatMenuModule,
     NgxGalleryModule,
     NgxImageEditorModule,
-    SimplePdfViewerModule,
-    AgGridModule.withComponents([])
+    SimplePdfViewerModule
   ],
   providers: [
     CurrentDataService,

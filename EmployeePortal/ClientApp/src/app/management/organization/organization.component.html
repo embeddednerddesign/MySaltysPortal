@@ -1,6 +1,7 @@
 <nav *ngIf="loggedInUserRole === 'leader'" mat-tab-nav-bar>
   <!-- <a mat-tab-link routerLink="company" routerLinkActive #comp="routerLinkActive" [active]="comp.isActive">Company</a> -->
   <a mat-tab-link routerLink="users" routerLinkActive #user="routerLinkActive" [active]="user.isActive">Users</a>
+  <a mat-tab-link routerLink="scheduleUpload" routerLinkActive #schedUp="routerLinkActive" [active]="schedUp.isActive">Schedules</a>
 </nav>
 <div *ngIf="loggedInUserRole === 'leader'" class="content">
   <router-outlet></router-outlet>

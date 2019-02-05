@@ -27,7 +27,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
 
   // angular lifecycle section
   ngOnInit() {
-    this.pdfPath = '../../../../assets/schedules/testschedule4.pdf';
+    this.frontOfHouseActive = true;
+    this.thisWeekActive = true;
+    this.pdfPath = '../../../../assets/schedules/thisweekfront.pdf';
   }
 
   ngAfterViewChecked() {
@@ -36,28 +38,40 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
   ngOnDestroy() {
   }
 
-  onThisWeekFrontClick() {
+  onThisWeekClick() {
     this.thisWeekActive = true;
-    this.frontOfHouseActive = true;
-    this.pdfViewer.openDocument('../../../../assets/schedules/testschedule3.pdf');
+    if (this.frontOfHouseActive === true) {
+      this.pdfViewer.openDocument('../../../../assets/schedules/thisweekfront.pdf');
+    } else {
+      this.pdfViewer.openDocument('../../../../assets/schedules/thisweekback.pdf');
+    }
   }
 
-  onThisWeekBackClick() {
-    this.thisWeekActive = true;
-    this.frontOfHouseActive = false;
-    this.pdfViewer.openDocument('../../../../assets/schedules/testschedule4.pdf');
-  }
-
-  onLastWeekFrontClick() {
+  onLastWeekClick() {
     this.thisWeekActive = false;
-    this.frontOfHouseActive = true;
-    this.pdfViewer.openDocument('../../../../assets/schedules/testschedule3.pdf');
+    if (this.frontOfHouseActive === true) {
+      this.pdfViewer.openDocument('../../../../assets/schedules/lastweekfront.pdf');
+    } else {
+      this.pdfViewer.openDocument('../../../../assets/schedules/lastweekback.pdf');
+    }
   }
 
-  onLastWeekBackClick() {
-    this.thisWeekActive = false;
+  onFrontClick() {
+    this.frontOfHouseActive = true;
+    if (this.thisWeekActive === true) {
+      this.pdfViewer.openDocument('../../../../assets/schedules/thisweekfront.pdf');
+    } else {
+      this.pdfViewer.openDocument('../../../../assets/schedules/lastweekfront.pdf');
+    }
+  }
+
+  onBackClick() {
     this.frontOfHouseActive = false;
-    this.pdfViewer.openDocument('../../../../assets/schedules/testschedule3.pdf');
+    if (this.thisWeekActive === true) {
+      this.pdfViewer.openDocument('../../../../assets/schedules/thisweekback.pdf');
+    } else {
+      this.pdfViewer.openDocument('../../../../assets/schedules/lastweekback.pdf');
+    }
   }
 
 }

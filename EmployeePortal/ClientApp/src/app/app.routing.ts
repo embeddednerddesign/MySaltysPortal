@@ -10,6 +10,7 @@ import { AppointmentsComponent } from './schedule/appointments/appointments.comp
 import { EditUserComponent } from './management/organization/actionpanel/edit-user/edit-user.component';
 import { EmployeePortalComponent } from './employeeportal/employeeportal.component';
 import { AuthGuard } from './app.auth.guard';
+import { OrgSchedulesComponent } from './management/organization/org-schedules/org-schedules.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: AuthComponent },
@@ -62,6 +63,12 @@ const appRoutes: Routes = [
                     outlet: 'action-panel'
                   }
                 ]
+              },
+              {
+                path: 'scheduleUpload',
+                component: OrgSchedulesComponent,
+                canActivate: [AuthGuard],
+                children: []
               }
             ]
           }

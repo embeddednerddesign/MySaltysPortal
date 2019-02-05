@@ -1,0 +1,98 @@
+.search-bar-container {
+    display: flex;
+    flex-direction: row;
+    padding-left: 24px;
+}
+
+:host /deep/ .search-bar {
+    width: 80%;
+    padding: 10px 0px 0px 10px;
+}
+:host /deep/ .capitalized {
+    text-transform: capitalize;
+}
+:host /deep/ .uppercased {
+    text-transform: uppercase;
+}
+
+:host /deep/ #gridDisableDiv {
+    .backdrop {
+        z-index: 2;
+    }
+    .spinner-three-bounce.ng-star-inserted {
+        display: none;
+    }
+}
+
+.nav-item {
+    &.search-users {
+        width: 500px;
+        padding-left: 10px;
+        border: 1px solid;
+        border-radius: 4px;
+        span {
+            font-size: 22px;
+            padding-left: 10px;
+            padding-right: 2px;
+        }
+        mat-form-field {
+            font-size: 18px;
+        }
+    }
+    &.add-users {
+        margin-top: auto;
+        margin-bottom: auto;
+
+        span {
+            font-size: 28px;
+            padding-left: 40px;
+        }
+    }
+    &.manage-categories {
+        margin-top: auto;
+        margin-bottom: auto;
+
+        span {
+            font-size: 28px;
+            padding-left: 40px;
+            padding-top: 3px;
+        }
+    }
+}
+
+mat-panel-title {
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+:host /deep/ #history .mat-expansion-panel-body {
+  padding-bottom: 3em;
+}
+:host /deep/ .mat-expansion-panel-header-title{
+  color:#fff;
+}
+:host /deep/ .mat-expansion-indicator::after{
+  color:#fff;
+}
+:host /deep/ .mat-expansion-panel{
+  background-color: #fff;
+}
+:host /deep/ .mat-expansion-panel-body{
+  background-color: #fff;
+  padding-top: 12px;
+}
+:host /deep/ #notes .mat-expansion-panel-body{
+  padding: 10px 0px;
+}
+:host /deep/ .mat-accordion .mat-expansion-panel-spacing{
+  margin-top: 0px !important;
+  margin-bottom: 0px;
+}
+:host /deep/ .mat-expansion-panel-header{
+  background-color: #33353e !important;
+  height: 67px !important;
+  min-height: 67px !important;
+  max-height: 67px !important;
+}
