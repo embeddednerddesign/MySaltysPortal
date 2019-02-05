@@ -3,18 +3,35 @@
        <div class="dummy-action-panel"></div>
    </mat-sidenav>
   <mat-sidenav-content>
-    <ag-grid-angular
-      #agGrid
-      style="width: 100%; height: 100%;"
-      id="myGrid"
-      class="ag-theme-balham-dark"
-      [columnDefs]="columnDefs"
-      [rowData]="rowData"
-      [enableCellChangeFlash]="true"
-      (gridReady)="onGridReady($event)"
-    ></ag-grid-angular>
-  <input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="Upload file" accept=".xlsx">
-  <button type="button" class="btn btn-info" (click)="Upload()" >Upload</button>
+    <div class="main-container">
+      <div class="resource-nav-header">
+        <div class="resource-nav-header-item">
+          <span (click)="onThisWeekFrontClick()" [ngClass]="{'item-selected': frontOfHouseActive}">Front of House</span>
+        </div>
+        <div class="resource-nav-header-item">
+          <span (click)="onThisWeekBackClick()" [ngClass]="{'item-selected': !frontOfHouseActive}">Back of House</span>
+        </div>
+      </div>
+      <div class="resource-nav-sub-header">
+        <div class="resource-nav-sub-header-item">
+          <span (click)="onThisWeekFrontClick()" [ngClass]="{'item-selected': !thisWeekActive}">Last Week</span>
+        </div>
+        <div class="resource-nav-sub-header-item">
+          <span (click)="onThisWeekBackClick()" [ngClass]="{'item-selected': thisWeekActive}">This Week</span>
+        </div>
+      </div>
+      <div class="pdf-controls">
+        <div class="control-container" (click)="pdfViewer.zoomOut()"><span class="icon"><i class="fa fa-minus"></i></span>Zoom Out</div>
+        <div class="control-container" (click)="pdfViewer.zoomIn()"><span class="icon"><i class="fa fa-plus"></i></span>Zoom In</div>
+        <div class="control-container" (click)="pdfViewer.prevPage()"><span class="icon"><i class="fa fa-arrow-left"></i></span>Prev</div>
+        <div class="control-container" (click)="pdfViewer.nextPage()"><span class="icon"><i class="fa fa-arrow-right"></i></span>Next</div>
+      </div>
+      <div class="pdf-container">
+        <section id="viewer">
+          <simple-pdf-viewer #pdfViewer [src]="pdfPath"></simple-pdf-viewer>
+        </section>
+      </div>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

@@ -33,7 +33,8 @@ export class ResourcesComponent implements OnInit, OnDestroy {
   }
 
   onResourceClick() {
-    this.viewPDF('../../../../assets/resources/test.pdf');
+    // this.viewPDF('../../../../assets/resources/test.pdf');
+    this.viewPDF('../../../../assets/schedules/testschedule.pdf');
   }
 
 

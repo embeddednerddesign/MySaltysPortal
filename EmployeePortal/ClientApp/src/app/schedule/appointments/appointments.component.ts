@@ -1,9 +1,6 @@
-import * as moment from 'moment';
-import * as XLSX from 'xlsx';
 // tslint:disable-next-line:max-line-length
-import { Component, OnInit, OnDestroy, AfterViewChecked, HostListener, ViewChild } from '@angular/core';
-import { AgGridModule } from 'ag-grid-angular';
-import { debug, isNullOrUndefined } from 'util';
+import { Component, OnInit, OnDestroy, AfterViewChecked, HostListener, ViewChild, Pipe } from '@angular/core';
+import { SimplePdfViewerComponent } from 'simple-pdf-viewer';
 
 @Component({
     selector: 'app-appointments',
@@ -11,18 +8,10 @@ import { debug, isNullOrUndefined } from 'util';
     styleUrls: ['./appointments.component.less']
 })
 export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecked {
-  @ViewChild(AgGridModule) private theGrid: AgGridModule;
-  data;
-  arrayBuffer: any;
-  file: File;
-  excelHeaderNames;
-  excelHeaderNamesClean;
-  excelData;
-  excelDataClean;
-  gridApi;
-  gridColumnApi;
-  columnDefs;
-  rowData;
+  @ViewChild(SimplePdfViewerComponent) private pdfViewer: SimplePdfViewerComponent;
+  pdfPath: string;
+  frontOfHouseActive = true;
+  thisWeekActive = true;
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(e) {
@@ -34,15 +23,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
   onMouseUp(e) {
   }
 
-  constructor() {
-    this.columnDefs = [];
-    this.rowData = [];
-  }
+  constructor() {}
 
   // angular lifecycle section
   ngOnInit() {
+    this.pdfPath = '../../../../assets/schedules/testschedule4.pdf';
   }
-
 
   ngAfterViewChecked() {
   }
@@ -50,41 +36,28 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
   ngOnDestroy() {
   }
 
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    params.api.setRowData([]);
+  onThisWeekFrontClick() {
+    this.thisWeekActive = true;
+    this.frontOfHouseActive = true;
+    this.pdfViewer.openDocument('../../../../assets/schedules/testschedule3.pdf');
   }
 
-  incomingfile(event) {
-    this.file = event.target.files[0];
+  onThisWeekBackClick() {
+    this.thisWeekActive = true;
+    this.frontOfHouseActive = false;
+    this.pdfViewer.openDocument('../../../../assets/schedules/testschedule4.pdf');
   }
 
-  Upload() {
-    const fileReader = new FileReader();
-    fileReader.onload = (e) => {
-      this.arrayBuffer = fileReader.result;
-      const data = new Uint8Array(this.arrayBuffer);
-      const arr = new Array();
-      for (let i = 0; i !== data.length; ++i) {
-        arr[i] = String.fromCharCode(data[i]);
-      }
-      const bstr = arr.join('');
-      const workbook = XLSX.read(bstr, {type: 'binary'});
-      const first_sheet_name = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[first_sheet_name];
-      this.excelHeaderNames = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {header: 1})[0];
-      this.excelData = XLSX.utils.sheet_to_json(worksheet);
-
-      this.columnDefs = [];
-      this.excelHeaderNamesClean = [];
-      this.excelHeaderNames.forEach(headerName => {
-        this.columnDefs.push({ field: headerName });
-      });
-      this.gridApi.setRowData(this.excelData);
-      this.gridApi.refreshCells();
-
-    };
-    fileReader.readAsArrayBuffer(this.file);
+  onLastWeekFrontClick() {
+    this.thisWeekActive = false;
+    this.frontOfHouseActive = true;
+    this.pdfViewer.openDocument('../../../../assets/schedules/testschedule3.pdf');
   }
+
+  onLastWeekBackClick() {
+    this.thisWeekActive = false;
+    this.frontOfHouseActive = false;
+    this.pdfViewer.openDocument('../../../../assets/schedules/testschedule3.pdf');
+  }
+
 }
