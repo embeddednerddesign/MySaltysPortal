@@ -11,6 +11,7 @@
         <button mat-button [disabled]="!thisWeekFrontFile" (click)="uploadThisWeekFront()">Upload</button>
       </div>
       <div class="schedule-upload-item-title" *ngIf="thisWeekFrontFile">{{thisWeekFrontFile.name}}</div>
+      <div class="schedule-upload-item-title" *ngIf="thisWeekFrontUploaded">Uploaded</div>
     </div>
     <div class="schedule-upload-item-column">
       <div class="schedule-upload-item-title">This Week - Back of House</div>
@@ -22,6 +23,7 @@
         <button mat-button [disabled]="!thisWeekBackFile" (click)="uploadThisWeekBack()">Upload</button>
       </div>
       <div class="schedule-upload-item-title" *ngIf="thisWeekBackFile">{{thisWeekBackFile.name}}</div>
+      <div class="schedule-upload-item-title" *ngIf="thisWeekBackUploaded">Uploaded</div>
     </div>
   </div>
   <div class="schedule-upload-row">
@@ -35,6 +37,7 @@
           <button mat-button [disabled]="!lastWeekFrontFile" (click)="uploadLastWeekFront()">Upload</button>
         </div>
         <div class="schedule-upload-item-title" *ngIf="lastWeekFrontFile">{{lastWeekFrontFile.name}}</div>
+        <div class="schedule-upload-item-title" *ngIf="lastWeekFrontUploaded">Uploaded</div>
       </div>
       <div class="schedule-upload-item-column">
         <div class="schedule-upload-item-title">Last Week - Back of House</div>
@@ -46,6 +49,7 @@
           <button mat-button [disabled]="!lastWeekBackFile" (click)="uploadLastWeekBack()">Upload</button>
         </div>
         <div class="schedule-upload-item-title" *ngIf="lastWeekBackFile">{{lastWeekBackFile.name}}</div>
+        <div class="schedule-upload-item-title" *ngIf="lastWeekBackUploaded">Uploaded</div>
       </div>
     </div>
   </div>
