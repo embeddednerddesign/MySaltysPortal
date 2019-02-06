@@ -19,7 +19,10 @@ export class OrgSchedulesComponent implements OnInit {
   columnDefs;
   rowData;
   name: string;
-  ourFile: File; // hold our file
+  thisWeekFrontFile: File;
+  thisWeekBackFile: File;
+  lastWeekFrontFile: File;
+  lastWeekBackFile: File;
 
   constructor() {}
 
@@ -29,26 +32,67 @@ export class OrgSchedulesComponent implements OnInit {
   /**
    * this is used to trigger the input
   */
-  openInput() {
+  openThisWeekFrontInput() {
     // your can use ElementRef for this later
-    document.getElementById('fileInput').click();
+    document.getElementById('thisWeekFrontFileInput').click();
   }
 
-  fileChange(files: File[]) {
+  openThisWeekBackInput() {
+    // your can use ElementRef for this later
+    document.getElementById('thisWeekBackFileInput').click();
+  }
+
+  openLastWeekFrontInput() {
+    // your can use ElementRef for this later
+    document.getElementById('lastWeekFrontFileInput').click();
+  }
+
+  openLastWeekBackInput() {
+    // your can use ElementRef for this later
+    document.getElementById('lastWeekBackFileInput').click();
+  }
+
+  thisWeekFrontFileChange(files: File[]) {
     if (files.length > 0) {
-      this.ourFile = files[0];
+      this.thisWeekFrontFile = files[0];
+    }
+  }
+
+  thisWeekBackFileChange(files: File[]) {
+    if (files.length > 0) {
+      this.thisWeekBackFile = files[0];
+    }
+  }
+
+  lastWeekFrontFileChange(files: File[]) {
+    if (files.length > 0) {
+      this.lastWeekFrontFile = files[0];
+    }
+  }
+
+  lastWeekBackFileChange(files: File[]) {
+    if (files.length > 0) {
+      this.lastWeekBackFile = files[0];
     }
   }
 
    /**
    * this is used to perform the actual upload
    */
-   upload() {
-    console.log('sending this to server', this.ourFile);
+  uploadThisWeekFront() {
+    console.log('sending this to server', this.thisWeekFrontFile);
   }
 
-  incomingfile(event) {
-    this.file = event.target.files[0];
+  uploadThisWeekBack() {
+    console.log('sending this to server', this.thisWeekBackFile);
+  }
+
+  uploadLastWeekFront() {
+    console.log('sending this to server', this.lastWeekFrontFile);
+  }
+
+  uploadLastWeekBack() {
+    console.log('sending this to server', this.lastWeekBackFile);
   }
 
   // Upload() {

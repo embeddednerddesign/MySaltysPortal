@@ -4,44 +4,48 @@
     <div class="schedule-upload-item-column">
       <div class="schedule-upload-item-title">This Week - Front of House</div>
       <div class="schedule-upload-item">
-        <button mat-raised-button (click)="openInput()">
+        <button mat-raised-button (click)="openThisWeekFrontInput()">
           Select File to Upload
         </button>
-        <input id="fileInput" hidden type="file" (change)="fileChange($event.target.files)" >
-        <button mat-button [disabled]="!ourFile" (click)="upload()">Upload</button>
+        <input id="thisWeekFrontFileInput" hidden type="file" accept=".pdf" (change)="thisWeekFrontFileChange($event.target.files)" >
+        <button mat-button [disabled]="!thisWeekFrontFile" (click)="uploadThisWeekFront()">Upload</button>
       </div>
+      <div class="schedule-upload-item-title" *ngIf="thisWeekFrontFile">{{thisWeekFrontFile.name}}</div>
     </div>
     <div class="schedule-upload-item-column">
       <div class="schedule-upload-item-title">This Week - Back of House</div>
       <div class="schedule-upload-item">
-        <button mat-raised-button (click)="openInput()">
+        <button mat-raised-button (click)="openThisWeekBackInput()">
           Select File to Upload
         </button>
-        <input id="fileInput" hidden type="file" (change)="fileChange($event.target.files)" >
-        <button mat-button [disabled]="!ourFile" (click)="upload()">Upload</button>
+        <input id="thisWeekBackFileInput" hidden type="file" accept=".pdf" (change)="thisWeekBackFileChange($event.target.files)" >
+        <button mat-button [disabled]="!thisWeekBackFile" (click)="uploadThisWeekBack()">Upload</button>
       </div>
+      <div class="schedule-upload-item-title" *ngIf="thisWeekBackFile">{{thisWeekBackFile.name}}</div>
     </div>
   </div>
   <div class="schedule-upload-row">
       <div class="schedule-upload-item-column">
         <div class="schedule-upload-item-title">Last Week - Front of House</div>
         <div class="schedule-upload-item">
-          <button mat-raised-button (click)="openInput()">
+          <button mat-raised-button (click)="openLastWeekFrontInput()">
             Select File to Upload
           </button>
-          <input id="fileInput" hidden type="file" (change)="fileChange($event.target.files)" >
-          <button mat-button [disabled]="!ourFile" (click)="upload()">Upload</button>
+          <input id="lastWeekFrontFileInput" hidden type="file" accept=".pdf" (change)="lastWeekFrontFileChange($event.target.files)" >
+          <button mat-button [disabled]="!lastWeekFrontFile" (click)="uploadLastWeekFront()">Upload</button>
         </div>
+        <div class="schedule-upload-item-title" *ngIf="lastWeekFrontFile">{{lastWeekFrontFile.name}}</div>
       </div>
       <div class="schedule-upload-item-column">
         <div class="schedule-upload-item-title">Last Week - Back of House</div>
         <div class="schedule-upload-item">
-          <button mat-raised-button (click)="openInput()">
+          <button mat-raised-button (click)="openLastWeekBackInput()">
             Select File to Upload
           </button>
-          <input id="fileInput" hidden type="file" (change)="fileChange($event.target.files)" >
-          <button mat-button [disabled]="!ourFile" (click)="upload()">Upload</button>
+          <input id="lastWeekBackFileInput" hidden type="file" accept=".pdf" (change)="lastWeekBackFileChange($event.target.files)" >
+          <button mat-button [disabled]="!lastWeekBackFile" (click)="uploadLastWeekBack()">Upload</button>
         </div>
+        <div class="schedule-upload-item-title" *ngIf="lastWeekBackFile">{{lastWeekBackFile.name}}</div>
       </div>
     </div>
   </div>
