@@ -86,6 +86,31 @@ namespace EmployeePortal.Migrations
                     b.ToTable("HomeContent");
                 });
 
+            modelBuilder.Entity("EmployeePortal.Models.Resource", b =>
+                {
+                    b.Property<int>("ResourceId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("backgroundImage");
+
+                    b.Property<string>("createdBy");
+
+                    b.Property<DateTime>("createdOn");
+
+                    b.Property<string>("description");
+
+                    b.Property<string>("path");
+
+                    b.Property<string>("title");
+
+                    b.Property<string>("type");
+
+                    b.HasKey("ResourceId");
+
+                    b.ToTable("Resource");
+                });
+
             modelBuilder.Entity("EmployeePortal.Models.User", b =>
                 {
                     b.Property<string>("Id")

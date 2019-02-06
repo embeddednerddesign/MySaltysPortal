@@ -13,10 +13,10 @@ export class HomeContentService {
   addHomeContent(content: HomeContent) {
     return this.http.post<HomeContent>(environment.baseUrl + 'api/HomeContent', content);
   }
-  updateCompany(content: HomeContent) {
+  updateHomeContent(content: HomeContent) {
     return this.http.put<void>(environment.baseUrl + 'api/HomeContent/' + content.homeContentId, content);
   }
-  removeCompany(content: HomeContent) {
+  removeHomeContent(content: HomeContent) {
     return this.http.delete(environment.baseUrl + 'api/HomeContent/' + content.homeContentId);
   }
   getHomeContent() {

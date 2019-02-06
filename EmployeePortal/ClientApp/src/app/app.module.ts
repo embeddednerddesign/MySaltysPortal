@@ -52,6 +52,7 @@ import { CurrentDataService } from './services/currentData.service';
 import { CompanyService } from './services/company.service';
 import { HomeContentService } from './services/home-content.service';
 import { SchedulesService } from './services/schedules.service';
+import { ResourceService } from './services/resource.service';
 import { CatalogueUpdatesService } from './services/catalogueupdates.service';
 import { ActionPanelService } from './services/actionpanel.service';
 import { AuthService } from './services/auth.service';
@@ -173,6 +174,7 @@ import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.c
     CompanyService,
     HomeContentService,
     SchedulesService,
+    ResourceService,
     GeographyService,
     ValidationService,
     FormatterService,

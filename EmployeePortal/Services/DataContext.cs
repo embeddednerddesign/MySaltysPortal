@@ -26,6 +26,6 @@ namespace EmployeePortal
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<HomeContent> HomeContent { get; set; }
-
+        public DbSet<Resource> Resource { get; set; }
     }
 }
