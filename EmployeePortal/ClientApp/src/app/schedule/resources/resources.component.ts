@@ -23,6 +23,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
   resources: Resource[] = [];
   frontResources: Resource[] = [];
   backResources: Resource[] = [];
+  activeResources: Resource[] = [];
   selectedResource: Resource;
 
   constructor(private userService: UsersService,
@@ -33,10 +34,12 @@ export class ResourcesComponent implements OnInit, OnDestroy {
 
   onFrontOfHouseClick() {
     this.frontOfHouseActive = true;
+    this.activeResources = this.frontResources;
   }
 
   onBackOfHouseClick() {
     this.frontOfHouseActive = false;
+    this.activeResources = this.backResources;
   }
 
   public viewPDF(pdfPath: string) {
@@ -58,6 +61,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
       this.resources = resources;
       this.frontResources = this.resources.filter(r => r.type === 'front');
       this.backResources = this.resources.filter(r => r.type === 'back');
+      this.activeResources = this.frontResources;
     });
   }
 
@@ -74,7 +78,6 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     this.resourceService.getResourceById(resourceId).subscribe(resource => {
       this.resourceService.contentSelected = true;
       this.selectedResource = resource;
-      console.log('the path is -> ', '../../../../assets/' + this.selectedResource.path);
       this.viewPDF('../../../../assets/' + this.selectedResource.path);
     });
   }

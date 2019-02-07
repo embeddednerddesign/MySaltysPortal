@@ -1,41 +1,26 @@
 <div class="main-content-column">
-    <div class="main-title">
-      My Salty's Resources
+  <div class="main-title">
+    My Salty's Resources
+  </div>
+  <div class="resource-nav-header">
+    <div class="resource-nav-header-item">
+      <span (click)="onFrontOfHouseClick()" [ngClass]="{'item-selected': frontOfHouseActive}">Front of House</span>
     </div>
-    <div class="resource-nav-header">
-      <div class="resource-nav-header-item">
-        <span (click)="onFrontOfHouseClick()" [ngClass]="{'item-selected': frontOfHouseActive}">Front of House</span>
-      </div>
-      <div class="resource-nav-header-item">
-        <span (click)="onBackOfHouseClick()" [ngClass]="{'item-selected': !frontOfHouseActive}">Back of House</span>
-      </div>
+    <div class="resource-nav-header-item">
+      <span (click)="onBackOfHouseClick()" [ngClass]="{'item-selected': !frontOfHouseActive}">Back of House</span>
     </div>
-    <div *ngIf="frontOfHouseActive">
-      <div class="content-wrapper" *ngFor="let resource of frontResources">
-        <div class="content-item">
-          <div class="content-item-title" (click)="onResourceClick(resource.resourceId)">
-            {{resource.title}}
-          </div>
-          <div class="content-item-body">
-            {{resource.description}}
-          </div>
-        </div>
+  </div>
+  <div class="content-row">
+    <div class="content-wrapper" *ngFor="let resource of activeResources">
+      <div class="content-item-title" (click)="onResourceClick(resource.resourceId)">
+        {{resource.title}}
       </div>
-    </div>
-
-    <div *ngIf="!frontOfHouseActive">
-      <div class="content-wrapper" *ngFor="let resource of backResources">
-        <div class="content-item">
-          <div class="content-item-title" (click)="onResourceClick(resource.resourceId)">
-              {{resource.title}}
-          </div>
-          <div class="content-item-body">
-            {{resource.description}}
-          </div>
-        </div>
+      <div class="content-item-body">
+        {{resource.description}}
       </div>
     </div>
   </div>
+</div>
 
   <p-overlayPanel #hoverPanel id="hoverPanel" [dismissable]="'false'">
     Content
