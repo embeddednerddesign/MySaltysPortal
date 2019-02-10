@@ -123,13 +123,13 @@ namespace EmployeePortal.Controllers
             return Ok(resource);
         }
 
-        [HttpPost("Resource"), DisableRequestSizeLimit]
-        public ActionResult UploadFile()
+        [HttpPost("Resource/{folder}"), DisableRequestSizeLimit]
+        public ActionResult UploadFile([FromRoute] string folder)
         {
             try
             {
                 var file = Request.Form.Files[0];
-                string folderName = "ClientApp/src/assets/resources";
+                string folderName = "ClientApp/src/assets/resources/" + folder;
                 string webRootPath = _hostingEnvironment.ContentRootPath;
                 string newPath = Path.Combine(webRootPath, folderName);
                 if (!Directory.Exists(newPath))

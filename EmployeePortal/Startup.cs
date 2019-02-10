@@ -211,7 +211,7 @@ namespace EmployeePortal
                 var content = new HomeContent
                 {
                     title = "My Salty's Content 1",
-                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    description = "This is the content. Obviously it could be much longer and more meaningful",
                     backgroundImage = "",
                     createdBy = "",
                     createdOn = DateTime.Now
@@ -220,7 +220,7 @@ namespace EmployeePortal
                 content = new HomeContent
                 {
                     title = "My Salty's Content 1",
-                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    description = "This is the content. Obviously it could be much longer and more meaningful",
                     backgroundImage = "",
                     createdBy = "",
                     createdOn = DateTime.Now
@@ -229,7 +229,7 @@ namespace EmployeePortal
                 content = new HomeContent
                 {
                     title = "My Salty's Content 2",
-                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    description = "This is the content. Obviously it could be much longer and more meaningful",
                     backgroundImage = "",
                     createdBy = "",
                     createdOn = DateTime.Now
@@ -238,7 +238,7 @@ namespace EmployeePortal
                 content = new HomeContent
                 {
                     title = "My Salty's Content 3",
-                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    description = "This is the content. Obviously it could be much longer and more meaningful",
                     backgroundImage = "",
                     createdBy = "",
                     createdOn = DateTime.Now
@@ -247,7 +247,7 @@ namespace EmployeePortal
                 content = new HomeContent
                 {
                     title = "My Salty's Content 4",
-                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    description = "This is the content. Obviously it could be much longer and more meaningful",
                     backgroundImage = "",
                     createdBy = "",
                     createdOn = DateTime.Now
@@ -256,7 +256,7 @@ namespace EmployeePortal
                 content = new HomeContent
                 {
                     title = "My Salty's Content 5",
-                    content = "This is the content. Obviously it could be much longer and more meaningful",
+                    description = "This is the content. Obviously it could be much longer and more meaningful",
                     backgroundImage = "",
                     createdBy = "",
                     createdOn = DateTime.Now

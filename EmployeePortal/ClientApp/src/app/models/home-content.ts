@@ -1,7 +1,7 @@
 export interface HomeContent {
     homeContentId: number;
     title: string;
-    content: string;
+    description: string;
     path: string;
     backgroundImage: string;
     createdBy: string;

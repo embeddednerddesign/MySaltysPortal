@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Resource } from '../models/resource';
+import { debug } from 'util';
 
 @Injectable()
 export class ResourceService {
@@ -25,7 +26,7 @@ export class ResourceService {
   getResourceById(resourceId) {
     return this.http.get<Resource>(environment.baseUrl + 'api/Resources/' + resourceId);
   }
-  uploadResource(formData: FormData) {
-    return this.http.post<void>(environment.baseUrl + 'api/Resources/Resource', formData);
+  uploadResource(formData: FormData, folder: string) {
+    return this.http.post<void>(environment.baseUrl + 'api/Resources/Resource/' + folder, formData);
   }
 }

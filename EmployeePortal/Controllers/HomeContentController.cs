@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EmployeePortal;
 using EmployeePortal.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System.Net.Http.Headers;
 
 namespace EmployeePortal.Controllers
 {
@@ -15,10 +18,12 @@ namespace EmployeePortal.Controllers
     public class HomeContentController : ControllerBase
     {
         private readonly DataContext _context;
+        private IHostingEnvironment _hostingEnvironment;
 
-        public HomeContentController(DataContext context)
+        public HomeContentController(DataContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: api/HomeContent
@@ -116,6 +121,36 @@ namespace EmployeePortal.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(homeContent);
+        }
+
+        [HttpPost("Content"), DisableRequestSizeLimit]
+        public ActionResult UploadFile()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                string folderName = "ClientApp/src/assets/home-content";
+                string webRootPath = _hostingEnvironment.ContentRootPath;
+                string newPath = Path.Combine(webRootPath, folderName);
+                if (!Directory.Exists(newPath))
+                {
+                    Directory.CreateDirectory(newPath);
+                }
+                if (file.Length > 0)
+                {
+                    string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fullPath = Path.Combine(newPath, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+                return Ok("Upload Successful.");
+            }
+            catch (System.Exception ex)
+            {
+                return Ok("Upload Failed: " + ex.Message);
+            }
         }
 
         private bool HomeContentExists(int id)

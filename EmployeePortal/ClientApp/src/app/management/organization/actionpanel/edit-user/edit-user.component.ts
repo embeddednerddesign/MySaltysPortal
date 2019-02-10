@@ -160,8 +160,7 @@ constructor(private usersService: UsersService,
         (this.password.value === this.passwordConfirm.value)) {
       this.password.setErrors(null);
       this.passwordConfirm.setErrors(null);
-    }
-    else {
+    } else {
       this.password.setErrors({'passwordMatchError': true});
       this.passwordConfirm.setErrors({'passwordMatchError': true});
     }
@@ -182,8 +181,7 @@ constructor(private usersService: UsersService,
     if (this.addOrEdit === 'Add' && ((isNullOrUndefined(this.password.value) || this.password.value === '')
         && (isNullOrUndefined(this.passwordConfirm.value) || this.passwordConfirm.value === ''))) {
       this.submitButtonDisabledState = true;
-    }
-    else {
+    } else {
       if ((this.password.hasError('passwordMatchError')) ||
         (this.passwordConfirm.hasError('passwordMatchError')) ||
         (this.email.value !== '' && this.email.hasError('email')) ||
