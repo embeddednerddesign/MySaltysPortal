@@ -1,0 +1,29 @@
+
+<div class="resource-upload-column">
+  <div class="resource-upload-row">
+    <div class="resource-upload-item-column">
+      <div class="resource-upload-item-title">This Week - Front of House</div>
+      <div class="resource-upload-item">
+        <button mat-raised-button (click)="openResourceFrontInput()">
+          Select File to Upload
+        </button>
+        <input id="resourceFrontFileInput" hidden type="file" accept=".pdf" (change)="resourceFrontFileChange($event.target.files)" >
+        <button mat-button [disabled]="!thisWeekFrontFile" (click)="uploadResourceFront()">Upload</button>
+      </div>
+      <div class="resource-upload-item-title" *ngIf="resourceFrontFile">{{resourceFrontFile.name}}</div>
+      <div class="resource-upload-item-title" *ngIf="resourceFrontUploaded">Uploaded</div>
+    </div>
+    <div class="resource-upload-item-column">
+      <div class="resource-upload-item-title">This Week - Back of House</div>
+      <div class="resource-upload-item">
+        <button mat-raised-button (click)="openResourceBackInput()">
+          Select File to Upload
+        </button>
+        <input id="resourceBackFileInput" hidden type="file" accept=".pdf" (change)="resourceBackFileChange($event.target.files)" >
+        <button mat-button [disabled]="!thisWeekBackFile" (click)="uploadResourceBack()">Upload</button>
+      </div>
+      <div class="resource-upload-item-title" *ngIf="resourceBackFile">{{resourceBackFile.name}}</div>
+      <div class="resource-upload-item-title" *ngIf="resourceBackUploaded">Uploaded</div>
+    </div>
+  </div>
+</div>

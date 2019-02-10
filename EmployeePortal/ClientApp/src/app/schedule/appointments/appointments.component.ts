@@ -1,6 +1,10 @@
 // tslint:disable-next-line:max-line-length
 import { Component, OnInit, OnDestroy, AfterViewChecked, HostListener, ViewChild, Pipe } from '@angular/core';
 import { SimplePdfViewerComponent } from 'simple-pdf-viewer';
+import { isNullOrUndefined } from 'util';
+import { isNullOrEmptyString } from '@progress/kendo-angular-grid/dist/es2015/utils';
+import { UsersService } from '../../services/users.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-appointments',
@@ -24,10 +28,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
   onMouseUp(e) {
   }
 
-  constructor() {}
+  constructor(private userService: UsersService,
+              private authService: AuthService) {}
 
   // angular lifecycle section
   ngOnInit() {
+    if (isNullOrUndefined(this.userService.loggedInUser) || isNullOrEmptyString(this.userService.loggedInUser.firstName)) {
+      this.authService.logout();
+    }
     this.frontOfHouseActive = true;
     this.thisWeekActive = true;
     this.pdfPath = '../../../../assets/schedules/ThisWeekFrontSchedule.pdf';

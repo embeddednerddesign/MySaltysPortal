@@ -1,5 +1,5 @@
 <!-- All the Content -->
-<div class="main-content-column" *ngIf="homeContentService.contentSelected === false">
+<div class="main-content-column">
   <div class="main-title">
     This is My Salty's
   </div>
@@ -14,24 +14,6 @@
     </div>
   </div>
 </div>
-
-<!-- Only the Selected Content -->
-<div class="selected-main-content-column" *ngIf="homeContentService.contentSelected === true">
-  <div class="main-title">
-    <div class="control-container" (click)="onBackClick()"><span class="icon"><i class="fa fa-chevron-left back-icon"></i></span>Back</div>
-  </div>
-  <div class="selected-content-row">
-    <div class="selected-content-wrapper">
-      <div class="selected-content-item-title">
-          {{selectedContent.title}}
-      </div>
-      <div class="selected-content-item-body">
-          {{selectedContent.content}}
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <p-overlayPanel #hoverPanel id="hoverPanel" [dismissable]="'false'">
   Content

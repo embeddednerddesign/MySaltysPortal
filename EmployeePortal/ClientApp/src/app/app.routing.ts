@@ -11,6 +11,8 @@ import { EditUserComponent } from './management/organization/actionpanel/edit-us
 import { EmployeePortalComponent } from './employeeportal/employeeportal.component';
 import { AuthGuard } from './app.auth.guard';
 import { OrgSchedulesComponent } from './management/organization/org-schedules/org-schedules.component';
+import { OrgHomeContentComponent } from './management/organization/org-home-content/org-home-content.component';
+import { OrgResourcesComponent } from './management/organization/org-resources/org-resources.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: AuthComponent },
@@ -67,6 +69,18 @@ const appRoutes: Routes = [
               {
                 path: 'scheduleUpload',
                 component: OrgSchedulesComponent,
+                canActivate: [AuthGuard],
+                children: []
+              },
+              {
+                path: 'homeContentUpload',
+                component: OrgHomeContentComponent,
+                canActivate: [AuthGuard],
+                children: []
+              },
+              {
+                path: 'resourceUpload',
+                component: OrgResourcesComponent,
                 canActivate: [AuthGuard],
                 children: []
               }

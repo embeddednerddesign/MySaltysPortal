@@ -41,6 +41,7 @@
     "ag-grid-community": "^20.0.0",
     "ajv": "^6.4.0",
     "angular-font-awesome": "^3.1.2",
+    "angular2-draggable": "^1.4.2",
     "bootstrap": "^4.0.0",
     "core-js": "^2.4.1",
     "cropperjs": "^1.4.3",

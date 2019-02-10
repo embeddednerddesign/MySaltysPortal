@@ -25,9 +25,7 @@ export class ResourceService {
   getResourceById(resourceId) {
     return this.http.get<Resource>(environment.baseUrl + 'api/Resources/' + resourceId);
   }
-
   uploadResource(formData: FormData) {
     return this.http.post<void>(environment.baseUrl + 'api/Resources/Resource', formData);
   }
-
 }

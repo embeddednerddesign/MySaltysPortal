@@ -7,6 +7,9 @@ import { pdf } from '@progress/kendo-drawing';
 import { ViewPdfDialogComponent } from '../../management/dialogs/view-pdf/view-pdf.component';
 import { ResourceService } from '../../services/resource.service';
 import { Resource } from '../../models/resource';
+import { isNullOrUndefined } from 'util';
+import { isNullOrEmptyString } from '@progress/kendo-angular-grid/dist/es2015/utils';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-resources',
@@ -27,6 +30,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
   selectedResource: Resource;
 
   constructor(private userService: UsersService,
+              private authService: AuthService,
               private resourceService: ResourceService,
               private confirmApptDialog: MatDialog
             ) { }
@@ -55,6 +59,9 @@ export class ResourcesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (isNullOrUndefined(this.userService.loggedInUser) || isNullOrEmptyString(this.userService.loggedInUser.firstName)) {
+      this.authService.logout();
+    }
     this.loggedInUserName = this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName;
     this.resourceService.contentSelected = false;
     this.resourceService.getResources().subscribe(resources => {

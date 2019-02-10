@@ -1,0 +1,16 @@
+
+<div class="home-content-upload-column">
+  <div class="home-content-upload-row">
+    <div class="home-content-upload-item-column">
+      <div class="home-content-upload-item-title">Home Page Content</div>
+      <div class="home-content-upload-item">
+        <button mat-raised-button (click)="openHomePageContentInput()">
+          Select File to Upload
+        </button>
+        <input id="homePageContentFileInput" hidden type="file" accept=".pdf" (change)="homePageContentFileChange($event.target.files)" >
+        <button mat-button [disabled]="!homePageContentFile" (click)="uploadHomePageContent()">Upload</button>
+      </div>
+      <div class="home-content-upload-item-title" *ngIf="homePageContentFile">{{homePageContentFile.name}}</div>
+      <div class="home-content-upload-item-title" *ngIf="homePageContentUploaded">Uploaded</div>
+    </div>
+  </div>

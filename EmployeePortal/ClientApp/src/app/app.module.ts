@@ -65,6 +65,8 @@ import { ImageService } from './services/image.service';
 import { OrganizationComponent } from './management/organization/organization.component';
 import { OrgUsersComponent } from './management/organization/org-users/org-users.component';
 import { OrgSchedulesComponent } from './management/organization/org-schedules/org-schedules.component';
+import { OrgHomeContentComponent } from './management/organization/org-home-content/org-home-content.component';
+import { OrgResourcesComponent } from './management/organization/org-resources/org-resources.component';
 import { HomeComponent } from './schedule/home/home.component';
 import { ResourcesComponent } from './schedule/resources/resources.component';
 import { AppointmentsComponent } from './schedule/appointments/appointments.component';
@@ -89,6 +91,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { NgxImageEditorModule } from 'ngx-image-editor';
 import { SimplePdfViewerModule } from 'simple-pdf-viewer';
 import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.component';
+import { AngularDraggableModule } from 'angular2-draggable';
 
 @NgModule({
   entryComponents: [
@@ -101,6 +104,8 @@ import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.c
     OrganizationComponent,
     OrgUsersComponent,
     OrgSchedulesComponent,
+    OrgHomeContentComponent,
+    OrgResourcesComponent,
     HomeComponent,
     ResourcesComponent,
     AppointmentsComponent,
@@ -162,7 +167,8 @@ import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.c
     MatMenuModule,
     NgxGalleryModule,
     NgxImageEditorModule,
-    SimplePdfViewerModule
+    SimplePdfViewerModule,
+    AngularDraggableModule
   ],
   providers: [
     CurrentDataService,

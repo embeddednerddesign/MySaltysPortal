@@ -1,9 +1,10 @@
-<div class="main-container">
+<div class="main-container" ngDraggable>
   <div class="pdf-controls">
     <div class="control-container" (click)="pdfViewer.zoomOut()"><span class="icon"><i class="fa fa-minus"></i></span>Zoom Out</div>
     <div class="control-container" (click)="pdfViewer.zoomIn()"><span class="icon"><i class="fa fa-plus"></i></span>Zoom In</div>
     <div class="control-container" (click)="pdfViewer.prevPage()"><span class="icon"><i class="fa fa-arrow-left"></i></span>Prev</div>
     <div class="control-container" (click)="pdfViewer.nextPage()"><span class="icon"><i class="fa fa-arrow-right"></i></span>Next</div>
+    <div class="close-viewer-row"><span class="icon close-viewer" (click)="onCloseClick()"><i class="fa fa-times"></i></span></div>
   </div>
   <div class="pdf-container">
     <section id="viewer">

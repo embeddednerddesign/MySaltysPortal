@@ -25,5 +25,7 @@ export class HomeContentService {
   getHomeContentById(contentId) {
     return this.http.get<HomeContent>(environment.baseUrl + 'api/HomeContent/' + contentId);
   }
-
+  uploadContent(formData: FormData) {
+    return this.http.post<void>(environment.baseUrl + 'api/HomeContent/Content', formData);
+  }
 }
