@@ -90,13 +90,17 @@ import { AddressService } from './services/address.service';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { NgxImageEditorModule } from 'ngx-image-editor';
 import { SimplePdfViewerModule } from 'simple-pdf-viewer';
+import { EditHomeContentDialogComponent } from './management/dialogs/edit-home-content/edit-home-content.component';
+import { EditResourceDialogComponent } from './management/dialogs/edit-resource/edit-resource.component';
 import { ViewPdfDialogComponent } from './management/dialogs/view-pdf/view-pdf.component';
 import { AngularDraggableModule } from 'angular2-draggable';
 
 @NgModule({
   entryComponents: [
     ConfirmDeleteDialogComponent,
-    ViewPdfDialogComponent
+    ViewPdfDialogComponent,
+    EditHomeContentDialogComponent,
+    EditResourceDialogComponent
   ],
   declarations: [
     AppComponent,
@@ -121,6 +125,8 @@ import { AngularDraggableModule } from 'angular2-draggable';
     ConfirmDeleteDialogComponent,
     CurrentDateComponent,
     ViewPdfDialogComponent,
+    EditHomeContentDialogComponent,
+    EditResourceDialogComponent
   ],
   imports: [
     BrowserModule,

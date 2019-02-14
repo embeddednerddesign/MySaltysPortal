@@ -98,11 +98,6 @@
   </div>
   <div class="panel-flex-row">
     <mat-form-field class="panel-flex-row-item">
-      <input autocomplete="off" matInput placeholder="Avatar" aria-label="Avatar" [(ngModel)]="editedUser.avatar"
-            [formControl]="avatar" (click)="onAvatarSelectClick()">
-      <input id="avatarToUpload" type="file" style="display: none" (change)="onAvatarSelected($event)">
-    </mat-form-field>
-    <mat-form-field class="panel-flex-row-item">
       <mat-select placeholder="User Role" [(ngModel)]="editedUser.role" name="userRole">
         <mat-option *ngFor="let role of allUserRoles" [value]="role.toLowerCase()">
           {{ role }}

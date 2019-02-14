@@ -47,12 +47,6 @@ const appRoutes: Routes = [
             component: OrganizationComponent,
             children: [
               { path: '', redirectTo: 'users', pathMatch: 'full' },
-              // {
-              //   path: 'company',
-              //   component: EditCompanyComponent,
-              //   canActivate: [AuthGuard],
-              //   children: []
-              // },
               {
                 path: 'users',
                 component: OrgUsersComponent,
@@ -69,18 +63,6 @@ const appRoutes: Routes = [
               {
                 path: 'scheduleUpload',
                 component: OrgSchedulesComponent,
-                canActivate: [AuthGuard],
-                children: []
-              },
-              {
-                path: 'homeContentUpload',
-                component: OrgHomeContentComponent,
-                canActivate: [AuthGuard],
-                children: []
-              },
-              {
-                path: 'resourceUpload',
-                component: OrgResourcesComponent,
                 canActivate: [AuthGuard],
                 children: []
               }

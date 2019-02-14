@@ -99,11 +99,11 @@ constructor(private usersService: UsersService,
     }
     this.selectedUser = this.initUser(this.selectedUser, this.selectedAddress);
     this.editedUser = this.initUser(this.editedUser, this.editedAddress);
+    this.allUserRoles = [ 'Leader', 'Partner'];
 
     this.isNew = true;
     this.addOrEdit = 'Add';
-    // TODO: Need to fill with actual Clinic country info
-    const clinicCountry = 'Canada';
+    const country = 'Canada';
     this.route.params.subscribe(params => {
       this.userIdParam = params['userid'];
       if (this.userIdParam !== '_' && this.userIdParam != null) {
@@ -116,9 +116,9 @@ constructor(private usersService: UsersService,
           this.updateSubmitButtonState();
         });
       } else {
-        if (this.countriesOfTheWorld.includes(clinicCountry)) {
-          this.selectedUser.address.country = this.countriesOfTheWorld[this.countriesOfTheWorld.indexOf(clinicCountry)];
-          this.editedUser.address.country = this.countriesOfTheWorld[this.countriesOfTheWorld.indexOf(clinicCountry)];
+        if (this.countriesOfTheWorld.includes(country)) {
+          this.selectedUser.address.country = this.countriesOfTheWorld[this.countriesOfTheWorld.indexOf(country)];
+          this.editedUser.address.country = this.countriesOfTheWorld[this.countriesOfTheWorld.indexOf(country)];
         } else {
           this.selectedUser.address.country = 'Canada';
           this.editedUser.address.country = 'Canada';
@@ -164,17 +164,6 @@ constructor(private usersService: UsersService,
       this.password.setErrors({'passwordMatchError': true});
       this.passwordConfirm.setErrors({'passwordMatchError': true});
     }
-  }
-
-  onAvatarSelectClick() {
-    document.getElementById('avatarToUpload').click();
-  }
-  onAvatarSelected(event) {
-    this.selectedFile = event.target.files[0];
-    const formData = new FormData();
-    formData.append(this.selectedFile.name, this.selectedFile);
-    this.editedUser.avatar = this.selectedFile.name;
-    this.imageService.uploadUserAvatar(formData).subscribe(res => {});
   }
 
   updateSubmitButtonState() {
@@ -235,7 +224,7 @@ constructor(private usersService: UsersService,
       firstName: '',
       lastName: '',
       avatar: '',
-      role: 'staff',
+      role: 'partner',
       phoneNumber: '',
       // password: '',
       email: '',

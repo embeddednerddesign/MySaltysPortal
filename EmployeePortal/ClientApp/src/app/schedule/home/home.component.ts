@@ -8,6 +8,8 @@ import { ViewPdfDialogComponent } from '../../management/dialogs/view-pdf/view-p
 import { isNullOrUndefined } from 'util';
 import { isNullOrEmptyString } from '@progress/kendo-angular-grid/dist/es2015/utils';
 import { AuthService } from '../../services/auth.service';
+import { EditHomeContentDialogComponent } from '../../management/dialogs/edit-home-content/edit-home-content.component';
+import { ConfirmDeleteDialogComponent } from '../../management/dialogs/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-home',
@@ -19,11 +21,14 @@ export class HomeComponent implements OnInit {
   loggedInUserName = '';
   homeContent: HomeContent[] = [];
   selectedContent: HomeContent;
+  editing = false;
+  loggedInUserRole = '';
 
   constructor(private userService: UsersService,
               private authService: AuthService,
               public homeContentService: HomeContentService,
-              private confirmApptDialog: MatDialog) { }
+              private confirmApptDialog: MatDialog,
+              private deleteDialog: MatDialog) { }
 
   ngOnInit() {
     if (isNullOrUndefined(this.userService.loggedInUser) || isNullOrEmptyString(this.userService.loggedInUser.firstName)) {
@@ -31,6 +36,7 @@ export class HomeComponent implements OnInit {
     }
     this.homeContentService.contentSelected = false;
     this.loggedInUserName = this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName;
+    this.loggedInUserRole = this.userService.loggedInUser.role;
     this.homeContentService.getHomeContent().subscribe(content => {
       this.homeContent = content;
     });
@@ -53,11 +59,53 @@ export class HomeComponent implements OnInit {
   }
 
   onContentClick(contentId) {
-    this.homeContentService.getHomeContentById(contentId).subscribe(content => {
-      this.homeContentService.contentSelected = true;
-      this.selectedContent = content;
-      this.viewPDF('../../../../assets/' + this.selectedContent.path);
-    });
+    if (!this.editing) {
+      this.homeContentService.getHomeContentById(contentId).subscribe(content => {
+        this.homeContentService.contentSelected = true;
+        this.selectedContent = content;
+        this.viewPDF('../../../../assets/' + this.selectedContent.path);
+      });
+    }
   }
 
+  editHomeContent(content: HomeContent) {
+    const dialogRef = this.confirmApptDialog.open(EditHomeContentDialogComponent, {
+      width: '50%',
+      height: '100%',
+      data: content
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.homeContentService.getHomeContent().subscribe(content => {
+        this.homeContent = content;
+      });
+    });
+
+    return dialogRef;
+  }
+
+  removeHomeContent(dataItem) {
+    const dialogRef = this.deleteDialog.open(ConfirmDeleteDialogComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'delete') {
+        const dataItemToRemove: HomeContent = {
+          homeContentId: dataItem.homeContentId,
+          title: dataItem.title,
+          description: dataItem.description,
+          backgroundImage: '',
+          path: dataItem.path,
+          createdBy: dataItem.createdBy,
+          createdOn: dataItem.createdOn
+        };
+        this.homeContentService.removeHomeContent(dataItemToRemove).subscribe(() => {
+          this.homeContentService.getHomeContent().subscribe(content => {
+            this.homeContent = content;
+          });
+        });
+      }
+    });
+  }
 }

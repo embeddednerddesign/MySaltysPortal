@@ -1,8 +1,17 @@
 <div class="main-content-column">
-  <div class="main-title">
-    My Salty's Resources
-  </div>
-  <div class="resource-nav-header">
+    <div class="main-title-column">
+      <div class="edit-control">
+        <mat-slide-toggle [ngClass]="{'invisible': loggedInUserRole !== 'leader'}"
+          class="edit-control-toggle"
+          [(ngModel)]="editing">
+          Edit
+        </mat-slide-toggle>
+      </div>
+      <div class="main-title">
+        My Salty's Resources
+      </div>
+    </div>
+    <div class="resource-nav-header">
     <div class="resource-nav-header-item">
       <span (click)="onFrontOfHouseClick()" [ngClass]="{'item-selected': frontOfHouseActive}">Front of House</span>
     </div>
@@ -11,12 +20,16 @@
     </div>
   </div>
   <div class="content-row">
-    <div class="content-wrapper" *ngFor="let resource of activeResources">
-      <div class="content-item-title" (click)="onResourceClick(resource.resourceId)">
+    <div class="content-wrapper" *ngFor="let resource of activeResources" (click)="onResourceClick(resource.resourceId)">
+      <div class="content-item-title" [ngClass]="{'disabled': editing}">
         {{resource.title}}
       </div>
-      <div class="content-item-body">
+      <div class="content-item-body" [ngClass]="{'disabled': editing}">
         {{resource.description}}
+      </div>
+      <div class="content-edit-controls-row" *ngIf="editing">
+        <span class="content-edit-controls" (click)="editResource(resource)"><i class="fa fa-pencil"></i></span>
+        <span class="content-edit-controls"><i class="fa fa-close" (click)="removeResource(resource)"></i></span>
       </div>
     </div>
   </div>

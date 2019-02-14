@@ -1,0 +1,35 @@
+<div class="main-container">
+  <div class="close-viewer-row"><span class="icon close-viewer" (click)="onCloseClick()"><i class="fa fa-times"></i></span></div>
+  <div class="resource-upload-column">
+    <div class="resource-upload-row">
+      <div class="resource-upload-item-column">
+        <div class="resource-upload-item-title">Resource</div>
+        <div class="panel-flex-column">
+          <mat-form-field class="panel-flex-row-item">
+            <input autocomplete="off" matInput placeholder="Title"
+              [(ngModel)]="resourceTitle" [formControl]="rsrcTitle">
+          </mat-form-field>
+          <mat-form-field class="panel-flex-row-item">
+            <textarea autocomplete="off" matInput placeholder="Description"
+              [(ngModel)]="resourceDescription" [formControl]="rsrcDescription"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="resource-upload-item">
+          <button mat-raised-button (click)="openResourceInput()">
+            Select File to Upload
+          </button>
+          <input id="resourceFileInput" hidden type="file" accept=".pdf" (change)="resourceFileChange($event.target.files)" >
+          <button mat-button [disabled]="!resourceFile" (click)="uploadResource()">Upload</button>
+        </div>
+        <div class="resource-upload-item-title" *ngIf="resourceFile">{{resourceFile.name}}</div>
+        <div class="resource-upload-item-title" *ngIf="resourceUploaded">Uploaded</div>
+        <div class="resource-upload-item" style="margin-top: 10px;">
+          <button mat-raised-button (click)="updateResource(true)" style="width: 159px;">
+            Update
+          </button>
+          <button mat-button (click)="onCancelClick()" style="width: 140px;">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,8 @@ import { Resource } from '../../models/resource';
 import { isNullOrUndefined } from 'util';
 import { isNullOrEmptyString } from '@progress/kendo-angular-grid/dist/es2015/utils';
 import { AuthService } from '../../services/auth.service';
+import { EditResourceDialogComponent } from '../../management/dialogs/edit-resource/edit-resource.component';
+import { ConfirmDeleteDialogComponent } from '../../management/dialogs/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-resources',
@@ -28,12 +30,14 @@ export class ResourcesComponent implements OnInit, OnDestroy {
   backResources: Resource[] = [];
   activeResources: Resource[] = [];
   selectedResource: Resource;
+  editing = false;
+  loggedInUserRole = '';
 
   constructor(private userService: UsersService,
               private authService: AuthService,
               private resourceService: ResourceService,
-              private confirmApptDialog: MatDialog
-            ) { }
+              private confirmApptDialog: MatDialog,
+              private deleteDialog: MatDialog) { }
 
 
   onFrontOfHouseClick() {
@@ -63,6 +67,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
       this.authService.logout();
     }
     this.loggedInUserName = this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName;
+    this.loggedInUserRole = this.userService.loggedInUser.role;
     this.resourceService.contentSelected = false;
     this.resourceService.getResources().subscribe(resources => {
       this.resources = resources;
@@ -82,10 +87,62 @@ export class ResourcesComponent implements OnInit, OnDestroy {
   }
 
   onResourceClick(resourceId) {
-    this.resourceService.getResourceById(resourceId).subscribe(resource => {
-      this.resourceService.contentSelected = true;
-      this.selectedResource = resource;
-      this.viewPDF('../../../../assets/' + this.selectedResource.path);
+    if (!this.editing) {
+      this.resourceService.getResourceById(resourceId).subscribe(resource => {
+        this.resourceService.contentSelected = true;
+        this.selectedResource = resource;
+        this.viewPDF('../../../../assets/' + this.selectedResource.path);
+      });
+    }
+  }
+
+  editResource(resource: Resource) {
+    const dialogRef = this.confirmApptDialog.open(EditResourceDialogComponent, {
+      width: '50%',
+      height: '100%',
+      data: resource
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.resourceService.getResources().subscribe(rsrc => {
+        this.resources = rsrc;
+        this.frontResources = this.resources.filter(r => r.type === 'front');
+        this.backResources = this.resources.filter(r => r.type === 'back');
+        this.activeResources = this.frontResources;
+      });
+    });
+
+    return dialogRef;
+  }
+
+
+  removeResource(dataItem) {
+    const dialogRef = this.deleteDialog.open(ConfirmDeleteDialogComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'delete') {
+        const dataItemToRemove: Resource = {
+          resourceId: dataItem.resourceId,
+          title: dataItem.title,
+          type: dataItem.type,
+          description: dataItem.description,
+          backgroundImage: '',
+          path: dataItem.path,
+          createdBy: dataItem.createdBy,
+          createdOn: dataItem.createdOn
+        };
+        this.resourceService.removeResource(dataItemToRemove).subscribe(() => {
+          this.resourceService.getResources().subscribe(rsrc => {
+            this.resources = rsrc;
+            this.frontResources = this.resources.filter(r => r.type === 'front');
+            this.backResources = this.resources.filter(r => r.type === 'back');
+            this.activeResources = this.frontResources;
+          });
+        });
+      }
     });
   }
+
 }

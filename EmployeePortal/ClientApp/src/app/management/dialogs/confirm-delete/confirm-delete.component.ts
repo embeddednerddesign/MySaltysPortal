@@ -12,7 +12,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
     constructor(
       public dialogRef: MatDialogRef<ConfirmDeleteDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any) { }
-    
+
     onNoClick(): void {
         this.data.result = 'cancel';
     }
