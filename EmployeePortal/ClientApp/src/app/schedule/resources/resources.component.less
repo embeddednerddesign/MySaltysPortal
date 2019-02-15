@@ -144,6 +144,12 @@
   margin-right: 10px;
 }
 
+/deep/ mat-slide-toggle {
+  @media (max-width: 1024px) {
+    visibility: hidden;
+  }
+}
+
 /deep/ .mat-checked .mat-slide-toggle-bar {
   background-color: #DF4931 !important;
 }

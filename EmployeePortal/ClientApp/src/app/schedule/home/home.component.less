@@ -14,6 +14,10 @@
   flex-direction: column;
   height: 100px;
   width: 100%;
+
+  @media (max-width: 768px) {
+    margin-left: 30px;
+  }
 }
 
 .main-title {
@@ -25,6 +29,11 @@
   font-family: 'Montserrat';
   height: 75px;
   width: 100%;
+
+  @media (max-width: 768px) {
+    font-size: 26px;
+    align-items: center;
+  }
 }
 
 .resource-nav-header {
@@ -73,12 +82,18 @@
   flex-direction: column;
   height: 24em;
   width: 24em;
+  min-width: 185px;
   margin: 10px 15px 10px 15px;
   padding: 15px;
   text-align: center;
   border: 1px solid #d64412;
   border-radius: 1em;
   background-image: url("../../../assets/images/header_bgy.jpg");
+
+  @media (max-width: 768px) {
+    height: 16em;
+    margin: 10px 15px 10px 80px;
+  }
 }
 
 .content-item-title {
@@ -218,6 +233,12 @@
 
 .edit-control-toggle {
   margin-right: 10px;
+}
+
+/deep/ mat-slide-toggle {
+  @media (max-width: 1024px) {
+    visibility: hidden;
+  }
 }
 
 /deep/ .mat-checked .mat-slide-toggle-bar {

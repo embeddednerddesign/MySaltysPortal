@@ -1,7 +1,7 @@
-:host /deep/ {
-
-}
 .component-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 100%;
   // background-color: #212429;
@@ -21,13 +21,15 @@ input, textarea, [contenteditable] {
   }
 
   .login-container {
+    width: 100%;
     min-height: 22em;
-    min-width: 50em;
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -12em 0 0 -25em;
+    max-height: 22em;
+    max-width: 50em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 50px;
+    margin-right: 50px;
     background-color: #d64412;
     color: #faf8f2;
     padding: 3.5em 2.5em 2.5em 2.5em;
@@ -90,6 +92,10 @@ input:-webkit-autofill {
   }
   ::ng-deep .component-wrapper .mat-input-element {
     font-size: 18px !important;
+
+    @media (max-width: 768px) {
+      font-size: 14px !important;
+    }
   }
   ::ng-deep .component-wrapper .mat-form-field-underline {
     background-color: #33353e;
