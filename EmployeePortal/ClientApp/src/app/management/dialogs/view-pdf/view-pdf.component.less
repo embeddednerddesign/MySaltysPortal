@@ -24,12 +24,20 @@
   &:hover {
     cursor: pointer;
   }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 }
 
 .pdf-container {
   display: flex;
   justify-content: center;
   height: 100%;
+}
+
+.pdf-container>section {
+  width: 100%;
 }
 
 :host /deep/ .page {
@@ -65,6 +73,10 @@
     &:hover {
       cursor: pointer;
     }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
   }
 }
 

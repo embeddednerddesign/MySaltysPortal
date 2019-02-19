@@ -4,6 +4,7 @@ import { Resource } from '../../../models/resource';
 import { FormControl } from '@angular/forms';
 import { UsersService } from '../../../services/users.service';
 import { ResourceService } from '../../../services/resource.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'app-edit-resource',
@@ -23,6 +24,20 @@ import { ResourceService } from '../../../services/resource.service';
     resourceType = '';
     resourceDescription = '';
 
+    emptyResource: Resource = {
+      resourceId: 0,
+      title: '',
+      type: '',
+      description: '',
+      backgroundImage: '',
+      path: 'resources/',
+      createdBy: '',
+      createdOn: new Date()
+    };
+
+    addNotUpdate = false;
+    backResource = false;
+
     constructor(private resourceService: ResourceService,
       private userService: UsersService,
       public dialogRef: MatDialogRef<EditResourceDialogComponent>,
@@ -32,9 +47,25 @@ import { ResourceService } from '../../../services/resource.service';
     }
 
     ngOnInit() {
-      this.resource = this.data;
+      if (this.data === 'front' || this.data === 'back') {
+        this.resource = this.emptyResource;
+        if (this.data === 'front') {
+          this.resource.path = this.resource.path + 'Front of House/';
+          this.resourceType = 'Front of House';
+          this.resource.type = 'front';
+          this.backResource = false;
+        } else {
+          this.resource.path = this.resource.path + 'Back of House/';
+          this.resourceType = 'Back of House';
+          this.resource.type = 'back';
+          this.backResource = true;
+        }
+        this.addNotUpdate = true;
+      } else {
+        this.resource = this.data;
+        this.addNotUpdate = false;
+      }
       this.resourceTitle = this.resource.title;
-      this.resourceType = this.resource.type;
       this.resourceDescription = this.resource.description;
     }
 
@@ -59,7 +90,7 @@ import { ResourceService } from '../../../services/resource.service';
       const formData = new FormData();
       const myNewFile = new File([this.resourceFile], this.resourceFile.name, {type: this.resourceFile.type});
       formData.append(myNewFile.name, myNewFile);
-      this.resourceService.uploadResource(formData, this.resourceFile.type).subscribe(res => {
+      this.resourceService.uploadResource(formData, this.resourceType).subscribe(res => {
         this.updateResource(false);
       });
       this.resource.path = this.resource.path.split('/')[0] + '/' + this.resource.path.split('/')[1] +
@@ -82,7 +113,11 @@ import { ResourceService } from '../../../services/resource.service';
         createdBy: this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName,
         createdOn: new Date()
       };
-      this.resourceService.updateResource(newContent).subscribe(newres => {});
+      if (this.addNotUpdate) {
+        this.resourceService.addResource(newContent).subscribe(newres => {});
+      } else {
+        this.resourceService.updateResource(newContent).subscribe(newres => {});
+      }
       if (closeAfterUpdate) {
         this.onCloseClick();
       }

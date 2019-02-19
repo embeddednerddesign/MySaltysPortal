@@ -96,6 +96,31 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     }
   }
 
+  addFrontResource() {
+    this.addResource('front');
+  }
+  addBackResource() {
+    this.addResource('back');
+  }
+  addResource(frontOrBack: string) {
+    const dialogRef = this.confirmApptDialog.open(EditResourceDialogComponent, {
+      width: '50%',
+      height: '100%',
+      data: frontOrBack
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.resourceService.getResources().subscribe(rsrc => {
+        this.resources = rsrc;
+        this.frontResources = this.resources.filter(r => r.type === 'front');
+        this.backResources = this.resources.filter(r => r.type === 'back');
+        this.activeResources = this.frontResources;
+      });
+    });
+
+    return dialogRef;
+  }
+
   editResource(resource: Resource) {
     const dialogRef = this.confirmApptDialog.open(EditResourceDialogComponent, {
       width: '50%',
@@ -118,7 +143,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
 
   removeResource(dataItem) {
     const dialogRef = this.deleteDialog.open(ConfirmDeleteDialogComponent, {
-      width: '250px'
+      width: '50%'
     });
 
     dialogRef.afterClosed().subscribe(result => {

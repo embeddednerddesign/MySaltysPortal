@@ -5,6 +5,8 @@ import { isNullOrUndefined } from 'util';
 import { isNullOrEmptyString } from '@progress/kendo-angular-grid/dist/es2015/utils';
 import { UsersService } from '../../services/users.service';
 import { AuthService } from '../../services/auth.service';
+import { ViewPdfDialogComponent } from '../../management/dialogs/view-pdf/view-pdf.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-appointments',
@@ -29,7 +31,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   constructor(private userService: UsersService,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              private confirmApptDialog: MatDialog,
+              ) {}
 
   // angular lifecycle section
   ngOnInit() {
@@ -50,13 +54,49 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
   onThisWeekClick() {
     this.thisWeekActive = true;
     if (this.frontOfHouseActive === true) {
+      this.viewPDF('../../../../assets/schedules/LastWeekBackSchedule.pdf');
+    } else {
+      this.viewPDF('../../../../assets/schedules/LastWeekBackSchedule.pdf');
+    }
+  }
+
+  onLastWeekClick() {
+    this.thisWeekActive = false;
+    if (this.frontOfHouseActive === true) {
+      this.viewPDF('../../../../assets/schedules/LastWeekBackSchedule.pdf');
+    } else {
+      this.viewPDF('../../../../assets/schedules/LastWeekBackSchedule.pdf');
+    }
+  }
+
+  onFrontClick() {
+    this.frontOfHouseActive = true;
+    if (this.thisWeekActive === true) {
+      this.viewPDF('../../../../assets/schedules/LastWeekBackSchedule.pdf');
+    } else {
+      this.viewPDF('../../../../assets/schedules/LastWeekBackSchedule.pdf');
+    }
+  }
+
+  onBackClick() {
+    this.frontOfHouseActive = false;
+    if (this.thisWeekActive === true) {
+      this.viewPDF('../../../../assets/schedules/LastWeekBackSchedule.pdf');
+    } else {
+      this.viewPDF('../../../../assets/schedules/LastWeekBackSchedule.pdf');
+    }
+  }
+
+  onThisWeekClickMobile() {
+    this.thisWeekActive = true;
+    if (this.frontOfHouseActive === true) {
       this.pdfViewer.openDocument('../../../../assets/schedules/ThisWeekFrontSchedule.pdf');
     } else {
       this.pdfViewer.openDocument('../../../../assets/schedules/ThisWeekBackSchedule.pdf');
     }
   }
 
-  onLastWeekClick() {
+  onLastWeekClickMobile() {
     this.thisWeekActive = false;
     if (this.frontOfHouseActive === true) {
       this.pdfViewer.openDocument('../../../../assets/schedules/LastWeekFrontSchedule.pdf');
@@ -65,7 +105,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
     }
   }
 
-  onFrontClick() {
+  onFrontClickMobile() {
     this.frontOfHouseActive = true;
     if (this.thisWeekActive === true) {
       this.pdfViewer.openDocument('../../../../assets/schedules/ThisWeekFrontSchedule.pdf');
@@ -74,13 +114,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewChecke
     }
   }
 
-  onBackClick() {
+  onBackClickMobile() {
     this.frontOfHouseActive = false;
     if (this.thisWeekActive === true) {
       this.pdfViewer.openDocument('../../../../assets/schedules/ThisWeekBackSchedule.pdf');
     } else {
       this.pdfViewer.openDocument('../../../../assets/schedules/LastWeekBackSchedule.pdf');
     }
+  }
+
+  public viewPDF(pdfPath: string) {
+    const dialogRef = this.confirmApptDialog.open(ViewPdfDialogComponent, {
+      width: '95%',
+      height: '100%',
+      data: pdfPath
+    });
+
+    dialogRef.afterClosed().subscribe(result => { });
+
+    return dialogRef;
   }
 
 }

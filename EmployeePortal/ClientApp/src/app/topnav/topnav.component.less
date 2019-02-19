@@ -8,7 +8,11 @@
     // border-bottom: 2px solid #33353e;
     padding-right: 0;
     padding-left: 0;
-}
+
+    @media (max-width: 384px) {
+      height: 50px !important;
+    }
+  }
 
 .navbar .navbar-brand {
   background-color: #DF4931;
@@ -19,9 +23,14 @@
 }
 
 .navbar-brand .logo {
-    padding-top: 0px;
-    width: 165px;
-    height: 68px;
+  padding-top: 0px;
+  width: 165px;
+  height: 68px;
+
+  @media (max-width: 384px) {
+    height: 48px;
+    width: 130px;
+  }
 }
 
 :host /deep/ .logo img {
@@ -39,6 +48,10 @@
     @media (max-width: 768px) {
       font-size: 14px;
     }
+
+    @media (max-width: 384px) {
+      height: 48px;
+    }
 }
 
 .nav-title {
@@ -50,6 +63,10 @@
   color: white;
   text-align: center;
   font-size: 18px;
+
+  @media (max-width: 768px) {
+    width: 80px;
+  }
 }
 
 .top-nav-button {
@@ -143,7 +160,17 @@
 }
 .profile .info .divider {
   margin: 0 5px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
+.profile .info .logged-in-user {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
 .profile .info h5 {
   font-size: 16px;
   margin-bottom: 0;

@@ -12,7 +12,7 @@
 .main-title-column {
   display: flex;
   flex-direction: column;
-  height: 170px;
+  height: 80px;
   width: 100%;
 }
 
@@ -25,6 +25,16 @@
   font-family: 'Montserrat';
   height: 75px;
   width: 100%;
+
+  @media (max-width: 768px) {
+    font-size: 26px;
+    align-items: center;
+  }
+
+  @media (max-width: 510px) {
+    font-size: 22px;
+    align-items: center;
+  }
 }
 
 .resource-nav-header {
@@ -54,6 +64,21 @@
   &:hover {
     cursor: pointer;
   }
+
+  @media (max-width: 768px) {
+    height: 50px;
+  }
+
+  @media (max-width: 640px) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  @media (max-width: 510px) {
+    font-size: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 .item-selected {
@@ -67,19 +92,39 @@
   justify-content: center;
   width: 100%;
   margin-top: 10px;
+
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
 }
 
 .content-wrapper {
   display: flex;
   flex-direction: column;
   height: 24em;
+  max-width: 22em;
   width: 22em;
+  min-width: 185px;
   margin: 10px 15px 10px 15px;
   padding: 15px;
   text-align: center;
   border: 3px solid #d64412;
-  border-radius: 0.5em;
+  border-radius: 1em;
   background-image: url("../../../assets/images/header_bgy.jpg");
+
+  @media (max-width: 768px) {
+    height: 16em;
+    margin: 10px 30px 10px 30px;
+  }
+
+  @media (max-width: 384px) {
+    height: 16em;
+    margin: 10px 10px 10px 10px;
+  }
 }
 
 .content-edit-controls-row {
@@ -164,4 +209,22 @@
 
 .disabled {
   filter: blur(4px);
+}
+
+.add-resource-button {
+  width: 140px;
+  height: 25px;
+  border: 2px solid #DF4931;
+  font-size: 14px;
+  margin-right: 5px;
+  margin-top: 1px;
+  border-radius: 15px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: 1024px) {
+    visibility: hidden;
+  }
 }

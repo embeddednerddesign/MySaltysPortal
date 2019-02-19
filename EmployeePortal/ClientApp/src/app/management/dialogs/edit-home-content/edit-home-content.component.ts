@@ -5,6 +5,7 @@ import { Resource } from '../../../models/resource';
 import { FormControl } from '@angular/forms';
 import { HomeContentService } from '../../../services/home-content.service';
 import { UsersService } from '../../../services/users.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'app-edit-home-content',
@@ -23,6 +24,18 @@ import { UsersService } from '../../../services/users.service';
     homeContentTitle = '';
     homeContentDescription = '';
 
+    emptyContent: HomeContent = {
+      homeContentId: 0,
+      title: '',
+      description: '',
+      backgroundImage: '',
+      path: 'home-content/',
+      createdBy: '',
+      createdOn: new Date()
+    };
+
+    addNotUpdate = false;
+
     constructor(private homeContentService: HomeContentService,
       private userService: UsersService,
       public dialogRef: MatDialogRef<EditHomeContentDialogComponent>,
@@ -32,7 +45,13 @@ import { UsersService } from '../../../services/users.service';
     }
 
     ngOnInit() {
-      this.homeContent = this.data;
+      if (isNullOrUndefined(this.data)) {
+        this.homeContent = this.emptyContent;
+        this.addNotUpdate = true;
+      } else {
+        this.homeContent = this.data;
+        this.addNotUpdate = false;
+      }
       this.homeContentTitle = this.homeContent.title;
       this.homeContentDescription = this.homeContent.description;
     }
@@ -79,7 +98,11 @@ import { UsersService } from '../../../services/users.service';
         createdBy: this.userService.loggedInUser.firstName + ' ' + this.userService.loggedInUser.lastName,
         createdOn: new Date()
       };
-      this.homeContentService.updateHomeContent(newContent).subscribe(newres => {});
+      if (this.addNotUpdate) {
+        this.homeContentService.addHomeContent(newContent).subscribe(newres => {});
+      } else {
+        this.homeContentService.updateHomeContent(newContent).subscribe(newres => {});
+      }
       if (closeAfterUpdate) {
         this.onCloseClick();
       }

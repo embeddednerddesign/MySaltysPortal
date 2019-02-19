@@ -3,7 +3,7 @@
   <div class="resource-upload-column">
     <div class="resource-upload-row">
       <div class="resource-upload-item-column">
-        <div class="resource-upload-item-title">Resource</div>
+        <div class="resource-upload-item-title">{{backResource ? 'Back' : 'Front'}} of House Resource</div>
         <div class="panel-flex-column">
           <mat-form-field class="panel-flex-row-item">
             <input autocomplete="off" matInput placeholder="Title"
@@ -25,7 +25,7 @@
         <div class="resource-upload-item-title" *ngIf="resourceUploaded">Uploaded</div>
         <div class="resource-upload-item" style="margin-top: 10px;">
           <button mat-raised-button (click)="updateResource(true)" style="width: 159px;">
-            Update
+            {{addNotUpdate ? 'Add' : 'Update'}}
           </button>
           <button mat-button (click)="onCancelClick()" style="width: 140px;">Cancel</button>
         </div>

@@ -1,11 +1,44 @@
-app-sidenav {
-    &.sideNavCollapsed {
-        width: 70px;
-    }
+.host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 
-.sideNavCollapsed {
-    left: 70px;
+.top-nav-row {
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+
+  @media (max-width: 384px) {
+    height: 50px;
+  }
+}
+
+.main-content-row {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.side-nav-column {
+  display: flex;
+  flex-direction: column;
+  width: 125px;
+}
+
+.app-viewer-column {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+
+  @media (max-width: 510px) {
+    width: 70%;
+  }
 }
 
 :host /deep/ #overlayDisableDiv {

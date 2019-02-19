@@ -1,5 +1,7 @@
 <ngx-loading [show]="masterOverlayEnabled" id="overlayDisableDiv"></ngx-loading>
 
-<app-topnav></app-topnav>
-<app-sidenav></app-sidenav>
-<app-viewer></app-viewer>
+<app-topnav class="top-nav-row"></app-topnav>
+<div class="main-content-row">
+  <app-sidenav class="side-nav-column"></app-sidenav>
+  <app-viewer class="app-viewer-column"></app-viewer>
+</div>

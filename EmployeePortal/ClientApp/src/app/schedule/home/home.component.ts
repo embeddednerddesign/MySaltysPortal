@@ -68,6 +68,22 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  addHomeContent() {
+    const dialogRef = this.confirmApptDialog.open(EditHomeContentDialogComponent, {
+      width: '50%',
+      height: '100%',
+      data: null
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.homeContentService.getHomeContent().subscribe(content => {
+        this.homeContent = content;
+      });
+    });
+
+    return dialogRef;
+  }
+
   editHomeContent(content: HomeContent) {
     const dialogRef = this.confirmApptDialog.open(EditHomeContentDialogComponent, {
       width: '50%',
@@ -86,7 +102,7 @@ export class HomeComponent implements OnInit {
 
   removeHomeContent(dataItem) {
     const dialogRef = this.deleteDialog.open(ConfirmDeleteDialogComponent, {
-      width: '250px'
+      width: '50%'
     });
 
     dialogRef.afterClosed().subscribe(result => {

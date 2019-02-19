@@ -2,6 +2,9 @@
 <div class="main-content-column">
   <div class="main-title-column">
     <div class="edit-control">
+      <div class="add-home-content-button" [ngClass]="{'invisible': !editing}" (click)="addHomeContent()">
+        Add Content
+      </div>
       <mat-slide-toggle [ngClass]="{'invisible': loggedInUserRole !== 'leader'}"
         class="edit-control-toggle"
         [(ngModel)]="editing">

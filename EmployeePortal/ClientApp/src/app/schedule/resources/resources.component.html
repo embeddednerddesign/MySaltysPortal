@@ -1,6 +1,12 @@
 <div class="main-content-column">
     <div class="main-title-column">
       <div class="edit-control">
+        <div class="add-resource-button" [ngClass]="{'invisible': !editing}" (click)="addFrontResource()">
+          Add Front Resource
+        </div>
+        <div class="add-resource-button" [ngClass]="{'invisible': !editing}" (click)="addBackResource()">
+          Add Back Resource
+        </div>
         <mat-slide-toggle [ngClass]="{'invisible': loggedInUserRole !== 'leader'}"
           class="edit-control-toggle"
           [(ngModel)]="editing">

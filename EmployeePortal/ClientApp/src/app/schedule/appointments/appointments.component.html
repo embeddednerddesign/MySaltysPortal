@@ -20,6 +20,23 @@
           <span (click)="onThisWeekClick()" [ngClass]="{'item-selected': thisWeekActive}">This Week</span>
         </div>
       </div>
+
+      <div class="resource-nav-header-mobile">
+        <div class="resource-nav-header-item">
+          <span (click)="onFrontClickMobile()" [ngClass]="{'item-selected': frontOfHouseActive}">Front of House</span>
+        </div>
+        <div class="resource-nav-header-item">
+          <span (click)="onBackClickMobile()" [ngClass]="{'item-selected': !frontOfHouseActive}">Back of House</span>
+        </div>
+      </div>
+      <div class="resource-nav-sub-header-mobile">
+        <div class="resource-nav-sub-header-item">
+          <span (click)="onLastWeekClickMobile()" [ngClass]="{'item-selected': !thisWeekActive}">Last Week</span>
+        </div>
+        <div class="resource-nav-sub-header-item">
+          <span (click)="onThisWeekClickMobile()" [ngClass]="{'item-selected': thisWeekActive}">This Week</span>
+        </div>
+      </div>
       <div class="pdf-controls">
         <div class="control-container" (click)="pdfViewer.zoomOut()"><span class="icon"><i class="fa fa-minus"></i></span>Zoom Out</div>
         <div class="control-container" (click)="pdfViewer.zoomIn()"><span class="icon"><i class="fa fa-plus"></i></span>Zoom In</div>
